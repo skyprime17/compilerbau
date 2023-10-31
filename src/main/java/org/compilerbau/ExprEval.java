@@ -21,6 +21,14 @@ public class ExprEval extends ExprBaseVisitor<Integer> {
   }
 
   @Override
+  public Integer visitPrintExpr(ExprParser.PrintExprContext ctx) {
+    Integer value = visit(ctx.expr());
+    System.out.println(value);
+    return 0;
+  }
+
+
+  @Override
   public Integer visitInt(ExprParser.IntContext ctx) {
     return Integer.valueOf(ctx.INT().getText());
   }
