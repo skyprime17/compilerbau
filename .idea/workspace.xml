@@ -4,33 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Expr.g4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ExprLexerRules.g4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ExprEval.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Expr.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Expr.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ExprBaseListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ExprBaseVisitor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ExprLexer.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ExprLexer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ExprLexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ExprListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ExprParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ExprVisitor.java" afterDir="false" />
+    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="-">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/ExprEval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ExprEval.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +18,21 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -135,11 +127,35 @@
       <option name="presentableId" value="Default" />
       <updated>1698782509967</updated>
       <workItem from="1698782511010" duration="47000" />
-      <workItem from="1698782570686" duration="3739000" />
+      <workItem from="1698782570686" duration="4467000" />
     </task>
+    <task id="LOCAL-00001" summary="-">
+      <option name="closed" value="true" />
+      <created>1698786606959</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698786606959</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="-" />
+    <option name="LAST_COMMIT_MESSAGE" value="-" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/compilerbau/ExprEval.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

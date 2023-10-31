@@ -10,7 +10,7 @@ import org.compilerbau.antlr.ExprParser;
 
 public class Main {
   public static void main(String[] args) throws IOException {
-    var reader = new StringReader("1+2+3\n");
+    var reader = new StringReader("1+2\n");
     var lexer = new ExprLexer(CharStreams.fromReader(reader));
     var parser = new ExprParser(new CommonTokenStream(lexer));
     var tree = parser.stat();
