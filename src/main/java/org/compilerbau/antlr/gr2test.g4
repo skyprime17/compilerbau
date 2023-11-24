@@ -10,14 +10,7 @@ item: visbility? (function_ | struct_);
 
 visbility: 'pub'?;
 
-/*
-function example
-parameter: x (optional mutability) and type
-pub fn main(mut x: int) -> int {
-    x = 5;
-    return x;
-}
-*/
+
 function_
     : 'fn' identifier '(' functionParams? ')' functionReturnType? blockExpression
     ;

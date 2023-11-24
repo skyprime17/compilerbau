@@ -1,29 +1,23 @@
+grammar gr3test;
+
+start: 'package' IDENT (item)* EOF;
+
+item: visbility? (function_ | struct_);
+
+visbility: 'pub'?;
 
 
-
-
-
-
-
-
-
-
-/*
-struct example:
-struct Point {
-    x: int,
-    y: int,
-}
-*/
-structDecl
-   : 'struct' identifier ('{' structFields? '}' | ';')
-   ;
-
-structFields
-    : structField (',' structField)*
+function_
+    : 'fn' IDENT '(' functionParams? ')' functionReturnType? blockExpression
     ;
 
-structField
-    : identifier ':' type
-    ;
+identifier: IDENT;
 
+functionParams: functionParam (',' functionParam)*;
+functionParam: identifier ':' type;
+functionReturnType: '->' type;
+
+blockExpression: '{' expression* '}';
+
+
+IDENT: [a-zA-Z_] [a-zA-Z_0-9]*;

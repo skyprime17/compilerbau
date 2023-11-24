@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="-" />
+    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="-">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr1.gr" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr1.gr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr2test.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr2test.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr3test.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr3test.g4" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,7 +65,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/IdeaProjects/compilerbau/compilerbau/src/main/java/org/compilerbau/antlr",
+    "last_opened_file_path": "C:/Users/nmoel/Downloads/jaegerschnitzel2/jaegerschnitzel",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -130,6 +136,7 @@
       <workItem from="1698782570686" duration="6708000" />
       <workItem from="1700603145192" duration="5823000" />
       <workItem from="1700609006907" duration="6054000" />
+      <workItem from="1700645149637" duration="10003000" />
     </task>
     <task id="LOCAL-00001" summary="-">
       <option name="closed" value="true" />

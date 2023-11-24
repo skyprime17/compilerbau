@@ -1,18 +1,8 @@
-
-/* Example 1
-pub fn length(xs:[]int) -> int {
-    let mut len = 0;
-    for x in xs {
-        len = len + 1;
-    }
-    return len;
-}
-
 /*
-Example 2 - create an array from a range
+Example 1 - create an array from a range
 */
 fn create_array_from_range(start:int, end:int) -> [int] {
-    let mut xs = [];
+    let xs = [];
     for i=start; i<end; i=i+1 {
         xs.push(i);
     }
@@ -20,9 +10,9 @@ fn create_array_from_range(start:int, end:int) -> [int] {
 }
 
 /*
-Example 3 - mutable arguments
+Example 2 - mutable arguments
 */
-fn add_one_to_mutable_arr(mut xs: [int]) {
+fn add_one_to_slice_arr(xs: [int]) {
     xs = xs + [1];
 }
 fn main() {
@@ -31,9 +21,9 @@ fn main() {
 }
 
 /*
-Example 4 - if statements
+Example 3 - if statements
 */
-fn main() {
+pub fn main() {
     let x = 1;
     if x == 1 {
         assert(x == 1);
@@ -45,10 +35,10 @@ fn main() {
 }
 
 /*
-Example 5 - while loops
+Example 4 - while loops
 */
 fn main() {
-    let mut x = 0;
+    let x = 0;
     while x < 10 {
         x = x + 1;
     }
@@ -56,16 +46,16 @@ fn main() {
 }
 
 /*
-Example 6 - variables
+Example 5 - variables
 */
 fn main() {
     let x = 1;
     let xy: int = 1;
-    let mut y: int = 1;
+    let y: int = 6;
 }
 
 /*
-Example 7
+Example 6
 /*
 struct Point {
     pub x: int,
@@ -76,11 +66,11 @@ fn main() {
     let p = Point{x: 1, y: 2};
     assert(p.x == 1);
     assert(p.y == 2);
-    let mut p_mut = p;
+    let p_mut = p;
 }
 
 /*
-Example 8 - example program
+Example 7 - example program
 */
 package main
 fn main() {
@@ -89,12 +79,12 @@ fn main() {
 }
 
 /*
-Example 9 - primitive types
+Example 8 - primitive types
 */
 package main
 fn main() {
     let x: int = 1;
-    let mut y: float = 1.0;
+    let y: float = 1.0;
     let z: bool = true;
     let a: char = 'a';
     let b: string = "hello";
@@ -102,3 +92,12 @@ fn main() {
     let dynamic_arr = [1, 2, 3, 4, 5];
 }
 
+/*
+Example 9 - arrays and slices
+*/
+fn method_with_array_param(xs: [int; 3]) {
+    println(xs)
+}
+fn method_with_arraylist(xs: [int]) {
+    println(xs)
+}
