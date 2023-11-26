@@ -1,10 +1,13 @@
+package test;
 /*
 Example 1 - create an array from a range
 */
 fn create_array_from_range(start:int, end:int) -> [int] {
     let xs = [];
-    for i=start; i<end; i=i+1 {
-        xs.push(i);
+    let i = start;
+    while i < end {
+        xs = xs + [i];
+        i = i + 1;
     }
     return xs;
 }
@@ -12,10 +15,10 @@ fn create_array_from_range(start:int, end:int) -> [int] {
 /*
 Example 2 - mutable arguments
 */
-fn add_one_to_slice_arr(xs: [int]) {
+fn add_one_to_slice_arr(xs: [int]) -> void {
     xs = xs + [1];
 }
-fn main() {
+fn main() -> void {
     let xs = [];
     assertThrows(mutable_arguments(xs), "cannot mutate immutable argument");
 }
@@ -23,7 +26,7 @@ fn main() {
 /*
 Example 3 - if statements
 */
-pub fn main() {
+pub fn main() -> void {
     let x = 1;
     if x == 1 {
         assert(x == 1);
@@ -37,7 +40,7 @@ pub fn main() {
 /*
 Example 4 - while loops
 */
-fn main() {
+fn main() -> void {
     let x = 0;
     while x < 10 {
         x = x + 1;
@@ -48,7 +51,7 @@ fn main() {
 /*
 Example 5 - variables
 */
-fn main() {
+fn main() -> void {
     let x = 1;
     let xy: int = 1;
     let y: int = 6;
@@ -62,7 +65,7 @@ struct Point {
     pub y: int,
     draw: bool,
 }
-fn main() {
+fn main() -> void {
     let p = Point{x: 1, y: 2};
     assert(p.x == 1);
     assert(p.y == 2);
@@ -72,8 +75,7 @@ fn main() {
 /*
 Example 7 - example program
 */
-package main
-fn main() {
+fn main() -> void {
     let xs = [1, 2, 3, 4, 5];
     let len = length(xs);
 }
@@ -81,12 +83,11 @@ fn main() {
 /*
 Example 8 - primitive types
 */
-package main
-fn main() {
+fn main() -> void {
     let x: int = 1;
-    let y: float = 1.0;
+    let y: float = 1;
     let z: bool = true;
-    let a: char = 'a';
+    let a: char = "a";
     let b: string = "hello";
     let static_arr: [int; 5] = [1, 2, 3, 4, 5];
     let dynamic_arr = [1, 2, 3, 4, 5];
@@ -95,9 +96,9 @@ fn main() {
 /*
 Example 9 - arrays and slices
 */
-fn method_with_array_param(xs: [int; 3]) {
+fn method_with_array_param(xs: [int; 3]) -> void {
     println(xs)
 }
-fn method_with_arraylist(xs: [int]) {
+fn method_with_arraylist(xs: [int]) -> void {
     println(xs)
 }

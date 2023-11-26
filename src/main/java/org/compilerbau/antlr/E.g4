@@ -137,4 +137,13 @@ NonZeroDigit
 	:	[1-9]
 	;
 
+
 WS : [ \r\n\t] + -> skip;
+
+COMMENT
+    :   '/*' .*? '*/' -> channel(HIDDEN)
+    ;
+
+LINE_COMMENT
+    :   '//' ~[\r\n]* -> channel(HIDDEN)
+    ;
