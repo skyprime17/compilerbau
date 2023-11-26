@@ -16,10 +16,10 @@
         <PerGrammarGenerationSettings>
           <option name="fileName" value="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Gr.g4" />
           <option name="autoGen" value="true" />
-          <option name="outputDir" value="" />
+          <option name="outputDir" value="D:\IdeaProjects\compilerbau\compilerbau\src\main\java" />
           <option name="libDir" value="" />
           <option name="encoding" value="" />
-          <option name="pkg" value="org.compilerbau.antlr" />
+          <option name="pkg" value="" />
           <option name="language" value="" />
           <option name="generateVisitor" value="true" />
         </PerGrammarGenerationSettings>

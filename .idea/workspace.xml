@@ -7,6 +7,17 @@
     <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="-">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/Gr.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Gr.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/Gr.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Gr.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrBaseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrBaseVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrLexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrLexer.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,13 +89,27 @@
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.org.compilerbau.antlr.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.compilerbau.Main" />
       <module name="compilerbau.main" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.compilerbau.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="org.compilerbau.antlr.Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.compilerbau.antlr.Main" />
+      <module name="compilerbau.main" />
+      <option name="PROGRAM_PARAMETERS" value="D:\\IdeaProjects\\compilerbau\\compilerbau\\src\\main\\java\\org\\compilerbau\\antlr\\gr1.gr" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.compilerbau.antlr.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -114,6 +139,11 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.org.compilerbau.antlr.Main" />
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Gradle.compilerbau [dependencies]" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.compilerbau [dependencies]" />
@@ -183,7 +213,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701014444860</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="-">
+      <option name="closed" value="true" />
+      <created>1701014964687</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1701014964687</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,5 +230,16 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="-" />
     <option name="LAST_COMMIT_MESSAGE" value="-" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Main.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
