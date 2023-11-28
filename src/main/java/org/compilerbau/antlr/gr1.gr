@@ -1,6 +1,6 @@
 package test;
 
-pub fn add(x:int, y:int) -> int {
+fn add(x:int, y:int) -> int {
     return x+y;
 }
 
