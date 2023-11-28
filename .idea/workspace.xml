@@ -5,19 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="-">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/BuildTree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/AST.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Arg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Assign.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Attributes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/BinOp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Block.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/FunDef.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Item.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/LongInteger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Operator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Program.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/StringLit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/TheTyp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/TheVisibility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Typ.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/UnaryOp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Variable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Visibility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Visitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/Gr.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Gr.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/Gr.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Gr.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrBaseListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrBaseVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrLexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrLexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrLexer.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/gen/org/compilerbau/antlr/GrVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Gr.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Gr.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Gr.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Gr.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrBaseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrBaseVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr1.gr" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr1.gr" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +67,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -79,7 +101,10 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -87,6 +112,10 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\src\main\java\org\compilerbau\antlr" />
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\src" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.compilerbau.antlr.ast" />
+      <recent name="org.compilerbau.antlr" />
     </key>
   </component>
   <component name="RunManager" selected="Application.org.compilerbau.antlr.Main">
@@ -109,7 +138,7 @@
       <option name="PROGRAM_PARAMETERS" value="D:\\IdeaProjects\\compilerbau\\compilerbau\\src\\main\\java\\org\\compilerbau\\antlr\\gr1.gr" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.compilerbau.antlr.*" />
+          <option name="PATTERN" value="org.compilerbau.antlr.ast.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -164,6 +193,7 @@
       <workItem from="1700603145192" duration="5823000" />
       <workItem from="1700609006907" duration="6054000" />
       <workItem from="1700645149637" duration="10003000" />
+      <workItem from="1701016334434" duration="34175000" />
     </task>
     <task id="LOCAL-00001" summary="-">
       <option name="closed" value="true" />
@@ -221,7 +251,23 @@
       <option name="project" value="LOCAL" />
       <updated>1701014964687</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="-">
+      <option name="closed" value="true" />
+      <created>1701015440299</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1701015440299</updated>
+    </task>
+    <task id="LOCAL-00009" summary="-">
+      <option name="closed" value="true" />
+      <created>1701015448008</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1701015448008</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -236,8 +282,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Main.java</url>
-          <line>27</line>
-          <option name="timeStamp" value="1" />
+          <line>28</line>
+          <option name="timeStamp" value="65" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

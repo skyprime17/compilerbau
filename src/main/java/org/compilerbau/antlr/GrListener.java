@@ -28,16 +28,6 @@ public interface GrListener extends ParseTreeListener {
 	 */
 	void exitItem(GrParser.ItemContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GrParser#visbility}.
-	 * @param ctx the parse tree
-	 */
-	void enterVisbility(GrParser.VisbilityContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GrParser#visbility}.
-	 * @param ctx the parse tree
-	 */
-	void exitVisbility(GrParser.VisbilityContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link GrParser#fundef}.
 	 * @param ctx the parse tree
 	 */
@@ -58,16 +48,6 @@ public interface GrListener extends ParseTreeListener {
 	 */
 	void exitStructdef(GrParser.StructdefContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GrParser#structfields}.
-	 * @param ctx the parse tree
-	 */
-	void enterStructfields(GrParser.StructfieldsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GrParser#structfields}.
-	 * @param ctx the parse tree
-	 */
-	void exitStructfields(GrParser.StructfieldsContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link GrParser#structfield}.
 	 * @param ctx the parse tree
 	 */
@@ -77,6 +57,16 @@ public interface GrListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStructfield(GrParser.StructfieldContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrParser#visbility}.
+	 * @param ctx the parse tree
+	 */
+	void enterVisbility(GrParser.VisbilityContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrParser#visbility}.
+	 * @param ctx the parse tree
+	 */
+	void exitVisbility(GrParser.VisbilityContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GrParser#statement}.
 	 * @param ctx the parse tree

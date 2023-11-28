@@ -24,6 +24,7 @@ public class Main {
     var parser = new GrParser(new CommonTokenStream(lexer));
 
     var antlrTree = parser.start();
+    var ast = new BuildTree().visit(antlrTree);
 
     return 0;
   }

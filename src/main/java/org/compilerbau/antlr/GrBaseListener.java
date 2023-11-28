@@ -41,18 +41,6 @@ public class GrBaseListener implements GrListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVisbility(GrParser.VisbilityContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitVisbility(GrParser.VisbilityContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterFundef(GrParser.FundefContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -77,18 +65,6 @@ public class GrBaseListener implements GrListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStructfields(GrParser.StructfieldsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitStructfields(GrParser.StructfieldsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterStructfield(GrParser.StructfieldContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -96,6 +72,18 @@ public class GrBaseListener implements GrListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStructfield(GrParser.StructfieldContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVisbility(GrParser.VisbilityContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVisbility(GrParser.VisbilityContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

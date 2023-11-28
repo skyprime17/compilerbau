@@ -23,12 +23,6 @@ public interface GrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitItem(GrParser.ItemContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GrParser#visbility}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVisbility(GrParser.VisbilityContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link GrParser#fundef}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -41,17 +35,17 @@ public interface GrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStructdef(GrParser.StructdefContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GrParser#structfields}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStructfields(GrParser.StructfieldsContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link GrParser#structfield}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStructfield(GrParser.StructfieldContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GrParser#visbility}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVisbility(GrParser.VisbilityContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GrParser#statement}.
 	 * @param ctx the parse tree

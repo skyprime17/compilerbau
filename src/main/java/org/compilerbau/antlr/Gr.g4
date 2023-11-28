@@ -3,27 +3,24 @@ grammar Gr;
 start : KW_PACKAGE IDENT SEMICOLON (item)*  EOF;
 
 item:
-  visbility? (fundef|structdef)
+   fundef
+   |structdef
 ;
 
-visbility: KW_PUBLIC;
-
 fundef:
-  KW_FN IDENT LPAR (param (COMMA param)* )? RPAR ARROW type blockExpression
+  visbility? KW_FN IDENT LPAR (param (COMMA param)* )? RPAR ARROW type blockExpression
 ;
 
 structdef:
-  KW_STRUCT IDENT LBRC structfields RBRC
+  visbility? KW_STRUCT IDENT LBRC structfield (COMMA structfield)* RBRC
 ;
 
-structfields:
-    structfield (COMMA structfield)*
-;
 
 structfield:
     visbility? IDENT COLON type
 ;
 
+visbility: KW_PUBLIC;
 
 statement
    : SEMICOLON
@@ -62,7 +59,7 @@ expression
    | KW_CONTINUE expression?                            # ContinueExpression
    | KW_BREAK expression?                               # BreakExpression
    | KW_RETURN expression?                              # ReturnExpression
-   | LPAR expression RPAR                               # GroupedExpression
+   | '(' expression ')'                                 # GroupedExpression
    | LSQB arrayElements? RSQB                           # ArrayExpression
    | structExprStruct                                   # StructExpression_
    | expressionWithBlock                                # ExpressionWithBlock_
@@ -87,8 +84,6 @@ compoundAssignOperator
    | OREQ
    | CARETEQ
    ;
-
-
 
 expressionWithBlock
    : blockExpression
@@ -134,7 +129,6 @@ predicateLoopExpression
    : KW_WHILE expression blockExpression
    ;
 
-
 ifExpression
    : KW_IF expression blockExpression
    (
@@ -159,9 +153,8 @@ slicetype
    : LSQB type RSQB
    ;
 
-
 type
-   : IDENT
+   : identifier
    | arraytype
    | slicetype
 ;
