@@ -4,6 +4,6 @@ pub fn calc() -> int {
     return 5 + 5;
 }
 
-pub fn main() -> int {
+pub fn calc2() -> int {
     return 5;
 }
