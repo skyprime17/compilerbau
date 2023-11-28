@@ -1,6 +1,8 @@
 package org.compilerbau.antlr;
 
 
+import java.util.List;
+
 import org.compilerbau.antlr.ast.AST;
 import org.compilerbau.antlr.ast.Arg;
 import org.compilerbau.antlr.ast.Assign;
@@ -153,6 +155,9 @@ class BuildTree extends GrBaseVisitor<AST> {
 
   @Override
   public AST visitBlockExpression(GrParser.BlockExpressionContext ctx) {
+    if (ctx.statements() == null) {
+      return new Block(List.of());
+    }
     return new Block(ctx.statements().statement().stream().map(this::visit).toList());
   }
 
@@ -175,7 +180,7 @@ class BuildTree extends GrBaseVisitor<AST> {
   @Override
   public AST visitFundef(GrParser.FundefContext ctx) {
     var funcName = ctx.IDENT().getText();
-    var visibility = ((TheVisibility) visit(ctx.visbility())).visibility();
+    var visibility = ctx.visbility() == null ? Visibility.PRIVATE : ((TheVisibility) visit(ctx.visbility())).visibility();
     var params = ctx.param().stream().map(p -> (Arg) visit(p)).toList();
     var returnType = ((TheTyp) visit(ctx.type())).typ();
     var body = visit(ctx.blockExpression());

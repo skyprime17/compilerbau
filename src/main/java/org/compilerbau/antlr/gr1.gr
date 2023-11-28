@@ -1,8 +1,5 @@
 package test;
 
-pub fn main(x: int, y:int) -> void {
-    let x = {
-        let y = 6;
-        5*(-y);
-    };
+fn main() -> void {
+
 }
