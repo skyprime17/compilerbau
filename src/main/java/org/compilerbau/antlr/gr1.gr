@@ -4,6 +4,6 @@ pub fn add(x:int, y:int) -> int {
     return x+y;
 }
 
-pub fn calc() -> int {
-    return calc(1+2);
+pub fn calc(x:int, y:int) -> int {
+    return add(x,y);
 }

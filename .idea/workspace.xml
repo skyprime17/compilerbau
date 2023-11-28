@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="- first generated class code!!">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/FunCall.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/test.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/BuildTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/BuildTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GenCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GenCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Visitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr1.gr" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr1.gr" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -218,7 +214,7 @@
       <workItem from="1700603145192" duration="5823000" />
       <workItem from="1700609006907" duration="6054000" />
       <workItem from="1700645149637" duration="10003000" />
-      <workItem from="1701016334434" duration="48028000" />
+      <workItem from="1701016334434" duration="48536000" />
     </task>
     <task id="LOCAL-00001" summary="-">
       <option name="closed" value="true" />
@@ -356,7 +352,23 @@
       <option name="project" value="LOCAL" />
       <updated>1701208715433</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="- first generated class code!!">
+      <option name="closed" value="true" />
+      <created>1701214654226</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1701214654226</updated>
+    </task>
+    <task id="LOCAL-00019" summary="- first generated class code!!">
+      <option name="closed" value="true" />
+      <created>1701214890610</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1701214890610</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -366,5 +378,16 @@
     <MESSAGE value="-" />
     <MESSAGE value="- first generated class code!!" />
     <option name="LAST_COMMIT_MESSAGE" value="- first generated class code!!" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GenCode.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="103" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
