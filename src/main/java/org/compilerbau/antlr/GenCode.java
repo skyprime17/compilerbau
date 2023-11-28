@@ -155,6 +155,7 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(ReturnExpression ast) {
     ast.expr().welcome(this);
+    // TODO currently returns a long
     mv.visitInsn(Opcodes.LRETURN);
     return null;
   }
