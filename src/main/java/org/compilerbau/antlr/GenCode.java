@@ -15,6 +15,7 @@ import org.compilerbau.antlr.ast.Block;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.LongInteger;
 import org.compilerbau.antlr.ast.Program;
+import org.compilerbau.antlr.ast.ReturnExpression;
 import org.compilerbau.antlr.ast.StringLit;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
@@ -82,12 +83,12 @@ public class GenCode implements Visitor<Void> {
     var publicCode = ast.visibility() == Visibility.PUBLIC ? Opcodes.ACC_PUBLIC : Opcodes.ACC_PRIVATE;
     mv = cw.visitMethod(publicCode | Opcodes.ACC_STATIC, ast.name(), s, null, null);
     env = new HashMap<>();
-    int[] i = {0};
-    ast.args().forEach(arg -> {
-      env.put(arg.name(), i[0]);
-      i[0] += arg.typ().stackPos();
-    });
-    //ast.body().welcome(this);
+    int i = 0;
+    for (Arg arg : ast.args()) {
+      env.put(arg.name(), i);
+      i += arg.typ().stackPos();
+    }
+    ast.body().welcome(this);
     mv.visitMaxs(1, 1);
     mv.visitEnd();
     return null;
@@ -95,6 +96,7 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(Variable ast) {
+    mv.visitVarInsn(Opcodes.LLOAD,env.get(ast.name()));
     return null;
   }
 
@@ -115,6 +117,7 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(Block ast) {
+    ast.statements().forEach(s -> s.welcome(this));
     return null;
   }
 
@@ -125,6 +128,7 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(LongInteger ast) {
+    mv.visitLdcInsn(ast.n());
     return null;
   }
 
@@ -135,11 +139,21 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(BinOp ast) {
+    ast.left().welcome(this);
+    ast.right().welcome(this);
+    mv.visitInsn(Opcodes.LADD);
     return null;
   }
 
   @Override
   public Void visit(UnaryOp ast) {
+    return null;
+  }
+
+  @Override
+  public Void visit(ReturnExpression ast) {
+    ast.expr().welcome(this);
+    mv.visitInsn(Opcodes.LRETURN);
     return null;
   }
 }

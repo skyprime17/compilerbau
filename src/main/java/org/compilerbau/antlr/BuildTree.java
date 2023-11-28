@@ -14,6 +14,7 @@ import org.compilerbau.antlr.ast.Item;
 import org.compilerbau.antlr.ast.LongInteger;
 import org.compilerbau.antlr.ast.Operator;
 import org.compilerbau.antlr.ast.Program;
+import org.compilerbau.antlr.ast.ReturnExpression;
 import org.compilerbau.antlr.ast.StringLit;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
@@ -102,6 +103,11 @@ class BuildTree extends GrBaseVisitor<AST> {
     var right = visit(ctx.expression(1));
 
     return new BinOp(new Attributes(), left, op, right);
+  }
+
+  @Override
+  public AST visitReturnExpression(GrParser.ReturnExpressionContext ctx) {
+    return new ReturnExpression(visit(ctx.expression()));
   }
 
   @Override

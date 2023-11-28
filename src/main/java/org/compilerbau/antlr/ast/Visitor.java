@@ -25,4 +25,5 @@ public interface Visitor<R> {
   R visit(BinOp ast);
 
   R visit(UnaryOp ast);
+  R visit(ReturnExpression ast);
 }
