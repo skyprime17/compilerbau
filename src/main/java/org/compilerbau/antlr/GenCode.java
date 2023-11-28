@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.Objects;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -59,7 +60,7 @@ public class GenCode implements Visitor<Void> {
   public Void visit(Program ast) {
     module = ast.name();
     cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-    cw.visit(Opcodes.V20, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, ast.name(), null, "java/lang/Object", null);
+    cw.visit(Opcodes.V21, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, ast.name(), null, "java/lang/Object", null);
     cw.visitSource(ast.name() + ".gr", null);
 
     ast.funDefs().forEach((n, fun) -> fun.welcome(this));
@@ -96,7 +97,7 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(Variable ast) {
-    mv.visitVarInsn(Opcodes.LLOAD,env.get(ast.name()));
+    mv.visitVarInsn(Opcodes.LLOAD, env.get(ast.name()));
     return null;
   }
 

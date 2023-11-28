@@ -1,5 +1,9 @@
 package test;
 
-fn main() -> string {
-    return "hello world";
+pub fn calc() -> int {
+    return 5 + 5;
+}
+
+pub fn main() -> int {
+    return 5;
 }

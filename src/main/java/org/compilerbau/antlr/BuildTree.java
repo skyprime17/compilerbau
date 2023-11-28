@@ -107,6 +107,9 @@ class BuildTree extends GrBaseVisitor<AST> {
 
   @Override
   public AST visitReturnExpression(GrParser.ReturnExpressionContext ctx) {
+    if (ctx.expression() == null) {
+      return new ReturnExpression(null);
+    }
     return new ReturnExpression(visit(ctx.expression()));
   }
 
