@@ -6,6 +6,7 @@ public interface Typ {
   Typ INT = new PrimInt();
   Typ BOOLEAN = new PrimBool();
   Typ VOID = new Void();
+  Typ STRING = new PrimString();
   FunTyp ARITH = new FunTyp(List.of(Typ.INT, Typ.INT), Typ.INT);
   FunTyp CMP = new FunTyp(List.of(Typ.INT, Typ.INT), Typ.BOOLEAN);
   FunTyp LOGIC = new FunTyp(List.of(Typ.BOOLEAN, Typ.BOOLEAN), Typ.BOOLEAN);
@@ -66,6 +67,18 @@ public interface Typ {
     @Override
     public String jvmType() {
       return "L" + name() + ";";
+    }
+  }
+
+  record PrimString() implements Typ {
+    @Override
+    public String toString() {
+      return "String";
+    }
+
+    @Override
+    public String jvmType() {
+      return "Ljava/lang/String;";
     }
   }
 

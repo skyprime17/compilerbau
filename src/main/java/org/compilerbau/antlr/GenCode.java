@@ -134,6 +134,7 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(StringLit ast) {
+    mv.visitLdcInsn(ast.s());
     return null;
   }
 

@@ -198,6 +198,7 @@ class BuildTree extends GrBaseVisitor<AST> {
     var t = ctx.identifier().getText();
     return switch (t) {
       case "int" -> new TheTyp(new Attributes(), new Typ.PrimInt());
+      case "string" -> new TheTyp(new Attributes(), new Typ.PrimString());
       case "boolean" -> new TheTyp(new Attributes(), new Typ.PrimBool());
       default -> new TheTyp(new Attributes(), new Typ.Ref(t));
     };

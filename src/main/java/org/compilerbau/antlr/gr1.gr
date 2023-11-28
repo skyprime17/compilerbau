@@ -1,5 +1,5 @@
 package test;
 
-fn main() -> int {
-    return 5 + 7;
+fn main() -> string {
+    return "hello world";
 }
