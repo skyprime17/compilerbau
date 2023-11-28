@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="- first generated class code!!">
-      <change afterPath="$PROJECT_DIR$/gencode/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/FunCall.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gencode/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gencode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gencode/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/test.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/BuildTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/BuildTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GenCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GenCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Visitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr1.gr" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr1.gr" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,8 +45,8 @@
       <list>
         <option value="Interface" />
         <option value="Enum" />
-        <option value="Record" />
         <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -216,7 +218,7 @@
       <workItem from="1700603145192" duration="5823000" />
       <workItem from="1700609006907" duration="6054000" />
       <workItem from="1700645149637" duration="10003000" />
-      <workItem from="1701016334434" duration="44387000" />
+      <workItem from="1701016334434" duration="48028000" />
     </task>
     <task id="LOCAL-00001" summary="-">
       <option name="closed" value="true" />
@@ -322,7 +324,39 @@
       <option name="project" value="LOCAL" />
       <updated>1701202529297</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="- first generated class code!!">
+      <option name="closed" value="true" />
+      <created>1701208525094</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1701208525094</updated>
+    </task>
+    <task id="LOCAL-00015" summary="- first generated class code!!">
+      <option name="closed" value="true" />
+      <created>1701208658693</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1701208658693</updated>
+    </task>
+    <task id="LOCAL-00016" summary="- first generated class code!!">
+      <option name="closed" value="true" />
+      <created>1701208683463</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1701208683463</updated>
+    </task>
+    <task id="LOCAL-00017" summary="- first generated class code!!">
+      <option name="closed" value="true" />
+      <created>1701208715433</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1701208715433</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -1,9 +1,9 @@
 package test;
 
-pub fn calc() -> int {
-    return 5 + 5;
+pub fn add(x:int, y:int) -> int {
+    return x+y;
 }
 
-pub fn calc2() -> int {
-    return 5;
+pub fn calc() -> int {
+    return calc(1+2);
 }

@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
-import java.util.Objects;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -13,6 +12,7 @@ import org.compilerbau.antlr.ast.Arg;
 import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.BinOp;
 import org.compilerbau.antlr.ast.Block;
+import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.LongInteger;
 import org.compilerbau.antlr.ast.Program;
@@ -156,6 +156,14 @@ public class GenCode implements Visitor<Void> {
   public Void visit(ReturnExpression ast) {
     ast.expr().welcome(this);
     mv.visitInsn(Opcodes.LRETURN);
+    return null;
+  }
+
+  @Override
+  public Void visit(FunCall ast) {
+    ast.args().forEach(arg -> arg.welcome(this));
+    // TOOD descriptor is hardcoded to be 2 integers that return an integer
+    mv.visitMethodInsn(Opcodes.INVOKESTATIC, module, ast.name(), "(JJ)J", false);
     return null;
   }
 }

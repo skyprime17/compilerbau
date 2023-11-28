@@ -9,6 +9,7 @@ import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.Attributes;
 import org.compilerbau.antlr.ast.BinOp;
 import org.compilerbau.antlr.ast.Block;
+import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.Item;
 import org.compilerbau.antlr.ast.LongInteger;
@@ -71,7 +72,6 @@ class BuildTree extends GrBaseVisitor<AST> {
   }
 
 
-
   @Override
   public AST visitExpressionStatement(GrParser.ExpressionStatementContext ctx) {
     return ctx.expression() != null ? visit(ctx.expression()) : visit(ctx.expressionWithBlock());
@@ -83,9 +83,9 @@ class BuildTree extends GrBaseVisitor<AST> {
     Operator op = null;
     if (ctx.TIMES() != null) {
       op = Operator.mul;
-    } else if(ctx.DIV() != null) {
+    } else if (ctx.DIV() != null) {
       op = Operator.div;
-    } else if (ctx.MOD() != null){
+    } else if (ctx.MOD() != null) {
       op = Operator.mod;
     } else if (ctx.PLUS() != null) {
       op = Operator.add;
@@ -118,6 +118,17 @@ class BuildTree extends GrBaseVisitor<AST> {
     var op = ctx.NOT() != null ? Operator.not : Operator.sub;
     var right = visit(ctx.expression());
     return new UnaryOp(new Attributes(), op, right);
+  }
+
+  @Override
+  public AST visitCallExpression(GrParser.CallExpressionContext ctx) {
+    if (ctx.callParams() == null) {
+      return new FunCall(ctx.expression().getText(), List.of());
+    }
+
+    var callParams = ctx.callParams().expression().stream().map(this::visit).toList();
+    var left = ctx.expression().getText();
+    return new FunCall(left, callParams);
   }
 
   @Override
@@ -189,7 +200,8 @@ class BuildTree extends GrBaseVisitor<AST> {
   @Override
   public AST visitFundef(GrParser.FundefContext ctx) {
     var funcName = ctx.IDENT().getText();
-    var visibility = ctx.visbility() == null ? Visibility.PRIVATE : ((TheVisibility) visit(ctx.visbility())).visibility();
+    var visibility = ctx.visbility() == null ? Visibility.PRIVATE :
+        ((TheVisibility) visit(ctx.visbility())).visibility();
     var params = ctx.param().stream().map(p -> (Arg) visit(p)).toList();
     var returnType = ((TheTyp) visit(ctx.type())).typ();
     var body = visit(ctx.blockExpression());
