@@ -27,4 +27,6 @@ public interface Visitor<R> {
   R visit(UnaryOp ast);
   R visit(ReturnExpression ast);
   R visit(FunCall ast);
+  R visit(Struct ast);
+  R visit(StructField ast);
 }

@@ -4,29 +4,17 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.lang.Void;
 import java.util.HashMap;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.compilerbau.antlr.ast.Arg;
-import org.compilerbau.antlr.ast.Assign;
-import org.compilerbau.antlr.ast.BinOp;
-import org.compilerbau.antlr.ast.Block;
-import org.compilerbau.antlr.ast.FunCall;
-import org.compilerbau.antlr.ast.FunDef;
-import org.compilerbau.antlr.ast.LongInteger;
-import org.compilerbau.antlr.ast.Program;
-import org.compilerbau.antlr.ast.ReturnExpression;
-import org.compilerbau.antlr.ast.StringLit;
-import org.compilerbau.antlr.ast.TheTyp;
-import org.compilerbau.antlr.ast.TheVisibility;
-import org.compilerbau.antlr.ast.UnaryOp;
-import org.compilerbau.antlr.ast.Variable;
-import org.compilerbau.antlr.ast.Visibility;
-import org.compilerbau.antlr.ast.Visitor;
+import org.compilerbau.antlr.ast.*;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+
+import static org.compilerbau.antlr.ast.Typ.*;
 
 public class GenCode implements Visitor<Void> {
 
@@ -38,7 +26,7 @@ public class GenCode implements Visitor<Void> {
 
   public static void main(String... args) throws IOException {
     for (var arg : args) {
-      compile("D:\\IdeaProjects\\compilerbau\\compilerbau\\gencode", new FileReader(arg));
+      compile("C:\\Users\\nmoel\\IdeaProjects\\compilerbauk\\gencode", new FileReader(arg));
     }
   }
 
@@ -47,6 +35,7 @@ public class GenCode implements Visitor<Void> {
     var parser = new GrParser(new CommonTokenStream(lexer));
     var antlrTree = parser.start();
     var ast = new BuildTree().visit(antlrTree);
+    var typ = ast.welcome(new TypCheck());
     var gencode = new GenCode(resultPath);
     ast.welcome(gencode);
   }
@@ -64,6 +53,7 @@ public class GenCode implements Visitor<Void> {
     cw.visitSource(ast.name() + ".gr", null);
 
     ast.funDefs().forEach((n, fun) -> fun.welcome(this));
+    ast.structDefs().forEach((n, struct) -> struct.welcome(this));
 
     cw.visitEnd();
     try {
@@ -156,7 +146,15 @@ public class GenCode implements Visitor<Void> {
   public Void visit(ReturnExpression ast) {
     ast.expr().welcome(this);
     // TODO currently returns a long
-    mv.visitInsn(Opcodes.LRETURN);
+    if (ast.expr().attributes().typ == INT) {
+      mv.visitInsn(Opcodes.LRETURN);
+    } else if (ast.expr().attributes().typ == VOID) {
+      mv.visitInsn(Opcodes.RETURN);
+    } else if (ast.expr().attributes().typ == STRING) {
+      mv.visitInsn(Opcodes.ARETURN);
+    } else {
+      throw new RuntimeException("Unknown return type");
+    }
     return null;
   }
 
@@ -165,6 +163,18 @@ public class GenCode implements Visitor<Void> {
     ast.args().forEach(arg -> arg.welcome(this));
     // TOOD descriptor is hardcoded to be 2 integers that return an integer
     mv.visitMethodInsn(Opcodes.INVOKESTATIC, module, ast.name(), "(JJ)J", false);
+    return null;
+  }
+
+  @Override
+  public Void visit(Struct ast) {
+    // create a static inner class
+    cw.visitInnerClass(ast.name(), module, ast.name(), Opcodes.ACC_STATIC | Opcodes.ACC_PUBLIC);
+    return null;
+  }
+
+  @Override
+  public Void visit(StructField ast) {
     return null;
   }
 }

@@ -7,16 +7,15 @@ import java.util.Map;
 import java.util.Set;
 
 
-public record Program(Attributes attributes, String name, List<Item> items, Map<String, FunDef> funDefs,
+public record Program(Attributes attributes, String name, List<Item> items, Map<String, FunDef> funDefs, Map<String, Struct> structDefs,
                       Set<String> interfaces) implements AST {
   public Program(String name, List<Item> items) {
-    this(new Attributes(), name, items, new HashMap<>(), new HashSet<>());
+    this(new Attributes(), name, items, new HashMap<>(), new HashMap<>(), new HashSet<>());
     for (var def : items) {
-      switch (def) {
-        case FunDef fun:
-          funDefs.put(fun.name(), fun);
-          break;
-      }
+        switch (def) {
+            case FunDef fun -> funDefs.put(fun.name(), fun);
+            case Struct struct -> structDefs.put(struct.name(), struct);
+        }
     }
   }
 
