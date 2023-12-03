@@ -14,8 +14,8 @@ import java.util.HashMap;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.compilerbau.antlr.ast.Arg;
-import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
+import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.Block;
 import org.compilerbau.antlr.ast.BreakExpression;
 import org.compilerbau.antlr.ast.ComparisonExpression;
@@ -25,6 +25,7 @@ import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
 import org.compilerbau.antlr.ast.LongInteger;
 import org.compilerbau.antlr.ast.LoopExpression;
+import org.compilerbau.antlr.ast.NegationExpression;
 import org.compilerbau.antlr.ast.Operator;
 import org.compilerbau.antlr.ast.Program;
 import org.compilerbau.antlr.ast.ReturnExpression;
@@ -33,7 +34,6 @@ import org.compilerbau.antlr.ast.Struct;
 import org.compilerbau.antlr.ast.StructField;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
-import org.compilerbau.antlr.ast.NegationExpression;
 import org.compilerbau.antlr.ast.Variable;
 import org.compilerbau.antlr.ast.Visibility;
 import org.compilerbau.antlr.ast.Visitor;
@@ -214,6 +214,15 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(IfExpression ast) {
+    var end = new Label();
+    var ifCase = new Label();
+    ast.cond().welcome(this);
+    mv.visitJumpInsn(Opcodes.IFNE, ifCase);
+    ast.elseCase().ifPresent(ec -> ec.welcome(this));
+    mv.visitJumpInsn(Opcodes.GOTO, end);
+    mv.visitLabel(ifCase);
+    ast.trueCase().welcome(this);
+    mv.visitLabel(end);
     return null;
   }
 
