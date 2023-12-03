@@ -187,4 +187,14 @@ public class GenCode implements Visitor<Void> {
   public Void visit(LoopExpression ast) {
     return null;
   }
+
+  @Override
+  public Void visit(BreakExpression ast) {
+    return null;
+  }
+
+  @Override
+  public Void visit(ContinueExpression ast) {
+      return null;
+  }
 }

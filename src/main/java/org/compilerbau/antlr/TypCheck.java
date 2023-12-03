@@ -124,4 +124,14 @@ public class TypCheck implements Visitor<Boolean> {
     public Boolean visit(LoopExpression ast) {
         return true;
     }
+
+    @Override
+    public Boolean visit(BreakExpression ast) {
+        return true;
+    }
+
+    @Override
+    public Boolean visit(ContinueExpression ast) {
+        return true;
+    }
 }

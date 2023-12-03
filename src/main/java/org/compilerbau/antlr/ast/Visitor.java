@@ -25,10 +25,20 @@ public interface Visitor<R> {
   R visit(BinOp ast);
 
   R visit(UnaryOp ast);
+
   R visit(ReturnExpression ast);
+
   R visit(FunCall ast);
+
   R visit(Struct ast);
+
   R visit(StructField ast);
+
   R visit(IfExpression ast);
+
   R visit(LoopExpression ast);
+
+  R visit(BreakExpression ast);
+
+  R visit(ContinueExpression ast);
 }

@@ -9,6 +9,8 @@ import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.Attributes;
 import org.compilerbau.antlr.ast.BinOp;
 import org.compilerbau.antlr.ast.Block;
+import org.compilerbau.antlr.ast.BreakExpression;
+import org.compilerbau.antlr.ast.ContinueExpression;
 import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
@@ -93,6 +95,11 @@ class BuildTree extends GrBaseVisitor<AST> {
   }
 
   @Override
+  public AST visitBreakExpression(GrParser.BreakExpressionContext ctx) {
+    return new BreakExpression();
+  }
+
+  @Override
   public AST visitArithmeticOrLogicalExpression(GrParser.ArithmeticOrLogicalExpressionContext ctx) {
 
     Operator op = null;
@@ -126,6 +133,11 @@ class BuildTree extends GrBaseVisitor<AST> {
       return new ReturnExpression(null);
     }
     return new ReturnExpression(visit(ctx.expression()));
+  }
+
+  @Override
+  public AST visitContinueExpression(GrParser.ContinueExpressionContext ctx) {
+    return new ContinueExpression();
   }
 
   @Override
