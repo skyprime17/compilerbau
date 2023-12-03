@@ -7,9 +7,10 @@ import org.compilerbau.antlr.ast.AST;
 import org.compilerbau.antlr.ast.Arg;
 import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.Attributes;
-import org.compilerbau.antlr.ast.BinOp;
+import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
 import org.compilerbau.antlr.ast.Block;
 import org.compilerbau.antlr.ast.BreakExpression;
+import org.compilerbau.antlr.ast.ComparisonExpression;
 import org.compilerbau.antlr.ast.ContinueExpression;
 import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
@@ -25,7 +26,7 @@ import org.compilerbau.antlr.ast.Struct;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
 import org.compilerbau.antlr.ast.Typ;
-import org.compilerbau.antlr.ast.UnaryOp;
+import org.compilerbau.antlr.ast.NegationExpression;
 import org.compilerbau.antlr.ast.Variable;
 import org.compilerbau.antlr.ast.Visibility;
 
@@ -124,7 +125,7 @@ class BuildTree extends GrBaseVisitor<AST> {
     var left = visit(ctx.expression(0));
     var right = visit(ctx.expression(1));
 
-    return new BinOp(new Attributes(), left, op, right);
+    return new ArithmeticOrLogicalExpression(new Attributes(), left, op, right);
   }
 
   @Override
@@ -136,6 +137,22 @@ class BuildTree extends GrBaseVisitor<AST> {
   }
 
   @Override
+  public AST visitComparisonExpression(GrParser.ComparisonExpressionContext ctx) {
+    Operator op = switch (ctx.comparisonOperator().getText()) {
+      case "<" -> Operator.lt;
+      case "<=" -> Operator.le;
+      case ">" -> Operator.gt;
+      case ">=" -> Operator.ge;
+      case "==" -> Operator.eq;
+      case "!=" -> Operator.neq;
+      default -> throw new RuntimeException("Unknown operator");
+    };
+    var left = visit(ctx.expression(0));
+    var right = visit(ctx.expression(1));
+    return new ComparisonExpression(new Attributes(), left, op, right);
+  }
+
+  @Override
   public AST visitContinueExpression(GrParser.ContinueExpressionContext ctx) {
     return new ContinueExpression();
   }
@@ -144,7 +161,7 @@ class BuildTree extends GrBaseVisitor<AST> {
   public AST visitNegationExpression(GrParser.NegationExpressionContext ctx) {
     var op = ctx.NOT() != null ? Operator.not : Operator.sub;
     var right = visit(ctx.expression());
-    return new UnaryOp(new Attributes(), op, right);
+    return new NegationExpression(new Attributes(), op, right);
   }
 
   @Override

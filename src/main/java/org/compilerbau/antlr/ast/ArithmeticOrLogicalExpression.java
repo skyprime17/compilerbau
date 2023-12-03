@@ -1,7 +1,7 @@
 package org.compilerbau.antlr.ast;
 
-public record BinOp(Attributes attributes, AST left, Operator op, AST right) implements AST {
-  public BinOp(AST left, Operator op, AST right) {
+public record ArithmeticOrLogicalExpression(Attributes attributes, AST left, Operator op, AST right) implements AST {
+  public ArithmeticOrLogicalExpression(AST left, Operator op, AST right) {
     this(new Attributes(), left, op, right);
   }
 

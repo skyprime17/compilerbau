@@ -22,9 +22,9 @@ public interface Visitor<R> {
 
   R visit(StringLit ast);
 
-  R visit(BinOp ast);
+  R visit(ArithmeticOrLogicalExpression ast);
 
-  R visit(UnaryOp ast);
+  R visit(NegationExpression ast);
 
   R visit(ReturnExpression ast);
 
@@ -41,4 +41,6 @@ public interface Visitor<R> {
   R visit(BreakExpression ast);
 
   R visit(ContinueExpression ast);
+
+  R visit(ComparisonExpression ast);
 }

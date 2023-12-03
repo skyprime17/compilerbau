@@ -1,7 +1,7 @@
 package org.compilerbau.antlr.ast;
 
-public record UnaryOp(Attributes attributes, Operator op, AST expr) implements AST {
-  public UnaryOp(Operator op, AST expr) {
+public record NegationExpression(Attributes attributes, Operator op, AST expr) implements AST {
+  public NegationExpression(Operator op, AST expr) {
     this(new Attributes(), op, expr);
   }
 

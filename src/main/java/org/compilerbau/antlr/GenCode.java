@@ -1,20 +1,46 @@
 package org.compilerbau.antlr;
 
+import static org.compilerbau.antlr.ast.Typ.BOOLEAN;
+import static org.compilerbau.antlr.ast.Typ.INT;
+import static org.compilerbau.antlr.ast.Typ.STRING;
+import static org.compilerbau.antlr.ast.Typ.VOID;
+
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.lang.Void;
 import java.util.HashMap;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.compilerbau.antlr.ast.*;
+import org.compilerbau.antlr.ast.Arg;
+import org.compilerbau.antlr.ast.Assign;
+import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
+import org.compilerbau.antlr.ast.Block;
+import org.compilerbau.antlr.ast.BreakExpression;
+import org.compilerbau.antlr.ast.ComparisonExpression;
+import org.compilerbau.antlr.ast.ContinueExpression;
+import org.compilerbau.antlr.ast.FunCall;
+import org.compilerbau.antlr.ast.FunDef;
+import org.compilerbau.antlr.ast.IfExpression;
+import org.compilerbau.antlr.ast.LongInteger;
+import org.compilerbau.antlr.ast.LoopExpression;
+import org.compilerbau.antlr.ast.Operator;
+import org.compilerbau.antlr.ast.Program;
+import org.compilerbau.antlr.ast.ReturnExpression;
+import org.compilerbau.antlr.ast.StringLit;
+import org.compilerbau.antlr.ast.Struct;
+import org.compilerbau.antlr.ast.StructField;
+import org.compilerbau.antlr.ast.TheTyp;
+import org.compilerbau.antlr.ast.TheVisibility;
+import org.compilerbau.antlr.ast.NegationExpression;
+import org.compilerbau.antlr.ast.Variable;
+import org.compilerbau.antlr.ast.Visibility;
+import org.compilerbau.antlr.ast.Visitor;
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
-
-import static org.compilerbau.antlr.ast.Typ.*;
 
 public class GenCode implements Visitor<Void> {
 
@@ -130,15 +156,15 @@ public class GenCode implements Visitor<Void> {
   }
 
   @Override
-  public Void visit(BinOp ast) {
+  public Void visit(ArithmeticOrLogicalExpression ast) {
     ast.left().welcome(this);
     ast.right().welcome(this);
-    mv.visitInsn(Opcodes.LADD);
+    mv.visitInsn(jvmOp(ast.op()));
     return null;
   }
 
   @Override
-  public Void visit(UnaryOp ast) {
+  public Void visit(NegationExpression ast) {
     return null;
   }
 
@@ -152,8 +178,11 @@ public class GenCode implements Visitor<Void> {
       mv.visitInsn(Opcodes.RETURN);
     } else if (ast.expr().attributes().typ == STRING) {
       mv.visitInsn(Opcodes.ARETURN);
+    } else if (ast.expr().attributes().typ == BOOLEAN) {
+      mv.visitInsn(Opcodes.IRETURN);
     } else {
-      throw new RuntimeException("Unknown return type");
+      mv.visitInsn(Opcodes.LRETURN);
+      //throw new RuntimeException("Unknown return type");
     }
     return null;
   }
@@ -161,8 +190,13 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(FunCall ast) {
     ast.args().forEach(arg -> arg.welcome(this));
-    // TOOD descriptor is hardcoded to be 2 integers that return an integer
-    mv.visitMethodInsn(Opcodes.INVOKESTATIC, module, ast.name(), "(JJ)J", false);
+    StringBuilder jvmArgs = new StringBuilder("(");
+    for (var arg : ast.args()) {
+      jvmArgs.append(arg.attributes().typ.jvmType());
+    }
+    jvmArgs.append(")");
+    jvmArgs.append(ast.attributes().typ.jvmType());
+    mv.visitMethodInsn(Opcodes.INVOKESTATIC, module, ast.name(), jvmArgs.toString(), false);
     return null;
   }
 
@@ -195,6 +229,43 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(ContinueExpression ast) {
-      return null;
+    return null;
+  }
+
+  @Override
+  public Void visit(ComparisonExpression ast) {
+    ast.left().welcome(this);
+    ast.right().welcome(this);
+    mv.visitInsn(jvmOp(ast.op()));
+    var end = new Label();
+    var ifCase = new Label();
+    mv.visitJumpInsn(switch (ast.op()) {
+          case lt -> Opcodes.IFLT;
+          case le -> Opcodes.IFLE;
+          case ge -> Opcodes.IFGE;
+          case gt -> Opcodes.IFGT;
+          case eq -> Opcodes.IFEQ;
+          case neq -> Opcodes.IFNE;
+          default -> throw new RuntimeException("internal error");
+        }
+        , ifCase);
+    mv.visitInsn(Opcodes.ICONST_0);
+    mv.visitJumpInsn(Opcodes.GOTO, end);
+    mv.visitLabel(ifCase);
+    mv.visitInsn(Opcodes.ICONST_1);
+    mv.visitLabel(end);
+    return null;
+  }
+
+  private static int jvmOp(Operator op) {
+    return switch (op) {
+      case mul -> Opcodes.LMUL;
+      case add -> Opcodes.LADD;
+      case sub -> Opcodes.LSUB;
+      case div -> Opcodes.LDIV;
+      case mod -> Opcodes.LREM;
+      case lt, le, ge, gt, eq, neq -> Opcodes.LCMP;
+      default -> 0;
+    };
   }
 }

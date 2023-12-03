@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.compilerbau.antlr.ast.Typ.BOOLEAN;
 import static org.compilerbau.antlr.ast.Typ.VOID;
 
 public class TypCheck implements Visitor<Boolean> {
@@ -81,12 +80,12 @@ public class TypCheck implements Visitor<Boolean> {
     }
 
     @Override
-    public Boolean visit(BinOp ast) {
+    public Boolean visit(ArithmeticOrLogicalExpression ast) {
         return true;
     }
 
     @Override
-    public Boolean visit(UnaryOp ast) {
+    public Boolean visit(NegationExpression ast) {
         return true;
     }
 
@@ -132,6 +131,11 @@ public class TypCheck implements Visitor<Boolean> {
 
     @Override
     public Boolean visit(ContinueExpression ast) {
+        return true;
+    }
+
+    @Override
+    public Boolean visit(ComparisonExpression ast) {
         return true;
     }
 }
