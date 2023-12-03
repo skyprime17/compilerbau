@@ -26,7 +26,7 @@ public class GenCode implements Visitor<Void> {
 
   public static void main(String... args) throws IOException {
     for (var arg : args) {
-      compile("C:\\Users\\nmoel\\IdeaProjects\\compilerbauk\\gencode", new FileReader(arg));
+      compile("D:\\IdeaProjects\\compilerbau\\compilerbau\\gencode", new FileReader(arg));
     }
   }
 
@@ -175,6 +175,16 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(StructField ast) {
+    return null;
+  }
+
+  @Override
+  public Void visit(IfExpression ast) {
+    return null;
+  }
+
+  @Override
+  public Void visit(LoopExpression ast) {
     return null;
   }
 }

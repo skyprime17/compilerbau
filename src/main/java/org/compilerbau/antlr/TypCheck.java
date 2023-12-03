@@ -114,4 +114,14 @@ public class TypCheck implements Visitor<Boolean> {
     public Boolean visit(StructField ast) {
         return true;
     }
+
+    @Override
+    public Boolean visit(IfExpression ast) {
+        return true;
+    }
+
+    @Override
+    public Boolean visit(LoopExpression ast) {
+        return true;
+    }
 }

@@ -29,4 +29,6 @@ public interface Visitor<R> {
   R visit(FunCall ast);
   R visit(Struct ast);
   R visit(StructField ast);
+  R visit(IfExpression ast);
+  R visit(LoopExpression ast);
 }
