@@ -199,6 +199,12 @@ class BuildTree extends GrBaseVisitor<AST> {
     return null;
   }
 
+  @Override
+  public AST visitStructExpression_(GrParser.StructExpression_Context ctx) {
+    // TODO
+    return super.visitStructExpression_(ctx);
+  }
+
 
   @Override
   public AST visitExpressionWithBlock(GrParser.ExpressionWithBlockContext ctx) {

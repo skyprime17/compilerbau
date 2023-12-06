@@ -71,6 +71,7 @@ public class TypCheck implements Visitor<Boolean> {
 
     @Override
     public Boolean visit(LongInteger ast) {
+        ast.attributes().typ = Typ.INT;
         return true;
     }
 
@@ -101,6 +102,17 @@ public class TypCheck implements Visitor<Boolean> {
 
     @Override
     public Boolean visit(FunCall ast) {
+        Typ.FunTyp fun = funs.get(ast.name());
+        ast.args().forEach(p -> p.welcome(this));
+        if (fun == null) {
+            System.out.println("Unknown function: " + ast.name());
+            return false;
+        }
+        ast.attributes().typ = fun.typ();
+        if (fun.args().size() != ast.args().size()) {
+            System.out.println("Wrong number of arguments for function: " + ast.name());
+            return false;
+        }
         return true;
     }
 

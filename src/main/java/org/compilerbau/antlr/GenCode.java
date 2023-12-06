@@ -203,7 +203,6 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(Struct ast) {
     // create a static inner class
-    cw.visitInnerClass(ast.name(), module, ast.name(), Opcodes.ACC_STATIC | Opcodes.ACC_PUBLIC);
     return null;
   }
 

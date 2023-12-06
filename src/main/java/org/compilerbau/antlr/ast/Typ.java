@@ -82,7 +82,7 @@ public interface Typ {
     }
   }
 
-  record FunTyp(List<Typ> args, Typ result) implements Typ {
+  record FunTyp(List<Typ> args, Typ typ) implements Typ {
     @Override
     public String jvmType() {
       return null;
