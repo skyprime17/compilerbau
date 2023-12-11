@@ -2,7 +2,7 @@ package org.compilerbau.antlr.ast;
 
 import java.util.List;
 
-public sealed interface Item permits FunDef, Struct {
+public sealed interface Item permits FunDef, StructDecl {
   String name();
 
   List<Arg> args();

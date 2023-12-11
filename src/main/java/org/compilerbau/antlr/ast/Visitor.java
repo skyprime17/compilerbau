@@ -30,7 +30,7 @@ public interface Visitor<R> {
 
   R visit(FunCall ast);
 
-  R visit(Struct ast);
+  R visit(StructDecl ast);
 
   R visit(StructField ast);
 
@@ -43,4 +43,6 @@ public interface Visitor<R> {
   R visit(ContinueExpression ast);
 
   R visit(ComparisonExpression ast);
+
+  R visit(StructCall ast);
 }

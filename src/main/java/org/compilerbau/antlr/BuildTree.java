@@ -22,7 +22,8 @@ import org.compilerbau.antlr.ast.Operator;
 import org.compilerbau.antlr.ast.Program;
 import org.compilerbau.antlr.ast.ReturnExpression;
 import org.compilerbau.antlr.ast.StringLit;
-import org.compilerbau.antlr.ast.Struct;
+import org.compilerbau.antlr.ast.StructCall;
+import org.compilerbau.antlr.ast.StructDecl;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
 import org.compilerbau.antlr.ast.Typ;
@@ -50,7 +51,7 @@ class BuildTree extends GrBaseVisitor<AST> {
     var params = ctx.structfield().stream().map(p -> (Arg) visit(p)).toList();
     var visibility = ctx.visbility() == null ? Visibility.PRIVATE :
         ((TheVisibility) visit(ctx.visbility())).visibility();
-    return new Struct(new Attributes(), visibility, structName, params, new Typ.Ref(structName));
+    return new StructDecl(new Attributes(), visibility, structName, params, new Typ.Ref(structName));
   }
 
   @Override
@@ -158,6 +159,13 @@ class BuildTree extends GrBaseVisitor<AST> {
   }
 
   @Override
+  public AST visitAssignmentExpression(GrParser.AssignmentExpressionContext ctx) {
+    var lhs = visit(ctx.expression(0));
+    var rhs = visit(ctx.expression(1));
+    return new Assign(new Attributes(), ((Variable) lhs).name(), rhs);
+  }
+
+  @Override
   public AST visitNegationExpression(GrParser.NegationExpressionContext ctx) {
     var op = ctx.NOT() != null ? Operator.not : Operator.sub;
     var right = visit(ctx.expression());
@@ -201,7 +209,6 @@ class BuildTree extends GrBaseVisitor<AST> {
 
   @Override
   public AST visitStructExpression_(GrParser.StructExpression_Context ctx) {
-    // TODO
     return super.visitStructExpression_(ctx);
   }
 
@@ -229,6 +236,16 @@ class BuildTree extends GrBaseVisitor<AST> {
       return new Block(List.of());
     }
     return new Block(ctx.statements().statement().stream().map(this::visit).toList());
+  }
+
+  @Override
+  public AST visitStructExprStruct(GrParser.StructExprStructContext ctx) {
+    var structName = ctx.identifier().getText();
+    if (ctx.structExprFields() == null) {
+      return new StructCall(new Attributes(), structName, List.of());
+    }
+    var fields = ctx.structExprFields().structExprField().stream().map(this::visit).toList();
+    return new StructCall(new Attributes(), structName, fields);
   }
 
   @Override
@@ -269,6 +286,7 @@ class BuildTree extends GrBaseVisitor<AST> {
       case "int" -> new TheTyp(new Attributes(), new Typ.PrimInt());
       case "string" -> new TheTyp(new Attributes(), new Typ.PrimString());
       case "boolean" -> new TheTyp(new Attributes(), new Typ.PrimBool());
+      case "void" -> new TheTyp(new Attributes(), new Typ.Void());
       default -> new TheTyp(new Attributes(), new Typ.Ref(t));
     };
   }

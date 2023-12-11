@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.HashMap;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -30,10 +29,12 @@ import org.compilerbau.antlr.ast.Operator;
 import org.compilerbau.antlr.ast.Program;
 import org.compilerbau.antlr.ast.ReturnExpression;
 import org.compilerbau.antlr.ast.StringLit;
-import org.compilerbau.antlr.ast.Struct;
+import org.compilerbau.antlr.ast.StructCall;
+import org.compilerbau.antlr.ast.StructDecl;
 import org.compilerbau.antlr.ast.StructField;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
+import org.compilerbau.antlr.ast.Typ;
 import org.compilerbau.antlr.ast.Variable;
 import org.compilerbau.antlr.ast.Visibility;
 import org.compilerbau.antlr.ast.Visitor;
@@ -99,12 +100,7 @@ public class GenCode implements Visitor<Void> {
 
     var publicCode = ast.visibility() == Visibility.PUBLIC ? Opcodes.ACC_PUBLIC : Opcodes.ACC_PRIVATE;
     mv = cw.visitMethod(publicCode | Opcodes.ACC_STATIC, ast.name(), s, null, null);
-    env = new HashMap<>();
-    int i = 0;
-    for (Arg arg : ast.args()) {
-      env.put(arg.name(), i);
-      i += arg.typ().stackPos();
-    }
+    env = new MkStackEnv().visit(ast);
     ast.body().welcome(this);
     mv.visitMaxs(1, 1);
     mv.visitEnd();
@@ -113,7 +109,7 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(Variable ast) {
-    mv.visitVarInsn(Opcodes.LLOAD, env.get(ast.name()));
+    mv.visitVarInsn(loadCode(ast.attributes().typ), env.get(ast.name()));
     return null;
   }
 
@@ -140,6 +136,8 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(Assign ast) {
+    ast.rhs().welcome(this);
+    mv.visitVarInsn(storeCode(ast.rhs().attributes().typ), env.get(ast.var()));
     return null;
   }
 
@@ -160,6 +158,25 @@ public class GenCode implements Visitor<Void> {
     ast.left().welcome(this);
     ast.right().welcome(this);
     mv.visitInsn(jvmOp(ast.op()));
+    if(ast.op().compare) {
+      var end = new Label();
+      var ifCase = new Label();
+      mv.visitJumpInsn(switch (ast.op()) {
+            case lt -> Opcodes.IFLT;
+            case le -> Opcodes.IFLE;
+            case ge -> Opcodes.IFGE;
+            case gt -> Opcodes.IFGT;
+            case eq -> Opcodes.IFEQ;
+            case neq -> Opcodes.IFNE;
+            default -> throw new RuntimeException("internal error");
+          }
+          , ifCase);
+      mv.visitInsn(Opcodes.ICONST_0);
+      mv.visitJumpInsn(Opcodes.GOTO, end);
+      mv.visitLabel(ifCase);
+      mv.visitInsn(Opcodes.ICONST_1);
+      mv.visitLabel(end);
+    }
     return null;
   }
 
@@ -170,8 +187,14 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(ReturnExpression ast) {
-    ast.expr().welcome(this);
-    // TODO currently returns a long
+    if (ast.expr() != null) {
+      ast.expr().welcome(this);
+    }
+    if (ast.expr() == null) {
+      mv.visitInsn(Opcodes.RETURN);
+      return null;
+    }
+
     if (ast.expr().attributes().typ == INT) {
       mv.visitInsn(Opcodes.LRETURN);
     } else if (ast.expr().attributes().typ == VOID) {
@@ -181,8 +204,8 @@ public class GenCode implements Visitor<Void> {
     } else if (ast.expr().attributes().typ == BOOLEAN) {
       mv.visitInsn(Opcodes.IRETURN);
     } else {
-      mv.visitInsn(Opcodes.LRETURN);
-      //throw new RuntimeException("Unknown return type");
+      //mv.visitInsn(Opcodes.LRETURN);
+      throw new RuntimeException("Unknown return type");
     }
     return null;
   }
@@ -201,7 +224,7 @@ public class GenCode implements Visitor<Void> {
   }
 
   @Override
-  public Void visit(Struct ast) {
+  public Void visit(StructDecl ast) {
     // create a static inner class
     return null;
   }
@@ -227,6 +250,14 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(LoopExpression ast) {
+    var end = new Label();
+    var start = new Label();
+    mv.visitLabel(start);
+    ast.cond().welcome(this);
+    mv.visitJumpInsn(Opcodes.IFEQ, end);
+    ast.body().welcome(this);
+    mv.visitJumpInsn(Opcodes.GOTO, start);
+    mv.visitLabel(end);
     return null;
   }
 
@@ -265,6 +296,11 @@ public class GenCode implements Visitor<Void> {
     return null;
   }
 
+  @Override
+  public Void visit(StructCall ast) {
+    return null;
+  }
+
   private static int jvmOp(Operator op) {
     return switch (op) {
       case mul -> Opcodes.LMUL;
@@ -276,4 +312,22 @@ public class GenCode implements Visitor<Void> {
       default -> 0;
     };
   }
+
+  private static int loadCode(Typ t) {
+    return switch (t) {
+      case Typ.PrimInt p -> Opcodes.LLOAD;
+      case Typ.PrimBool b -> Opcodes.ILOAD;
+      default -> Opcodes.ALOAD;
+    };
+  }
+
+  private static int storeCode(Typ t) {
+    return switch (t) {
+      case Typ.PrimInt p -> Opcodes.LSTORE;
+      case Typ.PrimBool b -> Opcodes.ISTORE;
+      default -> Opcodes.ASTORE;
+    };
+  }
+
+
 }

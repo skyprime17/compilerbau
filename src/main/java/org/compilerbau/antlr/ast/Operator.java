@@ -22,9 +22,9 @@ public enum Operator {
   or(LOGIC, "||", false),
   not(LOGIC, "!", false);
 
-  final Typ.FunTyp typ;
-  final String symbol;
-  final boolean compare;
+  public final Typ.FunTyp typ;
+  public final String symbol;
+  public final boolean compare;
 
   Operator(Typ.FunTyp typ, String symbol, boolean compare) {
     this.typ = typ;
