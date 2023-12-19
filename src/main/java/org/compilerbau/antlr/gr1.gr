@@ -1,25 +1,6 @@
 package test;
 
-pub fn factorial(n: int) -> int {
-    if n == 0 {
-      return 1;
-    }
-    return n * factorial(n - 1);
-}
 
-pub fn factorial2(n: int) -> int {
-    let s = 1;
-    while n > 0 {
-        s = s * n;
-        n = n - 1;
-    }
-    return s;
-}
-
-pub fn print_factorial(n: int) -> void {
-    if n < 0 {
-        return;
-    }
-    let s = factorial(n);
-    return;
+pub fn arr() -> void {
+    let a = ["a", "b", "c"];
 }

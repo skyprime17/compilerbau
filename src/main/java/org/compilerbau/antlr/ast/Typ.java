@@ -95,4 +95,11 @@ public interface Typ {
       return null;
     }
   }
+
+  record Array(Typ typ) implements Typ {
+    @Override
+    public String jvmType() {
+      return "[" + typ.jvmType();
+    }
+  }
 }

@@ -2,13 +2,16 @@
 
 
 public class Main {
+
+  static class T {
+
+    public T() {
+    }
+  }
+
+
   public static void main(String[] args) {
-    var res = 2;
-    if (res == 120) {
-      return;
-    }
-    if (res == 2) {
-      return;
-    }
+    var t = new T();
+    T[] tArray = new T[] {new T(), t};
   }
 }

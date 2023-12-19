@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.compilerbau.antlr.ast.Arg;
 import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
+import org.compilerbau.antlr.ast.ArrayExpression;
 import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.Block;
 import org.compilerbau.antlr.ast.BreakExpression;
@@ -172,6 +173,11 @@ public class MkStackEnv implements Visitor<Map<String, Integer>> {
 
   @Override
   public Map<String, Integer> visit(StructCall ast) {
+    return env;
+  }
+
+  @Override
+  public Map<String, Integer> visit(ArrayExpression ast) {
     return env;
   }
 }

@@ -45,4 +45,5 @@ public interface Visitor<R> {
   R visit(ComparisonExpression ast);
 
   R visit(StructCall ast);
+  R visit(ArrayExpression ast);
 }

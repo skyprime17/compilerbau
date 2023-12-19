@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.compilerbau.antlr.ast.AST;
 import org.compilerbau.antlr.ast.Arg;
+import org.compilerbau.antlr.ast.ArrayExpression;
 import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.Attributes;
 import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
@@ -194,7 +195,8 @@ class BuildTree extends GrBaseVisitor<AST> {
     }
 
     if (literalExpressionContext.STRING_LITERAL() != null) {
-      return new StringLit(new Attributes(), literalExpressionContext.STRING_LITERAL().getText());
+      String text = literalExpressionContext.STRING_LITERAL().getText();
+      return new StringLit(new Attributes(), text.substring(1, text.length() - 1));
     }
 
     if (literalExpressionContext.identifier() != null) {
@@ -266,6 +268,25 @@ class BuildTree extends GrBaseVisitor<AST> {
   public AST visitParam(GrParser.ParamContext ctx) {
     return new Arg(new Attributes(), ctx.IDENT().getText(), ((TheTyp) visit(ctx.type())).typ());
   }
+
+  @Override
+  public AST visitArraytype(GrParser.ArraytypeContext ctx) {
+    return super.visitArraytype(ctx);
+  }
+
+
+  @Override
+  public AST visitArrayElements(GrParser.ArrayElementsContext ctx) {
+    return super.visitArrayElements(ctx);
+  }
+
+
+  @Override
+  public AST visitArrayExpression(GrParser.ArrayExpressionContext ctx) {
+    var elements = ctx.arrayElements().expression().stream().map(this::visit).toList();
+    return new ArrayExpression(new Attributes(), elements);
+  }
+
 
 
   @Override

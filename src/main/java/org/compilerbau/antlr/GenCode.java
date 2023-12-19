@@ -12,8 +12,10 @@ import java.io.Reader;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.compilerbau.antlr.ast.AST;
 import org.compilerbau.antlr.ast.Arg;
 import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
+import org.compilerbau.antlr.ast.ArrayExpression;
 import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.Block;
 import org.compilerbau.antlr.ast.BreakExpression;
@@ -63,6 +65,9 @@ public class GenCode implements Visitor<Void> {
     var antlrTree = parser.start();
     var ast = new BuildTree().visit(antlrTree);
     var typ = ast.welcome(new TypCheck());
+    if (!typ) {
+      throw new RuntimeException("Typcheck failed");
+    }
     var gencode = new GenCode(resultPath);
     ast.welcome(gencode);
   }
@@ -71,6 +76,9 @@ public class GenCode implements Visitor<Void> {
   private String module;
   private MethodVisitor mv;
   private java.util.Map<String, Integer> env;
+
+  private Label end;
+  private Label start;
 
   @Override
   public Void visit(Program ast) {
@@ -141,11 +149,6 @@ public class GenCode implements Visitor<Void> {
     return null;
   }
 
-  @Override
-  public Void visit(LongInteger ast) {
-    mv.visitLdcInsn(ast.n());
-    return null;
-  }
 
   @Override
   public Void visit(StringLit ast) {
@@ -158,7 +161,7 @@ public class GenCode implements Visitor<Void> {
     ast.left().welcome(this);
     ast.right().welcome(this);
     mv.visitInsn(jvmOp(ast.op()));
-    if(ast.op().compare) {
+    if (ast.op().compare) {
       var end = new Label();
       var ifCase = new Label();
       mv.visitJumpInsn(switch (ast.op()) {
@@ -212,6 +215,10 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(FunCall ast) {
+    if (ast.name().equals("println")) {
+      mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+    }
+
     ast.args().forEach(arg -> arg.welcome(this));
     StringBuilder jvmArgs = new StringBuilder("(");
     for (var arg : ast.args()) {
@@ -219,6 +226,12 @@ public class GenCode implements Visitor<Void> {
     }
     jvmArgs.append(")");
     jvmArgs.append(ast.attributes().typ.jvmType());
+
+    if (ast.name().equals("println")) {
+      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(J)V", false);
+      return null;
+    }
+
     mv.visitMethodInsn(Opcodes.INVOKESTATIC, module, ast.name(), jvmArgs.toString(), false);
     return null;
   }
@@ -250,8 +263,8 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(LoopExpression ast) {
-    var end = new Label();
-    var start = new Label();
+    end = new Label();
+    start = new Label();
     mv.visitLabel(start);
     ast.cond().welcome(this);
     mv.visitJumpInsn(Opcodes.IFEQ, end);
@@ -263,6 +276,7 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(BreakExpression ast) {
+    mv.visitJumpInsn(Opcodes.GOTO, end);
     return null;
   }
 
@@ -301,6 +315,29 @@ public class GenCode implements Visitor<Void> {
     return null;
   }
 
+  @Override
+  public Void visit(ArrayExpression ast) {
+    mv.visitIntInsn(Opcodes.BIPUSH, ast.items().size());
+    mv.visitIntInsn(Opcodes.NEWARRAY, Opcodes.T_LONG);
+
+    int s = 0;
+    for (AST item : ast.items()) {
+      mv.visitInsn(Opcodes.DUP);
+      mv.visitIntInsn(Opcodes.BIPUSH, s++);
+      item.welcome(this);
+      mv.visitInsn(storeArrayCode(item.attributes().typ));
+    }
+
+    return null;
+  }
+
+  @Override
+  public Void visit(LongInteger ast) {
+    mv.visitLdcInsn(ast.n());
+    return null;
+  }
+
+
   private static int jvmOp(Operator op) {
     return switch (op) {
       case mul -> Opcodes.LMUL;
@@ -325,7 +362,25 @@ public class GenCode implements Visitor<Void> {
     return switch (t) {
       case Typ.PrimInt p -> Opcodes.LSTORE;
       case Typ.PrimBool b -> Opcodes.ISTORE;
+      case Typ.Array a -> Opcodes.ASTORE;
       default -> Opcodes.ASTORE;
+    };
+  }
+
+  private static int storeArrayCode(Typ t) {
+    return switch (t) {
+      case Typ.PrimInt p -> Opcodes.LASTORE;
+      case Typ.PrimBool b -> Opcodes.IASTORE;
+      case Typ.Array a -> Opcodes.AASTORE;
+      default -> Opcodes.AASTORE;
+    };
+  }
+
+  private static int arrayType(Typ t) {
+    return switch (t) {
+      case Typ.PrimInt p -> Opcodes.T_LONG;
+      case Typ.PrimBool b -> Opcodes.T_BOOLEAN;
+      default -> Opcodes.T;
     };
   }
 

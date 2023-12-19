@@ -3,11 +3,14 @@ package org.compilerbau.antlr;
 import static org.compilerbau.antlr.ast.Typ.VOID;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.compilerbau.antlr.ast.AST;
 import org.compilerbau.antlr.ast.Arg;
 import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
+import org.compilerbau.antlr.ast.ArrayExpression;
 import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.Block;
 import org.compilerbau.antlr.ast.BreakExpression;
@@ -35,7 +38,13 @@ import org.compilerbau.antlr.ast.Visitor;
 public class TypCheck implements Visitor<Boolean> {
   private Map<String, Typ> env = new HashMap<>();
   private final Map<String, Typ.FunTyp> funs = new HashMap<>();
+
+  private final static Map<String, Typ.FunTyp> standardLibFuns = new HashMap<>();
   private Typ currentFunctionResult;
+
+  static {
+    standardLibFuns.put("println", new Typ.FunTyp(List.of(Typ.INT), Typ.VOID));
+  }
 
   @Override
   public Boolean visit(Program ast) {
@@ -117,6 +126,7 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(StringLit ast) {
+    ast.attributes().typ = Typ.STRING;
     return true;
   }
 
@@ -155,8 +165,11 @@ public class TypCheck implements Visitor<Boolean> {
   @Override
   public Boolean visit(FunCall ast) {
     Typ.FunTyp fun = funs.get(ast.name());
-    ast.args().forEach(p -> p.welcome(this));
     if (fun == null) {
+      fun = standardLibFuns.get(ast.name());
+    }
+    ast.args().forEach(p -> p.welcome(this));
+    if (fun == null && !standardLibFuns.containsKey(ast.name())) {
       System.out.println("Unknown function: " + ast.name());
       return false;
     }
@@ -223,6 +236,21 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(StructCall ast) {
+    return true;
+  }
+
+  @Override
+  public Boolean visit(ArrayExpression ast) {
+    Typ t = null;
+    for (AST i : ast.items()) {
+      i.welcome(this);
+      if (t == null) {
+        t = i.attributes().typ;
+      } else if (!t.equals(i.attributes().typ)) {
+        System.out.println("Array items must have the same type");
+      }
+    }
+    ast.attributes().typ = new Typ.Array(t);
     return true;
   }
 }
