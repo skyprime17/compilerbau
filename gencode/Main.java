@@ -11,7 +11,6 @@ public class Main {
 
 
   public static void main(String[] args) {
-    var t = new T();
-    T[] tArray = new T[] {new T(), t};
+    String[] tArray = new String[] {"a", "b", "c"};
   }
 }

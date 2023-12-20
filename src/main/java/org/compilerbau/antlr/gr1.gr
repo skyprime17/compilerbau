@@ -1,5 +1,9 @@
 package test;
 
+struct T {
+    a: int,
+    b: int
+}
 
 pub fn arr() -> void {
     let a = ["a", "b", "c"];

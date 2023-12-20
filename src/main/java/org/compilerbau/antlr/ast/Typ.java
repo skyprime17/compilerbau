@@ -10,6 +10,7 @@ public interface Typ {
   FunTyp ARITH = new FunTyp(List.of(Typ.INT, Typ.INT), Typ.INT);
   FunTyp CMP = new FunTyp(List.of(Typ.INT, Typ.INT), Typ.BOOLEAN);
   FunTyp LOGIC = new FunTyp(List.of(Typ.BOOLEAN, Typ.BOOLEAN), Typ.BOOLEAN);
+  Typ BOXED_STRING = new Ref("java/lang/String");
 
   default int stackPos() {
     return 2;
@@ -58,7 +59,12 @@ public interface Typ {
     }
   }
 
-  record Ref(String name) implements Typ {
+  record Ref(String name, String outer) implements Typ {
+
+    public Ref(String name) {
+      this(name, null);
+    }
+
     @Override
     public String toString() {
       return name;
@@ -66,7 +72,7 @@ public interface Typ {
 
     @Override
     public String jvmType() {
-      return "L" + name() + ";";
+      return "L" + (outer() == null ? "" : outer + "$") + name() + ";";
     }
   }
 

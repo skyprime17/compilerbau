@@ -126,7 +126,7 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(StringLit ast) {
-    ast.attributes().typ = Typ.STRING;
+    ast.attributes().typ = Typ.BOXED_STRING;
     return true;
   }
 

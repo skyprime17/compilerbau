@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Map;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -75,7 +76,7 @@ public class GenCode implements Visitor<Void> {
   private ClassWriter cw;
   private String module;
   private MethodVisitor mv;
-  private java.util.Map<String, Integer> env;
+  private Map<String, Integer> env;
 
   private Label end;
   private Label start;
@@ -318,7 +319,13 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(ArrayExpression ast) {
     mv.visitIntInsn(Opcodes.BIPUSH, ast.items().size());
-    mv.visitIntInsn(Opcodes.NEWARRAY, Opcodes.T_LONG);
+
+    Typ typ = ((Typ.Array) ast.attributes().typ).typ();
+    if (typ instanceof Typ.Ref ref) {
+      mv.visitTypeInsn(Opcodes.ANEWARRAY, ref.name());
+    } else {
+      mv.visitIntInsn(Opcodes.NEWARRAY, arrayType(typ));
+    }
 
     int s = 0;
     for (AST item : ast.items()) {
@@ -380,7 +387,7 @@ public class GenCode implements Visitor<Void> {
     return switch (t) {
       case Typ.PrimInt p -> Opcodes.T_LONG;
       case Typ.PrimBool b -> Opcodes.T_BOOLEAN;
-      default -> Opcodes.T;
+      default -> throw new IllegalStateException("Unexpected value: " + t);
     };
   }
 
