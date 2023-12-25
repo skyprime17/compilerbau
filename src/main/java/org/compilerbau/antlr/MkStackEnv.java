@@ -15,6 +15,7 @@ import org.compilerbau.antlr.ast.ContinueExpression;
 import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
+import org.compilerbau.antlr.ast.IndexVariable;
 import org.compilerbau.antlr.ast.LongInteger;
 import org.compilerbau.antlr.ast.LoopExpression;
 import org.compilerbau.antlr.ast.NegationExpression;
@@ -128,6 +129,7 @@ public class MkStackEnv implements Visitor<Map<String, Integer>> {
 
   @Override
   public Map<String, Integer> visit(FunCall ast) {
+    ast.args().forEach(arg -> arg.welcome(this));
     return env;
   }
 
@@ -178,6 +180,11 @@ public class MkStackEnv implements Visitor<Map<String, Integer>> {
 
   @Override
   public Map<String, Integer> visit(ArrayExpression ast) {
+    return env;
+  }
+
+  @Override
+  public Map<String, Integer> visit(IndexVariable ast) {
     return env;
   }
 }

@@ -25,6 +25,7 @@ import org.compilerbau.antlr.ast.ContinueExpression;
 import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
+import org.compilerbau.antlr.ast.IndexVariable;
 import org.compilerbau.antlr.ast.LongInteger;
 import org.compilerbau.antlr.ast.LoopExpression;
 import org.compilerbau.antlr.ast.NegationExpression;
@@ -207,9 +208,12 @@ public class GenCode implements Visitor<Void> {
       mv.visitInsn(Opcodes.ARETURN);
     } else if (ast.expr().attributes().typ == BOOLEAN) {
       mv.visitInsn(Opcodes.IRETURN);
+    } else if (ast.expr().attributes().typ instanceof Typ.Ref) {
+      mv.visitInsn(Opcodes.ARETURN);
+    } else if (ast.expr().attributes().typ instanceof Typ.Array) {
+      mv.visitInsn(Opcodes.ARETURN);
     } else {
-      //mv.visitInsn(Opcodes.LRETURN);
-      throw new RuntimeException("Unknown return type");
+      throw new RuntimeException("internal error");
     }
     return null;
   }
@@ -239,7 +243,44 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(StructDecl ast) {
-    // create a static inner class
+    var conw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+    conw.visit(Opcodes.V20, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, ast.name(), null, "java/lang/Object", null);
+    conw.visitSource(module + ".gr", null);
+
+    for (var arg : ast.args()) {
+      conw.visitField(Opcodes.ACC_PUBLIC, arg.name(), arg.typ().jvmType(), null, null);
+    }
+    var argTypes = new StringBuilder("(");
+    for (var arg : ast.args()) {
+      argTypes.append(arg.typ().jvmType());
+    }
+    argTypes.append(")V");
+
+    var constr = conw.visitMethod(Opcodes.ACC_PUBLIC, "<init>", argTypes.toString(), null, null);
+    constr.visitVarInsn(Opcodes.ALOAD, 0);
+    constr.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
+    var i = 1;
+    for (var arg : ast.args()) {
+      constr.visitVarInsn(Opcodes.ALOAD, 0);
+      constr.visitVarInsn(loadCode(arg.typ()), i);
+      constr.visitFieldInsn(Opcodes.PUTFIELD, ast.name(), arg.name(), arg.typ().jvmType());
+      i += arg.typ().stackPos();
+    }
+    constr.visitInsn(Opcodes.RETURN);
+    constr.visitMaxs(1, 1);
+    constr.visitEnd();
+
+
+    conw.visitEnd();
+
+    try {
+      var out = new FileOutputStream(resultPath + "/" + ast.name() + ".class");
+      out.write(conw.toByteArray());
+      out.close();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
     return null;
   }
 
@@ -313,12 +354,23 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(StructCall ast) {
+    mv.visitTypeInsn(Opcodes.NEW, ast.name());
+    mv.visitInsn(Opcodes.DUP);
+    ast.args().forEach(arg -> arg.welcome(this));
+    StringBuilder descriptor = new StringBuilder("(");
+    for (var arg : ast.args()) {
+      descriptor.append(arg.attributes().typ.jvmType());
+    }
+    descriptor.append(")V");
+    mv.visitMethodInsn(Opcodes.INVOKESPECIAL, ast.name(), "<init>", descriptor.toString(), false);
     return null;
   }
 
   @Override
   public Void visit(ArrayExpression ast) {
-    mv.visitIntInsn(Opcodes.BIPUSH, ast.items().size());
+    var opCode = ast.items().size() < 127 ? Opcodes.BIPUSH : Opcodes.SIPUSH;
+
+    mv.visitIntInsn(opCode, ast.items().size());
 
     Typ typ = ((Typ.Array) ast.attributes().typ).typ();
     if (typ instanceof Typ.Ref ref) {
@@ -330,11 +382,20 @@ public class GenCode implements Visitor<Void> {
     int s = 0;
     for (AST item : ast.items()) {
       mv.visitInsn(Opcodes.DUP);
-      mv.visitIntInsn(Opcodes.BIPUSH, s++);
+      mv.visitIntInsn(opCode, s++);
       item.welcome(this);
       mv.visitInsn(storeArrayCode(item.attributes().typ));
     }
 
+    return null;
+  }
+
+  @Override
+  public Void visit(IndexVariable ast) {
+    mv.visitVarInsn(Opcodes.ALOAD, env.get(ast.name()));
+    ast.index().welcome(this);
+    mv.visitInsn(Opcodes.L2I);
+    mv.visitInsn(loadArrayCode(ast.attributes().typ));
     return null;
   }
 
@@ -365,6 +426,23 @@ public class GenCode implements Visitor<Void> {
     };
   }
 
+  private static int loadArrayCode(Typ t) {
+    return switch (t) {
+      case Typ.PrimInt p -> Opcodes.LALOAD;
+      case Typ.PrimBool b -> Opcodes.IALOAD;
+      default -> Opcodes.AALOAD;
+    };
+  }
+
+
+  private static int storeArrayCode(Typ t) {
+    return switch (t) {
+      case Typ.PrimInt p -> Opcodes.LASTORE;
+      case Typ.PrimBool b -> Opcodes.IASTORE;
+      default -> Opcodes.AASTORE;
+    };
+  }
+
   private static int storeCode(Typ t) {
     return switch (t) {
       case Typ.PrimInt p -> Opcodes.LSTORE;
@@ -374,14 +452,6 @@ public class GenCode implements Visitor<Void> {
     };
   }
 
-  private static int storeArrayCode(Typ t) {
-    return switch (t) {
-      case Typ.PrimInt p -> Opcodes.LASTORE;
-      case Typ.PrimBool b -> Opcodes.IASTORE;
-      case Typ.Array a -> Opcodes.AASTORE;
-      default -> Opcodes.AASTORE;
-    };
-  }
 
   private static int arrayType(Typ t) {
     return switch (t) {

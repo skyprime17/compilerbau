@@ -46,4 +46,5 @@ public interface Visitor<R> {
 
   R visit(StructCall ast);
   R visit(ArrayExpression ast);
+  R visit(IndexVariable ast);
 }

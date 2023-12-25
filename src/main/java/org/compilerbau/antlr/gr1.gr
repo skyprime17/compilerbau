@@ -1,10 +1,11 @@
 package test;
 
-struct T {
-    a: int,
-    b: int
+struct Point {
+    t: string,
+    x: int
 }
 
-pub fn arr() -> void {
-    let a = ["a", "b", "c"];
+pub fn test2() -> Point {
+    let p = Point { t: "test", x:1 };
+    return p;
 }

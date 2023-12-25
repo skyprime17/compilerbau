@@ -3,14 +3,9 @@
 
 public class Main {
 
-  static class T {
-
-    public T() {
-    }
-  }
-
 
   public static void main(String[] args) {
-    String[] tArray = new String[] {"a", "b", "c"};
+    var p = new Point("hello", 5L);
+    System.out.println(p.t + " " + p.x);
   }
 }

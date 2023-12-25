@@ -2,13 +2,14 @@ package org.compilerbau.antlr;
 
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.compilerbau.antlr.ast.AST;
 import org.compilerbau.antlr.ast.Arg;
+import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
 import org.compilerbau.antlr.ast.ArrayExpression;
 import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.Attributes;
-import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
 import org.compilerbau.antlr.ast.Block;
 import org.compilerbau.antlr.ast.BreakExpression;
 import org.compilerbau.antlr.ast.ComparisonExpression;
@@ -16,9 +17,11 @@ import org.compilerbau.antlr.ast.ContinueExpression;
 import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
+import org.compilerbau.antlr.ast.IndexVariable;
 import org.compilerbau.antlr.ast.Item;
 import org.compilerbau.antlr.ast.LongInteger;
 import org.compilerbau.antlr.ast.LoopExpression;
+import org.compilerbau.antlr.ast.NegationExpression;
 import org.compilerbau.antlr.ast.Operator;
 import org.compilerbau.antlr.ast.Program;
 import org.compilerbau.antlr.ast.ReturnExpression;
@@ -28,7 +31,6 @@ import org.compilerbau.antlr.ast.StructDecl;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
 import org.compilerbau.antlr.ast.Typ;
-import org.compilerbau.antlr.ast.NegationExpression;
 import org.compilerbau.antlr.ast.Variable;
 import org.compilerbau.antlr.ast.Visibility;
 
@@ -98,6 +100,13 @@ class BuildTree extends GrBaseVisitor<AST> {
   }
 
   @Override
+  public AST visitIndexExpression(GrParser.IndexExpressionContext ctx) {
+    var arr = ctx.expression(0).getText();
+    var index = visit(ctx.expression(1));
+    return new IndexVariable(new Attributes(), arr, index);
+  }
+
+  @Override
   public AST visitBreakExpression(GrParser.BreakExpressionContext ctx) {
     return new BreakExpression();
   }
@@ -128,6 +137,11 @@ class BuildTree extends GrBaseVisitor<AST> {
     var right = visit(ctx.expression(1));
 
     return new ArithmeticOrLogicalExpression(new Attributes(), left, op, right);
+  }
+
+  @Override
+  public AST visitFieldExpression(GrParser.FieldExpressionContext ctx) {
+    return super.visitFieldExpression(ctx);
   }
 
   @Override
@@ -237,7 +251,16 @@ class BuildTree extends GrBaseVisitor<AST> {
     if (ctx.statements() == null) {
       return new Block(List.of());
     }
-    return new Block(ctx.statements().statement().stream().map(this::visit).toList());
+    if (!ctx.statements().statement().isEmpty()) {
+      return new Block(ctx.statements().statement().stream().map(this::visit).toList());
+    }
+    // TODO expressions
+    /*
+    if (!ctx.statements().expression().isEmpty()) {
+      return new Block(List.of(visit(ctx.statements().expression())));
+    }
+     */
+    return new Block(List.of());
   }
 
   @Override
@@ -249,6 +272,13 @@ class BuildTree extends GrBaseVisitor<AST> {
     var fields = ctx.structExprFields().structExprField().stream().map(this::visit).toList();
     return new StructCall(new Attributes(), structName, fields);
   }
+
+ /*
+  @Override
+  public AST visitStructExprField(GrParser.StructExprFieldContext ctx) {
+    //return new Assign(new Attributes(), ctx.identifier().getText(), visit(ctx.expression()));
+  }
+  */
 
   @Override
   public AST visitPredicateLoopExpression(GrParser.PredicateLoopExpressionContext ctx) {
@@ -283,10 +313,20 @@ class BuildTree extends GrBaseVisitor<AST> {
 
   @Override
   public AST visitArrayExpression(GrParser.ArrayExpressionContext ctx) {
-    var elements = ctx.arrayElements().expression().stream().map(this::visit).toList();
-    return new ArrayExpression(new Attributes(), elements);
-  }
+    boolean isNormalArray = !ctx.arrayElements().COMMA().isEmpty() || ctx.arrayElements().SEMICOLON() == null;
+    if (isNormalArray) {
+      var elements = ctx.arrayElements().expression().stream().map(this::visit).toList();
+      return new ArrayExpression(new Attributes(), elements);
+    }
+    if (ctx.arrayElements().SEMICOLON() != null) {
+      var defaultVal = visit(ctx.arrayElements().expression(0));
+      var size = (LongInteger) visit(ctx.arrayElements().expression(1));
+      var elements = IntStream.range(0, (int) size.n()).mapToObj(i -> defaultVal).toList();
+      return new ArrayExpression(new Attributes(), elements);
+    }
 
+    return null;
+  }
 
 
   @Override
@@ -302,6 +342,12 @@ class BuildTree extends GrBaseVisitor<AST> {
 
   @Override
   public AST visitType(GrParser.TypeContext ctx) {
+    if (ctx.slicetype() != null) {
+      return visit(ctx.slicetype());
+    }
+    if (ctx.arraytype() != null) {
+      return visit(ctx.arraytype());
+    }
     var t = ctx.identifier().getText();
     return switch (t) {
       case "int" -> new TheTyp(new Attributes(), new Typ.PrimInt());
@@ -310,6 +356,21 @@ class BuildTree extends GrBaseVisitor<AST> {
       case "void" -> new TheTyp(new Attributes(), new Typ.Void());
       default -> new TheTyp(new Attributes(), new Typ.Ref(t));
     };
+  }
+
+  @Override
+  public AST visitSlicetype(GrParser.SlicetypeContext ctx) {
+    if (ctx.type().identifier() != null) {
+      var type = switch (ctx.type().identifier().getText()) {
+        case "int" -> new Typ.PrimInt();
+        case "string" -> new Typ.PrimString();
+        case "boolean" -> new Typ.PrimBool();
+        case "void" -> new Typ.Void();
+        default -> new Typ.Ref(ctx.type().identifier().getText());
+      };
+      return new TheTyp(new Attributes(), new Typ.Array(type));
+    }
+    return visit(ctx.type());
   }
 
 

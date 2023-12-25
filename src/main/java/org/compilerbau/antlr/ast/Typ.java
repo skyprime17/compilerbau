@@ -13,7 +13,7 @@ public interface Typ {
   Typ BOXED_STRING = new Ref("java/lang/String");
 
   default int stackPos() {
-    return 2;
+    return 1;
   }
 
   String jvmType();
@@ -37,11 +37,6 @@ public interface Typ {
     }
 
     @Override
-    public int stackPos() {
-      return 1;
-    }
-
-    @Override
     public String jvmType() {
       return "Z";
     }
@@ -56,6 +51,11 @@ public interface Typ {
     @Override
     public String jvmType() {
       return "J";
+    }
+
+    @Override
+    public int stackPos() {
+      return 2;
     }
   }
 

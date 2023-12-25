@@ -19,6 +19,7 @@ import org.compilerbau.antlr.ast.ContinueExpression;
 import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
+import org.compilerbau.antlr.ast.IndexVariable;
 import org.compilerbau.antlr.ast.Item;
 import org.compilerbau.antlr.ast.LongInteger;
 import org.compilerbau.antlr.ast.LoopExpression;
@@ -38,6 +39,7 @@ import org.compilerbau.antlr.ast.Visitor;
 public class TypCheck implements Visitor<Boolean> {
   private Map<String, Typ> env = new HashMap<>();
   private final Map<String, Typ.FunTyp> funs = new HashMap<>();
+
 
   private final static Map<String, Typ.FunTyp> standardLibFuns = new HashMap<>();
   private Typ currentFunctionResult;
@@ -236,6 +238,8 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(StructCall ast) {
+    ast.args().forEach(p -> p.welcome(this));
+    ast.attributes().typ = funs.get(ast.name()).typ();
     return true;
   }
 
@@ -252,5 +256,16 @@ public class TypCheck implements Visitor<Boolean> {
     }
     ast.attributes().typ = new Typ.Array(t);
     return true;
+  }
+
+  @Override
+  public Boolean visit(IndexVariable ast) {
+    Typ typ = env.get(ast.name());
+    if (typ instanceof Typ.Array) {
+      ast.attributes().typ = ((Typ.Array) typ).typ();
+      return true;
+    }
+    System.out.println("Variable is not an array");
+    return false;
   }
 }
