@@ -87,13 +87,24 @@ public class MkStackEnv implements Visitor<Map<String, Integer>> {
 
   @Override
   public Map<String, Integer> visit(Assign ast) {
-    var entry = env.get(ast.var());
-    if (null == entry) {
-      env.put(ast.var(), offset);
-      offset += ast.attributes().typ.stackPos();
+    if (ast.var() instanceof Variable var) {
+      var entry = env.get(var.name());
+      if (null == entry) {
+        env.put(var.name(), offset);
+        offset += ast.attributes().typ.stackPos();
+      }
+      ast.rhs().welcome(this);
+      return env;
     }
-
-    ast.rhs().welcome(this);
+    if (ast.var() instanceof IndexVariable var) {
+      var entry = env.get(var.name());
+      if (null == entry) {
+        env.put(var.name(), offset);
+        offset += ast.attributes().typ.stackPos();
+      }
+      ast.rhs().welcome(this);
+      return env;
+    }
     return env;
   }
 

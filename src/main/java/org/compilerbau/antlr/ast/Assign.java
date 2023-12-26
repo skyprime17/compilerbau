@@ -1,7 +1,7 @@
 package org.compilerbau.antlr.ast;
 
-public record Assign(Attributes attributes, String var, AST rhs) implements AST {
-  Assign(String var, AST rhs) {
+public record Assign(Attributes attributes, AST var, AST rhs) implements AST {
+  public Assign(AST var, AST rhs) {
     this(new Attributes(), var, rhs);
   }
 

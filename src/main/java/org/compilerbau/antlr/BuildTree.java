@@ -83,7 +83,7 @@ class BuildTree extends GrBaseVisitor<AST> {
     if (ctx.letStatement() != null) {
       GrParser.LetStatementContext letStatementContext = ctx.letStatement();
       var rhs = visit(letStatementContext.expression());
-      return new Assign(new Attributes(), letStatementContext.IDENT().getText(), rhs);
+      return new Assign(new Variable(letStatementContext.IDENT().getText()), rhs);
     }
 
     if (ctx.item() != null) {
@@ -177,7 +177,7 @@ class BuildTree extends GrBaseVisitor<AST> {
   public AST visitAssignmentExpression(GrParser.AssignmentExpressionContext ctx) {
     var lhs = visit(ctx.expression(0));
     var rhs = visit(ctx.expression(1));
-    return new Assign(new Attributes(), ((Variable) lhs).name(), rhs);
+    return new Assign(lhs, rhs);
   }
 
   @Override

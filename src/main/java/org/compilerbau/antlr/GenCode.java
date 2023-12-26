@@ -146,8 +146,18 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(Assign ast) {
-    ast.rhs().welcome(this);
-    mv.visitVarInsn(storeCode(ast.rhs().attributes().typ), env.get(ast.var()));
+    if (ast.var() instanceof Variable var) {
+      ast.rhs().welcome(this);
+      mv.visitVarInsn(storeCode(ast.rhs().attributes().typ), env.get(var.name()));
+    } else if (ast.var() instanceof IndexVariable iv) {
+      mv.visitVarInsn(Opcodes.ALOAD, env.get(iv.name()));
+      iv.index().welcome(this);
+      mv.visitInsn(Opcodes.L2I);
+      ast.rhs().welcome(this);
+      mv.visitInsn(storeArrayCode(iv.attributes().typ));
+    } else {
+      throw new RuntimeException("internal error");
+    }
     return null;
   }
 

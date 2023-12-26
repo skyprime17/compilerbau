@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="-">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/IndexVariable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.java" afterDir="false" />
@@ -14,8 +13,8 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GenCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GenCode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/MkStackEnv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/MkStackEnv.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/TypCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/TypCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Typ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Typ.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Visitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Assign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Assign.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Variable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Variable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr1.gr" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr1.gr" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -243,7 +242,7 @@
       <workItem from="1702633751468" duration="595000" />
       <workItem from="1702674855731" duration="5222000" />
       <workItem from="1702929025444" duration="596000" />
-      <workItem from="1702946511319" duration="37637000" />
+      <workItem from="1702946511319" duration="45292000" />
     </task>
     <task id="LOCAL-00001" summary="-">
       <option name="closed" value="true" />
@@ -461,7 +460,15 @@
       <option name="project" value="LOCAL" />
       <updated>1703034850266</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="-">
+      <option name="closed" value="true" />
+      <created>1703542143560</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1703542143560</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -482,5 +489,16 @@
     <MESSAGE value="- first generated class code!!" />
     <MESSAGE value="-" />
     <option name="LAST_COMMIT_MESSAGE" value="-" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/TypCheck.java</url>
+          <line>190</line>
+          <option name="timeStamp" value="92" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

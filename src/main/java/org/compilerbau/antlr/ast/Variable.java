@@ -1,7 +1,7 @@
 package org.compilerbau.antlr.ast;
 
 public record Variable(Attributes attributes, String name) implements AST {
-  Variable(String name) {
+  public Variable(String name) {
     this(new Attributes(), name);
   }
 

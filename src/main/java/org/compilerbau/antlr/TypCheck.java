@@ -110,14 +110,36 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(Assign ast) {
-    var r = ast.rhs().welcome(this);
-    var rt = ast.rhs().attributes().typ;
-    var oldTyp = env.get(ast.var());
-    if (oldTyp != null && !oldTyp.equals(rt)) {
-      return false;
+    if (ast.var() instanceof Variable var) {
+      var r = ast.rhs().welcome(this);
+      var rt = ast.rhs().attributes().typ;
+      var oldTyp = env.get(var.name());
+      if (oldTyp != null && !oldTyp.equals(rt)) {
+        return false;
+      }
+      env.put(var.name(), rt);
+      return r;
     }
-    env.put(ast.var(), rt);
-    return r;
+    if (ast.var() instanceof IndexVariable iv) {
+      var indexExpr = iv.index().welcome(this);
+      if (!indexExpr) {
+        return false;
+      }
+      var r = ast.rhs().welcome(this);
+      var rt = ast.rhs().attributes().typ;
+      var oldTyp = env.get(iv.name());
+      if (oldTyp == null) {
+        return false;
+      }
+      var oldIndexTyp = ((Typ.Array) oldTyp).typ();
+      if (!oldIndexTyp.equals(rt)) {
+        return false;
+      }
+      env.put(iv.name(), rt);
+      return r;
+    }
+
+    return true;
   }
 
   @Override
@@ -261,6 +283,10 @@ public class TypCheck implements Visitor<Boolean> {
   @Override
   public Boolean visit(IndexVariable ast) {
     Typ typ = env.get(ast.name());
+    boolean r = ast.index().welcome(this);
+    if (!r) {
+      return false;
+    }
     if (typ instanceof Typ.Array) {
       ast.attributes().typ = ((Typ.Array) typ).typ();
       return true;
