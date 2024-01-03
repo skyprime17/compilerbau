@@ -1,15 +1,12 @@
 package test;
 
 struct Point {
-    t: string
+    x: int,
+    y: int
 }
 
-pub fn test15() -> int {
-    return 5;
+pub fn area() -> int {
+    let p = Point {x: 1+2, y: 2};
+    return p.x * p.y;
 }
 
-pub fn test2() -> void {
-    let p = [Point { t: "hello" }];
-    p[test15()] = Point { t: "a" };
-    return;
-}

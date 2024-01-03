@@ -35,7 +35,7 @@ import org.compilerbau.antlr.ast.ReturnExpression;
 import org.compilerbau.antlr.ast.StringLit;
 import org.compilerbau.antlr.ast.StructCall;
 import org.compilerbau.antlr.ast.StructDecl;
-import org.compilerbau.antlr.ast.StructField;
+import org.compilerbau.antlr.ast.FieldExpression;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
 import org.compilerbau.antlr.ast.Typ;
@@ -295,7 +295,10 @@ public class GenCode implements Visitor<Void> {
   }
 
   @Override
-  public Void visit(StructField ast) {
+  public Void visit(FieldExpression ast) {
+    Variable var = (Variable) ast.expression();
+    mv.visitVarInsn(Opcodes.ALOAD, env.get(var.name()));
+    mv.visitFieldInsn(Opcodes.GETFIELD, var.name(), ast.fieldName(), ast.attributes().typ.jvmType());
     return null;
   }
 

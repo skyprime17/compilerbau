@@ -16,6 +16,7 @@ import org.compilerbau.antlr.ast.Block;
 import org.compilerbau.antlr.ast.BreakExpression;
 import org.compilerbau.antlr.ast.ComparisonExpression;
 import org.compilerbau.antlr.ast.ContinueExpression;
+import org.compilerbau.antlr.ast.FieldExpression;
 import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
@@ -29,7 +30,6 @@ import org.compilerbau.antlr.ast.ReturnExpression;
 import org.compilerbau.antlr.ast.StringLit;
 import org.compilerbau.antlr.ast.StructCall;
 import org.compilerbau.antlr.ast.StructDecl;
-import org.compilerbau.antlr.ast.StructField;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
 import org.compilerbau.antlr.ast.Typ;
@@ -38,23 +38,22 @@ import org.compilerbau.antlr.ast.Visitor;
 
 public class TypCheck implements Visitor<Boolean> {
   private Map<String, Typ> env = new HashMap<>();
-  private final Map<String, Typ.FunTyp> funs = new HashMap<>();
+  private final Map<String, Item> funs = new HashMap<>();
 
 
-  private final static Map<String, Typ.FunTyp> standardLibFuns = new HashMap<>();
+  //private final static Map<String, FunDef> standardLibFuns = new HashMap<>();
   private Typ currentFunctionResult;
 
+  /*
   static {
-    standardLibFuns.put("println", new Typ.FunTyp(List.of(Typ.INT), Typ.VOID));
+   /standardLibFuns.put("println", new Typ.FunTyp(List.of(Typ.INT), Typ.VOID));
   }
+   */
 
   @Override
   public Boolean visit(Program ast) {
     var result = true;
-    for (Item item : ast.items()) {
-      funs.put(item.name(), new Typ.FunTyp(item.args().stream().map(Arg::typ).collect(Collectors.toList()),
-          item.typ()));
-    }
+    ast.items().forEach(item -> funs.put(item.name(), item));
     for (var fun : ast.items()) {
       result = fun.welcome(this);
     }
@@ -188,12 +187,16 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(FunCall ast) {
-    Typ.FunTyp fun = funs.get(ast.name());
+    var fun = funs.get(ast.name());
+    /*
     if (fun == null) {
       fun = standardLibFuns.get(ast.name());
     }
+     */
     ast.args().forEach(p -> p.welcome(this));
-    if (fun == null && !standardLibFuns.containsKey(ast.name())) {
+    if (fun == null
+    //   &&  !standardLibFuns.containsKey(ast.name())
+    ) {
       System.out.println("Unknown function: " + ast.name());
       return false;
     }
@@ -211,7 +214,28 @@ public class TypCheck implements Visitor<Boolean> {
   }
 
   @Override
-  public Boolean visit(StructField ast) {
+  public Boolean visit(FieldExpression ast) {
+    // TODO ONLY VARIABLE SUPPORTED RN
+    if (ast.expression() instanceof Variable var) {
+      var variable = env.get(var.name());
+      if (variable == null) {
+        System.out.println("Variable not found: " + var.name());
+        return false;
+      }
+      if (variable instanceof Typ.Ref ref) {
+        var structDecl = (StructDecl) funs.get(ref.name());
+        if (structDecl == null) {
+          System.out.println("Struct not found: " + ref.name());
+          return false;
+        }
+        var field = structDecl.args().stream().filter(p -> p.name().equals(ast.fieldName())).findFirst().orElse(null);
+        if (field == null) {
+          System.out.println("Field not found: " + ast.fieldName());
+          return false;
+        }
+        ast.attributes().typ = field.typ();
+      }
+    }
     return true;
   }
 
@@ -261,6 +285,10 @@ public class TypCheck implements Visitor<Boolean> {
   @Override
   public Boolean visit(StructCall ast) {
     ast.args().forEach(p -> p.welcome(this));
+    if (!funs.containsKey(ast.name())) {
+      System.out.println("Unknown fundef or structdef: " + ast.name());
+      return false;
+    }
     ast.attributes().typ = funs.get(ast.name()).typ();
     return true;
   }

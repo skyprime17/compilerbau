@@ -14,6 +14,7 @@ import org.compilerbau.antlr.ast.Block;
 import org.compilerbau.antlr.ast.BreakExpression;
 import org.compilerbau.antlr.ast.ComparisonExpression;
 import org.compilerbau.antlr.ast.ContinueExpression;
+import org.compilerbau.antlr.ast.FieldExpression;
 import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
@@ -141,7 +142,9 @@ class BuildTree extends GrBaseVisitor<AST> {
 
   @Override
   public AST visitFieldExpression(GrParser.FieldExpressionContext ctx) {
-    return super.visitFieldExpression(ctx);
+    var expr = visit(ctx.expression());
+    var field = ctx.identifier().getText();
+    return new FieldExpression(expr, field);
   }
 
   @Override

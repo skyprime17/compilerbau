@@ -24,7 +24,7 @@ import org.compilerbau.antlr.ast.ReturnExpression;
 import org.compilerbau.antlr.ast.StringLit;
 import org.compilerbau.antlr.ast.StructCall;
 import org.compilerbau.antlr.ast.StructDecl;
-import org.compilerbau.antlr.ast.StructField;
+import org.compilerbau.antlr.ast.FieldExpression;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
 import org.compilerbau.antlr.ast.Variable;
@@ -150,7 +150,7 @@ public class MkStackEnv implements Visitor<Map<String, Integer>> {
   }
 
   @Override
-  public Map<String, Integer> visit(StructField ast) {
+  public Map<String, Integer> visit(FieldExpression ast) {
     return env;
   }
 

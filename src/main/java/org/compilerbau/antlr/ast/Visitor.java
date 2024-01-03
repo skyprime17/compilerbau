@@ -32,7 +32,7 @@ public interface Visitor<R> {
 
   R visit(StructDecl ast);
 
-  R visit(StructField ast);
+  R visit(FieldExpression ast);
 
   R visit(IfExpression ast);
 
