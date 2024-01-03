@@ -210,20 +210,13 @@ public class GenCode implements Visitor<Void> {
       return null;
     }
 
-    if (ast.expr().attributes().typ == INT) {
-      mv.visitInsn(Opcodes.LRETURN);
-    } else if (ast.expr().attributes().typ == VOID) {
-      mv.visitInsn(Opcodes.RETURN);
-    } else if (ast.expr().attributes().typ == STRING) {
-      mv.visitInsn(Opcodes.ARETURN);
-    } else if (ast.expr().attributes().typ == BOOLEAN) {
-      mv.visitInsn(Opcodes.IRETURN);
-    } else if (ast.expr().attributes().typ instanceof Typ.Ref) {
-      mv.visitInsn(Opcodes.ARETURN);
-    } else if (ast.expr().attributes().typ instanceof Typ.Array) {
-      mv.visitInsn(Opcodes.ARETURN);
-    } else {
-      throw new RuntimeException("internal error");
+    switch (ast.expr().attributes().typ) {
+      case Typ.PrimInt p -> mv.visitInsn(Opcodes.LRETURN);
+      case Typ.PrimBool b -> mv.visitInsn(Opcodes.IRETURN);
+      case Typ.PrimString s -> mv.visitInsn(Opcodes.ARETURN);
+      case Typ.Ref r -> mv.visitInsn(Opcodes.ARETURN);
+      case Typ.Array a -> mv.visitInsn(Opcodes.ARETURN);
+      default -> throw new RuntimeException("Unknown type");
     }
     return null;
   }

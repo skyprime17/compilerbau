@@ -4,10 +4,9 @@
 public class Main {
 
 
-  public long area() {
-    var point = new Point(1, 2);
-    var area = point.x;
-    return area;
+  public String test3() {
+    new S("hello");
+    return "x";
   }
 
   public static void main(String[] args) {

@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="-">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/FieldExpression.java" afterDir="false" />
+    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="- field expression">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/test.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/BuildTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/BuildTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GenCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GenCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/MkStackEnv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/MkStackEnv.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/TypCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/TypCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/StructField.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Visitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr1.gr" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr1.gr" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -244,7 +238,7 @@
       <workItem from="1702674855731" duration="5222000" />
       <workItem from="1702929025444" duration="596000" />
       <workItem from="1702946511319" duration="50326000" />
-      <workItem from="1703763707813" duration="12622000" />
+      <workItem from="1703763707813" duration="13030000" />
     </task>
     <task id="LOCAL-00001" summary="-">
       <option name="closed" value="true" />
@@ -478,7 +472,15 @@
       <option name="project" value="LOCAL" />
       <updated>1703622582654</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="- field expression">
+      <option name="closed" value="true" />
+      <created>1704241048584</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1704241048584</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -498,17 +500,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="- first generated class code!!" />
     <MESSAGE value="-" />
-    <option name="LAST_COMMIT_MESSAGE" value="-" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/TypCheck.java</url>
-          <line>220</line>
-          <option name="timeStamp" value="115" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="- field expression" />
+    <option name="LAST_COMMIT_MESSAGE" value="- field expression" />
   </component>
 </project>

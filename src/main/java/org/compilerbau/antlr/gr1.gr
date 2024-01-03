@@ -5,8 +5,17 @@ struct Point {
     y: int
 }
 
+struct S {
+    str: string
+}
+
 pub fn area() -> int {
     let p = Point {x: 1+2, y: 2};
     return p.x * p.y;
+}
+
+pub fn test3() -> string {
+    let s = S {str: "hello"};
+    return s.str;
 }
 
