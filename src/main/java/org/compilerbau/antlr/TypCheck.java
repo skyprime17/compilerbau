@@ -27,7 +27,7 @@ import org.compilerbau.antlr.ast.Program;
 import org.compilerbau.antlr.ast.ReturnExpression;
 import org.compilerbau.antlr.ast.StringLit;
 import org.compilerbau.antlr.ast.StructCall;
-import org.compilerbau.antlr.ast.StructDecl;
+import org.compilerbau.antlr.ast.StructDeclaration;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
 import org.compilerbau.antlr.ast.Typ;
@@ -230,7 +230,7 @@ public class TypCheck implements Visitor<Boolean> {
   }
 
   @Override
-  public Boolean visit(StructDecl ast) {
+  public Boolean visit(StructDeclaration ast) {
     return true;
   }
 
@@ -244,7 +244,7 @@ public class TypCheck implements Visitor<Boolean> {
         return false;
       }
       if (variable instanceof Typ.Ref ref) {
-        var structDecl = (StructDecl) funs.get(ref.name());
+        var structDecl = (StructDeclaration) funs.get(ref.name());
         if (structDecl == null) {
           System.out.println("Struct not found: " + ref.name());
           return false;

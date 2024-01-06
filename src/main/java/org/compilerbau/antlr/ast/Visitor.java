@@ -30,7 +30,7 @@ public interface Visitor<R> {
 
   R visit(FunCall ast);
 
-  R visit(StructDecl ast);
+  R visit(StructDeclaration ast);
 
   R visit(FieldExpression ast);
 

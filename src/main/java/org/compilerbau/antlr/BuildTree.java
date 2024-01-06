@@ -9,7 +9,6 @@ import org.compilerbau.antlr.ast.Arg;
 import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
 import org.compilerbau.antlr.ast.ArrayExpression;
 import org.compilerbau.antlr.ast.Assign;
-import org.compilerbau.antlr.ast.Attributes;
 import org.compilerbau.antlr.ast.Block;
 import org.compilerbau.antlr.ast.BreakExpression;
 import org.compilerbau.antlr.ast.ComparisonExpression;
@@ -28,7 +27,7 @@ import org.compilerbau.antlr.ast.Program;
 import org.compilerbau.antlr.ast.ReturnExpression;
 import org.compilerbau.antlr.ast.StringLit;
 import org.compilerbau.antlr.ast.StructCall;
-import org.compilerbau.antlr.ast.StructDecl;
+import org.compilerbau.antlr.ast.StructDeclaration;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
 import org.compilerbau.antlr.ast.Typ;
@@ -55,14 +54,14 @@ class BuildTree extends GrBaseVisitor<AST> {
     var params = ctx.structfield().stream().map(p -> (Arg) visit(p)).toList();
     var visibility = ctx.visbility() == null ? Visibility.PRIVATE :
         ((TheVisibility) visit(ctx.visbility())).visibility();
-    return new StructDecl(new Attributes(), visibility, structName, params, new Typ.Ref(structName));
+    return new StructDeclaration(visibility, structName, params, new Typ.Ref(structName));
   }
 
   @Override
   public AST visitStructfield(GrParser.StructfieldContext ctx) {
     var name = ctx.IDENT().getText();
     var typ = ((TheTyp) visit(ctx.type())).typ();
-    return new Arg(new Attributes(), name, typ);
+    return new Arg(name, typ);
   }
 
 
@@ -70,9 +69,9 @@ class BuildTree extends GrBaseVisitor<AST> {
   public AST visitVisbility(GrParser.VisbilityContext ctx) {
     var visibility = ctx.getText();
     if (visibility.equals("pub")) {
-      return new TheVisibility(new Attributes(), Visibility.PUBLIC);
+      return new TheVisibility(Visibility.PUBLIC);
     }
-    return new TheVisibility(new Attributes(), Visibility.PRIVATE);
+    return new TheVisibility(Visibility.PRIVATE);
   }
 
   @Override
@@ -104,7 +103,7 @@ class BuildTree extends GrBaseVisitor<AST> {
   public AST visitIndexExpression(GrParser.IndexExpressionContext ctx) {
     var arr = ctx.expression(0).getText();
     var index = visit(ctx.expression(1));
-    return new IndexVariable(new Attributes(), arr, index);
+    return new IndexVariable(arr, index);
   }
 
   @Override
@@ -137,7 +136,7 @@ class BuildTree extends GrBaseVisitor<AST> {
     var left = visit(ctx.expression(0));
     var right = visit(ctx.expression(1));
 
-    return new ArithmeticOrLogicalExpression(new Attributes(), left, op, right);
+    return new ArithmeticOrLogicalExpression(left, op, right);
   }
 
   @Override
@@ -168,7 +167,7 @@ class BuildTree extends GrBaseVisitor<AST> {
     };
     var left = visit(ctx.expression(0));
     var right = visit(ctx.expression(1));
-    return new ComparisonExpression(new Attributes(), left, op, right);
+    return new ComparisonExpression(left, op, right);
   }
 
   @Override
@@ -213,11 +212,11 @@ class BuildTree extends GrBaseVisitor<AST> {
 
     if (literalExpressionContext.STRING_LITERAL() != null) {
       String text = literalExpressionContext.STRING_LITERAL().getText();
-      return new StringLit(new Attributes(), text.substring(1, text.length() - 1));
+      return new StringLit(text.substring(1, text.length() - 1));
     }
 
     if (literalExpressionContext.identifier() != null) {
-      return new Variable(new Attributes(), literalExpressionContext.identifier().getText());
+      return new Variable(literalExpressionContext.identifier().getText());
     }
 
 
@@ -270,16 +269,16 @@ class BuildTree extends GrBaseVisitor<AST> {
   public AST visitStructExprStruct(GrParser.StructExprStructContext ctx) {
     var structName = ctx.identifier().getText();
     if (ctx.structExprFields() == null) {
-      return new StructCall(new Attributes(), structName, List.of());
+      return new StructCall(structName, List.of());
     }
     var fields = ctx.structExprFields().structExprField().stream().map(this::visit).toList();
-    return new StructCall(new Attributes(), structName, fields);
+    return new StructCall(structName, fields);
   }
 
  /*
   @Override
   public AST visitStructExprField(GrParser.StructExprFieldContext ctx) {
-    //return new Assign(new Attributes(), ctx.identifier().getText(), visit(ctx.expression()));
+    //return new Assign( ctx.identifier().getText(), visit(ctx.expression()));
   }
   */
 
@@ -299,7 +298,7 @@ class BuildTree extends GrBaseVisitor<AST> {
 
   @Override
   public AST visitParam(GrParser.ParamContext ctx) {
-    return new Arg(new Attributes(), ctx.IDENT().getText(), ((TheTyp) visit(ctx.type())).typ());
+    return new Arg(ctx.IDENT().getText(), ((TheTyp) visit(ctx.type())).typ());
   }
 
   @Override
@@ -343,7 +342,7 @@ class BuildTree extends GrBaseVisitor<AST> {
     var params = ctx.param().stream().map(p -> (Arg) visit(p)).toList();
     var returnType = ((TheTyp) visit(ctx.type())).typ();
     var body = visit(ctx.blockExpression());
-    return new FunDef(new Attributes(), visibility, funcName, params, returnType, body);
+    return new FunDef(visibility, funcName, params, returnType, body);
   }
 
   @Override
@@ -356,11 +355,11 @@ class BuildTree extends GrBaseVisitor<AST> {
     }
     var t = ctx.identifier().getText();
     return switch (t) {
-      case "int" -> new TheTyp(new Attributes(), new Typ.PrimInt());
-      case "string" -> new TheTyp(new Attributes(), new Typ.PrimString());
-      case "boolean" -> new TheTyp(new Attributes(), new Typ.PrimBool());
-      case "void" -> new TheTyp(new Attributes(), new Typ.Void());
-      default -> new TheTyp(new Attributes(), new Typ.Ref(t));
+      case "int" -> new TheTyp(new Typ.PrimInt());
+      case "string" -> new TheTyp(new Typ.PrimString());
+      case "boolean" -> new TheTyp(new Typ.PrimBool());
+      case "void" -> new TheTyp(new Typ.Void());
+      default -> new TheTyp(new Typ.Ref(t));
     };
   }
 
@@ -374,7 +373,7 @@ class BuildTree extends GrBaseVisitor<AST> {
         case "void" -> new Typ.Void();
         default -> new Typ.Ref(ctx.type().identifier().getText());
       };
-      return new TheTyp(new Attributes(), new Typ.Array(type));
+      return new TheTyp(new Typ.Array(type));
     }
     return visit(ctx.type());
   }

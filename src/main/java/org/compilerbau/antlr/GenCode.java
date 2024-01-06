@@ -30,7 +30,7 @@ import org.compilerbau.antlr.ast.Program;
 import org.compilerbau.antlr.ast.ReturnExpression;
 import org.compilerbau.antlr.ast.StringLit;
 import org.compilerbau.antlr.ast.StructCall;
-import org.compilerbau.antlr.ast.StructDecl;
+import org.compilerbau.antlr.ast.StructDeclaration;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
 import org.compilerbau.antlr.ast.Typ;
@@ -243,7 +243,7 @@ public class GenCode implements Visitor<Void> {
   }
 
   @Override
-  public Void visit(StructDecl ast) {
+  public Void visit(StructDeclaration ast) {
     var conw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
     conw.visit(Opcodes.V20, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, ast.name(), null, "java/lang/Object", null);
     conw.visitSource(module + ".gr", null);

@@ -1,7 +1,7 @@
 package org.compilerbau.antlr.ast;
 
 public record StringLit(Attributes attributes, String s) implements AST {
-  StringLit(String s) {
+  public StringLit(String s) {
     this(new Attributes(), s);
   }
 
