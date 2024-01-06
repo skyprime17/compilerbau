@@ -9,8 +9,4 @@ public record ArithmeticOrLogicalExpression(Attributes attributes, AST left, Ope
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return false;
-  }
 }

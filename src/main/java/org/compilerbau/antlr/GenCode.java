@@ -1,10 +1,5 @@
 package org.compilerbau.antlr;
 
-import static org.compilerbau.antlr.ast.Typ.BOOLEAN;
-import static org.compilerbau.antlr.ast.Typ.INT;
-import static org.compilerbau.antlr.ast.Typ.STRING;
-import static org.compilerbau.antlr.ast.Typ.VOID;
-
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,6 +17,7 @@ import org.compilerbau.antlr.ast.Block;
 import org.compilerbau.antlr.ast.BreakExpression;
 import org.compilerbau.antlr.ast.ComparisonExpression;
 import org.compilerbau.antlr.ast.ContinueExpression;
+import org.compilerbau.antlr.ast.FieldExpression;
 import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
@@ -35,7 +31,6 @@ import org.compilerbau.antlr.ast.ReturnExpression;
 import org.compilerbau.antlr.ast.StringLit;
 import org.compilerbau.antlr.ast.StructCall;
 import org.compilerbau.antlr.ast.StructDecl;
-import org.compilerbau.antlr.ast.FieldExpression;
 import org.compilerbau.antlr.ast.TheTyp;
 import org.compilerbau.antlr.ast.TheVisibility;
 import org.compilerbau.antlr.ast.Typ;
@@ -223,24 +218,27 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(FunCall ast) {
-    if (ast.name().equals("println")) {
-      mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-    }
-
-    ast.args().forEach(arg -> arg.welcome(this));
-    StringBuilder jvmArgs = new StringBuilder("(");
-    for (var arg : ast.args()) {
-      jvmArgs.append(arg.attributes().typ.jvmType());
-    }
-    jvmArgs.append(")");
-    jvmArgs.append(ast.attributes().typ.jvmType());
-
-    if (ast.name().equals("println")) {
-      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(J)V", false);
+    if (ast.lhs() instanceof Variable variable) {
+      ast.args().forEach(arg -> arg.welcome(this));
+      StringBuilder jvmArgs = new StringBuilder("(");
+      for (var arg : ast.args()) {
+        jvmArgs.append(arg.attributes().typ.jvmType());
+      }
+      jvmArgs.append(")");
+      jvmArgs.append(ast.attributes().typ.jvmType());
+      mv.visitMethodInsn(Opcodes.INVOKESTATIC, module, variable.name(), jvmArgs.toString(), false);
       return null;
     }
 
-    mv.visitMethodInsn(Opcodes.INVOKESTATIC, module, ast.name(), jvmArgs.toString(), false);
+    if (ast.lhs() instanceof FieldExpression fieldExpression) {
+      if (fieldExpression.expression().attributes().typ instanceof Typ.Array && fieldExpression.fieldName().equals("len")) {
+        fieldExpression.expression().welcome(this);
+        mv.visitInsn(Opcodes.ARRAYLENGTH);
+        mv.visitInsn(Opcodes.I2L);
+        return null;
+      }
+    }
+
     return null;
   }
 

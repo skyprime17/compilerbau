@@ -9,8 +9,5 @@ public record StructDecl(Attributes attributes, Visibility visibility, String na
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return true;
-  }
+
 }

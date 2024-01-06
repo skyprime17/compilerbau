@@ -187,17 +187,17 @@ class BuildTree extends GrBaseVisitor<AST> {
   public AST visitNegationExpression(GrParser.NegationExpressionContext ctx) {
     var op = ctx.NOT() != null ? Operator.not : Operator.sub;
     var right = visit(ctx.expression());
-    return new NegationExpression(new Attributes(), op, right);
+    return new NegationExpression(op, right);
   }
 
   @Override
   public AST visitCallExpression(GrParser.CallExpressionContext ctx) {
     if (ctx.callParams() == null) {
-      return new FunCall(ctx.expression().getText(), List.of());
+      return new FunCall(visit(ctx.expression()), List.of());
     }
 
     var callParams = ctx.callParams().expression().stream().map(this::visit).toList();
-    var left = ctx.expression().getText();
+    var left = visit(ctx.expression());
     return new FunCall(left, callParams);
   }
 
@@ -316,16 +316,19 @@ class BuildTree extends GrBaseVisitor<AST> {
 
   @Override
   public AST visitArrayExpression(GrParser.ArrayExpressionContext ctx) {
+    if (ctx.arrayElements() == null) {
+      return new ArrayExpression(List.of());
+    }
     boolean isNormalArray = !ctx.arrayElements().COMMA().isEmpty() || ctx.arrayElements().SEMICOLON() == null;
     if (isNormalArray) {
       var elements = ctx.arrayElements().expression().stream().map(this::visit).toList();
-      return new ArrayExpression(new Attributes(), elements);
+      return new ArrayExpression(elements);
     }
     if (ctx.arrayElements().SEMICOLON() != null) {
       var defaultVal = visit(ctx.arrayElements().expression(0));
       var size = (LongInteger) visit(ctx.arrayElements().expression(1));
       var elements = IntStream.range(0, (int) size.n()).mapToObj(i -> defaultVal).toList();
-      return new ArrayExpression(new Attributes(), elements);
+      return new ArrayExpression(elements);
     }
 
     return null;

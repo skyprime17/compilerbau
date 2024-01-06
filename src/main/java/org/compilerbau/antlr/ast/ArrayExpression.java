@@ -3,10 +3,11 @@ package org.compilerbau.antlr.ast;
 import java.util.List;
 
 public record ArrayExpression(Attributes attributes, List<AST> items) implements AST {
-  @Override
-  public boolean isStructured() {
-    return false;
+
+  public ArrayExpression(List<AST> items) {
+    this(new Attributes(), items);
   }
+
 
   @Override
   public <R> R welcome(Visitor<R> vis) {

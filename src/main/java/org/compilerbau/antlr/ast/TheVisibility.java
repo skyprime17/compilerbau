@@ -5,8 +5,5 @@ public record TheVisibility(Attributes attributes, Visibility visibility) implem
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return false;
-  }
+
 }

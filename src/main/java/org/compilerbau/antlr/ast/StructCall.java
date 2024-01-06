@@ -11,8 +11,5 @@ public record StructCall(Attributes attributes, String name, List<AST> args) imp
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return false;
-  }
+
 }

@@ -8,10 +8,7 @@ public record ContinueExpression(Attributes attributes) implements AST {
 
 
 
-  @Override
-  public boolean isStructured() {
-    return false;
-  }
+
 
   @Override
   public <R> R welcome(Visitor<R> vis) {

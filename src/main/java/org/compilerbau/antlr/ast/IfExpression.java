@@ -11,8 +11,5 @@ public record IfExpression(Attributes attributes, AST cond, AST trueCase, Option
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return true;
-  }
+
 }

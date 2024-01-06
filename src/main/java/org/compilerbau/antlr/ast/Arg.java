@@ -5,8 +5,4 @@ public record Arg(Attributes attributes, String name, Typ typ) implements AST {
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return false;
-  }
 }

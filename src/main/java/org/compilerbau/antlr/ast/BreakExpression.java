@@ -10,8 +10,5 @@ public record BreakExpression(Attributes attributes) implements AST {
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return false;
-  }
+
 }

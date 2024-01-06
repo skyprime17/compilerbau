@@ -7,9 +7,6 @@ public record FunDef(Attributes attributes, Visibility visibility, String name, 
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return false;
-  }
+
 
 }

@@ -9,8 +9,5 @@ public record Variable(Attributes attributes, String name) implements AST {
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return false;
-  }
+
 }

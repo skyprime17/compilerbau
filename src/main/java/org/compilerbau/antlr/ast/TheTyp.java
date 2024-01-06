@@ -5,8 +5,5 @@ public record TheTyp(Attributes attributes, Typ typ) implements AST {
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return false;
-  }
+
 }

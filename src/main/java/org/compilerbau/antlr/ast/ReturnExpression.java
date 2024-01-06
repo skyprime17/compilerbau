@@ -9,8 +9,5 @@ public record ReturnExpression(Attributes attributes, AST expr) implements AST {
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return true;
-  }
+
 }

@@ -9,8 +9,5 @@ public record NegationExpression(Attributes attributes, Operator op, AST expr) i
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return false;
-  }
+
 }

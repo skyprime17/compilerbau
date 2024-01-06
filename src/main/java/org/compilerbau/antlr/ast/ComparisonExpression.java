@@ -8,11 +8,6 @@ public record ComparisonExpression(Attributes attributes, AST left, Operator op,
 
 
   @Override
-  public boolean isStructured() {
-    return false;
-  }
-
-  @Override
   public <R> R welcome(Visitor<R> vis) {
     return vis.visit(this);
   }

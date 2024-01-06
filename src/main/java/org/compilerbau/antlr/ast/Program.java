@@ -23,8 +23,5 @@ public record Program(Attributes attributes, String name, List<Item> items, Map<
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return false;
-  }
+
 }

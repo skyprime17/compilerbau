@@ -6,10 +6,7 @@ public record FieldExpression(Attributes attributes, AST expression, String fiel
     this(new Attributes(), expression, fieldName);
   }
 
-  @Override
-  public boolean isStructured() {
-    return false;
-  }
+
 
   @Override
   public <R> R welcome(Visitor<R> vis) {

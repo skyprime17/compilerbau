@@ -3,9 +3,7 @@ package org.compilerbau.antlr;
 import static org.compilerbau.antlr.ast.Typ.VOID;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.compilerbau.antlr.ast.AST;
 import org.compilerbau.antlr.ast.Arg;
@@ -117,6 +115,7 @@ public class TypCheck implements Visitor<Boolean> {
         return false;
       }
       env.put(var.name(), rt);
+      ast.attributes().typ = rt;
       return r;
     }
     if (ast.var() instanceof IndexVariable iv) {
@@ -134,7 +133,8 @@ public class TypCheck implements Visitor<Boolean> {
       if (!oldIndexTyp.equals(rt)) {
         return false;
       }
-      env.put(iv.name(), rt);
+      iv.attributes().typ = rt;
+      //env.put(iv.name(), rt);
       return r;
     }
 
@@ -187,25 +187,46 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(FunCall ast) {
-    var fun = funs.get(ast.name());
-    /*
-    if (fun == null) {
-      fun = standardLibFuns.get(ast.name());
+    if (ast.lhs() instanceof Variable var) {
+      var fun = funs.get(var.name());
+      if (fun == null) {
+        System.out.println("Function notfound: " + var.name());
+        return false;
+      }
+      ast.args().forEach(p -> p.welcome(this));
+      ast.attributes().typ = fun.typ();
+      if (fun.args().size() != ast.args().size()) {
+        System.out.println("Wrong number of arguments for function: " + var.name());
+        return false;
+      }
+      return true;
     }
-     */
-    ast.args().forEach(p -> p.welcome(this));
-    if (fun == null
-    //   &&  !standardLibFuns.containsKey(ast.name())
-    ) {
-      System.out.println("Unknown function: " + ast.name());
-      return false;
+
+    if (ast.lhs() instanceof FieldExpression fieldExpression) {
+      var r = fieldExpression.welcome(this);
+      if (!r) {
+        return false;
+      }
+      AST expression = fieldExpression.expression();
+      if (expression instanceof Variable var) {
+        Boolean visit = visit(var);
+        if (!visit) {
+          return false;
+        }
+        var variable = env.get(var.name());
+        if (variable == null) {
+          System.out.println("Variable not found: " + var.name());
+          return false;
+        }
+        String fieldMethodCallName = fieldExpression.fieldName();
+        if (expression.attributes().typ instanceof Typ.Array e && fieldMethodCallName.equals("len")) {
+          ast.attributes().typ = Typ.INT;
+          return true;
+        }
+      }
+      return true;
     }
-    ast.attributes().typ = fun.typ();
-    if (fun.args().size() != ast.args().size()) {
-      System.out.println("Wrong number of arguments for function: " + ast.name());
-      return false;
-    }
-    return true;
+    return false;
   }
 
   @Override

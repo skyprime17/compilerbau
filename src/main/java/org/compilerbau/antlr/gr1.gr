@@ -1,21 +1,31 @@
 package test;
 
-struct Point {
-    x: int,
-    y: int
+
+pub fn sum(xs:[int]) -> int {
+    let sum = 0;
+    let idx = 0;
+    while idx < xs.len() {
+        sum = sum + xs[idx];
+        idx = idx + 1;
+    }
+    return sum;
 }
 
-struct S {
-    str: string
+pub fn make_array() -> [int] {
+    let xs = [1, 2, 3];
+    return xs;
 }
 
-pub fn area() -> int {
-    let p = Point {x: 1+2, y: 2};
-    return p.x * p.y;
+pub fn make_arr_from_range(from:int, to:int) -> [int] {
+    if from >= to {
+        return [];
+    }
+    let size = to - from;
+    let xs = [0; size];
+    let idx = from;
+    while idx < to {
+        xs = xs + [idx];
+        idx = idx + 1;
+    }
+    return xs;
 }
-
-pub fn test3() -> string {
-    let s = S {str: "hello"};
-    return s.str;
-}
-

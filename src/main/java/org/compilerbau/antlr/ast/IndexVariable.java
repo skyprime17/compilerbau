@@ -9,8 +9,5 @@ public record IndexVariable(Attributes attributes, String name, AST index) imple
     return vis.visit(this);
   }
 
-  @Override
-  public boolean isStructured() {
-    return false;
-  }
+
 }
