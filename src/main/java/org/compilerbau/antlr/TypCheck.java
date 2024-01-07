@@ -20,7 +20,7 @@ import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
 import org.compilerbau.antlr.ast.IndexVariable;
 import org.compilerbau.antlr.ast.Item;
-import org.compilerbau.antlr.ast.LongInteger;
+import org.compilerbau.antlr.ast.IntegerInteger;
 import org.compilerbau.antlr.ast.LoopExpression;
 import org.compilerbau.antlr.ast.NegationExpression;
 import org.compilerbau.antlr.ast.Program;
@@ -140,14 +140,22 @@ public class TypCheck implements Visitor<Boolean> {
       }
       case FieldExpression fieldExpression -> {
         var field = fieldExpression.welcome(this);
+        if (!field) {
+          return false;
+        }
         var r = ast.rhs().welcome(this);
-        var rt = ast.rhs().attributes().typ;
+        var fieldType = ast.rhs().attributes().typ;
+        var newType = fieldExpression.attributes().typ;
+        if (!fieldType.equals(newType)) {
+          System.out.println("Field type does not match");
+          return false;
+        }
         var oldTyp = env.get(fieldExpression.fieldName());
-        if (oldTyp != null && !oldTyp.equals(rt)) {
+        if (oldTyp != null && !oldTyp.equals(fieldType)) {
           return false;
         }
         //env.put(fieldExpression.fieldName(), rt);
-        ast.attributes().typ = rt;
+        ast.attributes().typ = fieldType;
         return r;
       }
       case null, default -> {
@@ -158,7 +166,8 @@ public class TypCheck implements Visitor<Boolean> {
   }
 
   @Override
-  public Boolean visit(LongInteger ast) {
+  public Boolean visit(IntegerInteger ast) {
+    if (ast.attributes().typ instanceof Typ.PrimBool) return true;
     ast.attributes().typ = Typ.INT;
     return true;
   }
@@ -179,7 +188,9 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(NegationExpression ast) {
-    return true;
+    var expr = ast.expr().welcome(this);
+    ast.attributes().typ = ast.expr().attributes().typ;
+    return expr;
   }
 
   @Override
@@ -254,6 +265,9 @@ public class TypCheck implements Visitor<Boolean> {
   public Boolean visit(FieldExpression ast) {
     // TODO ONLY VARIABLE SUPPORTED RN
     var ok = ast.expression().welcome(this);
+    if (!ok) {
+      return false;
+    }
     if (ast.expression() instanceof Variable var) {
       var variable = env.get(var.name());
       if (variable == null) {

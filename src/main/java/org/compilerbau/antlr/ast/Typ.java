@@ -50,12 +50,12 @@ public interface Typ {
 
     @Override
     public String jvmType() {
-      return "J";
+      return "I";
     }
 
     @Override
     public int stackPos() {
-      return 2;
+      return 1;
     }
   }
 

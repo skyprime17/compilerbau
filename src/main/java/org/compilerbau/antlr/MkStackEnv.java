@@ -16,7 +16,7 @@ import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
 import org.compilerbau.antlr.ast.IndexVariable;
-import org.compilerbau.antlr.ast.LongInteger;
+import org.compilerbau.antlr.ast.IntegerInteger;
 import org.compilerbau.antlr.ast.LoopExpression;
 import org.compilerbau.antlr.ast.NegationExpression;
 import org.compilerbau.antlr.ast.Program;
@@ -109,7 +109,7 @@ public class MkStackEnv implements Visitor<Map<String, Integer>> {
   }
 
   @Override
-  public Map<String, Integer> visit(LongInteger ast) {
+  public Map<String, Integer> visit(IntegerInteger ast) {
     return env;
   }
 

@@ -19,7 +19,7 @@ import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
 import org.compilerbau.antlr.ast.IndexVariable;
 import org.compilerbau.antlr.ast.Item;
-import org.compilerbau.antlr.ast.LongInteger;
+import org.compilerbau.antlr.ast.IntegerInteger;
 import org.compilerbau.antlr.ast.LoopExpression;
 import org.compilerbau.antlr.ast.NegationExpression;
 import org.compilerbau.antlr.ast.Operator;
@@ -207,7 +207,7 @@ class BuildTree extends GrBaseVisitor<AST> {
       return null;
     }
     if (literalExpressionContext.INTEGER_LITERAL() != null) {
-      return new LongInteger(Long.parseLong(literalExpressionContext.INTEGER_LITERAL().getText()));
+      return new IntegerInteger(Integer.parseInt(literalExpressionContext.INTEGER_LITERAL().getText()));
     }
 
     if (literalExpressionContext.STRING_LITERAL() != null) {
@@ -219,8 +219,17 @@ class BuildTree extends GrBaseVisitor<AST> {
       return new Variable(literalExpressionContext.identifier().getText());
     }
 
+    if (literalExpressionContext.KW_TRUE() != null) {
+      var trueKeyword = new IntegerInteger(1);
+      trueKeyword.attributes().typ = new Typ.PrimBool();
+      return trueKeyword;
+    }
 
-    // KW TRUE / FALSE
+    if (literalExpressionContext.KW_FALSE() != null) {
+      var falseKeyword = new IntegerInteger(0);
+      falseKeyword.attributes().typ = new Typ.PrimBool();
+      return falseKeyword;
+    }
 
     return null;
   }
@@ -325,7 +334,7 @@ class BuildTree extends GrBaseVisitor<AST> {
     }
     if (ctx.arrayElements().SEMICOLON() != null) {
       var defaultVal = visit(ctx.arrayElements().expression(0));
-      var size = (LongInteger) visit(ctx.arrayElements().expression(1));
+      var size = (IntegerInteger) visit(ctx.arrayElements().expression(1));
       var elements = IntStream.range(0, (int) size.n()).mapToObj(i -> defaultVal).toList();
       return new ArrayExpression(elements);
     }
@@ -357,7 +366,7 @@ class BuildTree extends GrBaseVisitor<AST> {
     return switch (t) {
       case "int" -> new TheTyp(new Typ.PrimInt());
       case "string" -> new TheTyp(new Typ.PrimString());
-      case "boolean" -> new TheTyp(new Typ.PrimBool());
+      case "bool" -> new TheTyp(new Typ.PrimBool());
       case "void" -> new TheTyp(new Typ.Void());
       default -> new TheTyp(new Typ.Ref(t));
     };

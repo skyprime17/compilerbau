@@ -22,7 +22,7 @@ import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
 import org.compilerbau.antlr.ast.IndexVariable;
-import org.compilerbau.antlr.ast.LongInteger;
+import org.compilerbau.antlr.ast.IntegerInteger;
 import org.compilerbau.antlr.ast.LoopExpression;
 import org.compilerbau.antlr.ast.NegationExpression;
 import org.compilerbau.antlr.ast.Operator;
@@ -149,7 +149,6 @@ public class GenCode implements Visitor<Void> {
       case IndexVariable iv -> {
         mv.visitVarInsn(Opcodes.ALOAD, env.get(iv.name()));
         iv.index().welcome(this);
-        mv.visitInsn(Opcodes.L2I);
         ast.rhs().welcome(this);
         mv.visitInsn(storeArrayCode(iv.attributes().typ));
       }
@@ -158,7 +157,8 @@ public class GenCode implements Visitor<Void> {
           mv.visitVarInsn(Opcodes.ALOAD, env.get(v.name()));
           ast.rhs().welcome(this);
           var owner = ((Typ.Ref) v.attributes().typ).name();
-          mv.visitFieldInsn(Opcodes.PUTFIELD, owner, fieldExpression.fieldName(), fieldExpression.attributes().typ.jvmType());
+          mv.visitFieldInsn(Opcodes.PUTFIELD, owner, fieldExpression.fieldName(),
+              fieldExpression.attributes().typ.jvmType());
         } else {
           throw new RuntimeException("Unsuported field expression");
         }
@@ -204,6 +204,12 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(NegationExpression ast) {
+    ast.expr().welcome(this);
+    switch (ast.expr().attributes().typ) {
+      case Typ.PrimInt p -> mv.visitInsn(Opcodes.INEG);
+      case Typ.PrimBool b -> mv.visitInsn(Opcodes.ICONST_1);
+      default -> throw new RuntimeException("Unknown type");
+    }
     return null;
   }
 
@@ -218,7 +224,7 @@ public class GenCode implements Visitor<Void> {
     }
 
     switch (ast.expr().attributes().typ) {
-      case Typ.PrimInt p -> mv.visitInsn(Opcodes.LRETURN);
+      case Typ.PrimInt p -> mv.visitInsn(Opcodes.IRETURN);
       case Typ.PrimBool b -> mv.visitInsn(Opcodes.IRETURN);
       case Typ.PrimString s -> mv.visitInsn(Opcodes.ARETURN);
       case Typ.Ref r -> mv.visitInsn(Opcodes.ARETURN);
@@ -247,7 +253,6 @@ public class GenCode implements Visitor<Void> {
           "len")) {
         fieldExpression.expression().welcome(this);
         mv.visitInsn(Opcodes.ARRAYLENGTH);
-        mv.visitInsn(Opcodes.I2L);
         return null;
       }
     }
@@ -348,9 +353,13 @@ public class GenCode implements Visitor<Void> {
   public Void visit(ComparisonExpression ast) {
     ast.left().welcome(this);
     ast.right().welcome(this);
-    mv.visitInsn(jvmOp(ast.op()));
+    //mv.visitInsn(jvmOp(ast.op()));
     var end = new Label();
     var ifCase = new Label();
+    if (ast.op().compare) {
+      mv.visitJumpInsn(jvmOp(ast.op()), ifCase);
+    }
+    /*
     mv.visitJumpInsn(switch (ast.op()) {
           case lt -> Opcodes.IFLT;
           case le -> Opcodes.IFLE;
@@ -361,6 +370,7 @@ public class GenCode implements Visitor<Void> {
           default -> throw new RuntimeException("internal error");
         }
         , ifCase);
+     */
     mv.visitInsn(Opcodes.ICONST_0);
     mv.visitJumpInsn(Opcodes.GOTO, end);
     mv.visitLabel(ifCase);
@@ -411,13 +421,12 @@ public class GenCode implements Visitor<Void> {
   public Void visit(IndexVariable ast) {
     mv.visitVarInsn(Opcodes.ALOAD, env.get(ast.name()));
     ast.index().welcome(this);
-    mv.visitInsn(Opcodes.L2I);
     mv.visitInsn(loadArrayCode(ast.attributes().typ));
     return null;
   }
 
   @Override
-  public Void visit(LongInteger ast) {
+  public Void visit(IntegerInteger ast) {
     mv.visitLdcInsn(ast.n());
     return null;
   }
@@ -425,19 +434,24 @@ public class GenCode implements Visitor<Void> {
 
   private static int jvmOp(Operator op) {
     return switch (op) {
-      case mul -> Opcodes.LMUL;
-      case add -> Opcodes.LADD;
-      case sub -> Opcodes.LSUB;
-      case div -> Opcodes.LDIV;
-      case mod -> Opcodes.LREM;
-      case lt, le, ge, gt, eq, neq -> Opcodes.LCMP;
+      case mul -> Opcodes.IMUL;
+      case add -> Opcodes.IADD;
+      case sub -> Opcodes.ISUB;
+      case div -> Opcodes.IDIV;
+      case mod -> Opcodes.IREM;
+      case lt -> Opcodes.IF_ICMPLT;
+      case le -> Opcodes.IF_ICMPLE;
+      case ge -> Opcodes.IF_ICMPGE;
+      case gt -> Opcodes.IF_ICMPGT;
+      case eq -> Opcodes.IF_ICMPEQ;
+      case neq -> Opcodes.IF_ICMPNE;
       default -> 0;
     };
   }
 
   private static int loadCode(Typ t) {
     return switch (t) {
-      case Typ.PrimInt p -> Opcodes.LLOAD;
+      case Typ.PrimInt p -> Opcodes.ILOAD;
       case Typ.PrimBool b -> Opcodes.ILOAD;
       default -> Opcodes.ALOAD;
     };
@@ -445,7 +459,7 @@ public class GenCode implements Visitor<Void> {
 
   private static int loadArrayCode(Typ t) {
     return switch (t) {
-      case Typ.PrimInt p -> Opcodes.LALOAD;
+      case Typ.PrimInt p -> Opcodes.IALOAD;
       case Typ.PrimBool b -> Opcodes.IALOAD;
       default -> Opcodes.AALOAD;
     };
@@ -454,7 +468,7 @@ public class GenCode implements Visitor<Void> {
 
   private static int storeArrayCode(Typ t) {
     return switch (t) {
-      case Typ.PrimInt p -> Opcodes.LASTORE;
+      case Typ.PrimInt p -> Opcodes.IASTORE;
       case Typ.PrimBool b -> Opcodes.IASTORE;
       default -> Opcodes.AASTORE;
     };
@@ -462,7 +476,7 @@ public class GenCode implements Visitor<Void> {
 
   private static int storeCode(Typ t) {
     return switch (t) {
-      case Typ.PrimInt p -> Opcodes.LSTORE;
+      case Typ.PrimInt p -> Opcodes.ISTORE;
       case Typ.PrimBool b -> Opcodes.ISTORE;
       case Typ.Array a -> Opcodes.ASTORE;
       default -> Opcodes.ASTORE;
@@ -472,7 +486,7 @@ public class GenCode implements Visitor<Void> {
 
   private static int arrayType(Typ t) {
     return switch (t) {
-      case Typ.PrimInt p -> Opcodes.T_LONG;
+      case Typ.PrimInt p -> Opcodes.T_INT;
       case Typ.PrimBool b -> Opcodes.T_BOOLEAN;
       default -> throw new IllegalStateException("Unexpected value: " + t);
     };

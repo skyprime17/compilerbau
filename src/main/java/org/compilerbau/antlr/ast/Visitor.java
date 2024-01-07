@@ -18,7 +18,7 @@ public interface Visitor<R> {
 
   R visit(Assign ast);
 
-  R visit(LongInteger ast);
+  R visit(IntegerInteger ast);
 
   R visit(StringLit ast);
 

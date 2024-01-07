@@ -1,7 +1,7 @@
 package org.compilerbau.antlr.ast;
 
-public record LongInteger(Attributes attributes, long n) implements AST {
-  public LongInteger(long n) {
+public record IntegerInteger(Attributes attributes, int n) implements AST {
+  public IntegerInteger(int n) {
     this(new Attributes(), n);
   }
 
