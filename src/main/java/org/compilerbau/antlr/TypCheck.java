@@ -107,35 +107,51 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(Assign ast) {
-    if (ast.var() instanceof Variable var) {
-      var r = ast.rhs().welcome(this);
-      var rt = ast.rhs().attributes().typ;
-      var oldTyp = env.get(var.name());
-      if (oldTyp != null && !oldTyp.equals(rt)) {
-        return false;
+    switch (ast.var()) {
+      case Variable var -> {
+        var r = ast.rhs().welcome(this);
+        var rt = ast.rhs().attributes().typ;
+        var oldTyp = env.get(var.name());
+        if (oldTyp != null && !oldTyp.equals(rt)) {
+          return false;
+        }
+        env.put(var.name(), rt);
+        ast.attributes().typ = rt;
+        return r;
       }
-      env.put(var.name(), rt);
-      ast.attributes().typ = rt;
-      return r;
-    }
-    if (ast.var() instanceof IndexVariable iv) {
-      var indexExpr = iv.index().welcome(this);
-      if (!indexExpr) {
-        return false;
+      case IndexVariable iv -> {
+        var indexExpr = iv.index().welcome(this);
+        if (!indexExpr) {
+          return false;
+        }
+        var r = ast.rhs().welcome(this);
+        var rt = ast.rhs().attributes().typ;
+        var oldTyp = env.get(iv.name());
+        if (oldTyp == null) {
+          return false;
+        }
+        var oldIndexTyp = ((Typ.Array) oldTyp).typ();
+        if (!oldIndexTyp.equals(rt)) {
+          return false;
+        }
+        iv.attributes().typ = rt;
+        //env.put(iv.name(), rt);
+        return r;
       }
-      var r = ast.rhs().welcome(this);
-      var rt = ast.rhs().attributes().typ;
-      var oldTyp = env.get(iv.name());
-      if (oldTyp == null) {
-        return false;
+      case FieldExpression fieldExpression -> {
+        var field = fieldExpression.welcome(this);
+        var r = ast.rhs().welcome(this);
+        var rt = ast.rhs().attributes().typ;
+        var oldTyp = env.get(fieldExpression.fieldName());
+        if (oldTyp != null && !oldTyp.equals(rt)) {
+          return false;
+        }
+        //env.put(fieldExpression.fieldName(), rt);
+        ast.attributes().typ = rt;
+        return r;
       }
-      var oldIndexTyp = ((Typ.Array) oldTyp).typ();
-      if (!oldIndexTyp.equals(rt)) {
-        return false;
+      case null, default -> {
       }
-      iv.attributes().typ = rt;
-      //env.put(iv.name(), rt);
-      return r;
     }
 
     return true;

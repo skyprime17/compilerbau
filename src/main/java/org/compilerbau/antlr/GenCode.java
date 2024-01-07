@@ -141,17 +141,28 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(Assign ast) {
-    if (ast.var() instanceof Variable var) {
-      ast.rhs().welcome(this);
-      mv.visitVarInsn(storeCode(ast.rhs().attributes().typ), env.get(var.name()));
-    } else if (ast.var() instanceof IndexVariable iv) {
-      mv.visitVarInsn(Opcodes.ALOAD, env.get(iv.name()));
-      iv.index().welcome(this);
-      mv.visitInsn(Opcodes.L2I);
-      ast.rhs().welcome(this);
-      mv.visitInsn(storeArrayCode(iv.attributes().typ));
-    } else {
-      throw new RuntimeException("internal error");
+    switch (ast.var()) {
+      case Variable var -> {
+        ast.rhs().welcome(this);
+        mv.visitVarInsn(storeCode(ast.rhs().attributes().typ), env.get(var.name()));
+      }
+      case IndexVariable iv -> {
+        mv.visitVarInsn(Opcodes.ALOAD, env.get(iv.name()));
+        iv.index().welcome(this);
+        mv.visitInsn(Opcodes.L2I);
+        ast.rhs().welcome(this);
+        mv.visitInsn(storeArrayCode(iv.attributes().typ));
+      }
+      case FieldExpression fieldExpression -> {
+        if (fieldExpression.expression() instanceof Variable v) {
+          mv.visitVarInsn(Opcodes.ALOAD, env.get(v.name()));
+          ast.rhs().welcome(this);
+          mv.visitFieldInsn(Opcodes.PUTFIELD, v.name(), fieldExpression.fieldName(), fieldExpression.attributes().typ.jvmType());
+        } else {
+          throw new RuntimeException("Unsuported field expression");
+        }
+      }
+      case null, default -> throw new RuntimeException("internal error");
     }
     return null;
   }
@@ -231,7 +242,8 @@ public class GenCode implements Visitor<Void> {
     }
 
     if (ast.lhs() instanceof FieldExpression fieldExpression) {
-      if (fieldExpression.expression().attributes().typ instanceof Typ.Array && fieldExpression.fieldName().equals("len")) {
+      if (fieldExpression.expression().attributes().typ instanceof Typ.Array && fieldExpression.fieldName().equals(
+          "len")) {
         fieldExpression.expression().welcome(this);
         mv.visitInsn(Opcodes.ARRAYLENGTH);
         mv.visitInsn(Opcodes.I2L);
