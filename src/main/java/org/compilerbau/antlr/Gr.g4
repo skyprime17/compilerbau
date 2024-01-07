@@ -30,7 +30,7 @@ statement
    ;
 
 letStatement:
-  KW_LET IDENT (COLON type)? EQ expression SEMICOLON
+  KW_LET KW_MUT? IDENT (COLON type)? EQ expression SEMICOLON
  ;
 
 
@@ -141,7 +141,7 @@ identifier:
 ;
 
 param:
-  IDENT COLON type
+  'mut'? IDENT COLON type
 ;
 
 
@@ -259,6 +259,7 @@ KW_PUBLIC: 'pub';
 KW_STRUCT: 'struct';
 KW_TRUE: 'true';
 KW_FALSE: 'false';
+KW_MUT: 'mut';
 
 IDENT: Alpha (Digit|Alpha)*;
 
