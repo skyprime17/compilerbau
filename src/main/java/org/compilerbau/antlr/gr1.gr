@@ -6,7 +6,10 @@ struct Point {
 }
 
 pub fn change_point(p: Point) -> void {
-  p.x = "hallo";
-  p.y = 3;
-  return p;
+    p.x = "changed";
+    return;
+}
+
+pub fn add(x: int, y: int) -> int {
+    return x + y;
 }

@@ -253,6 +253,7 @@ public class TypCheck implements Visitor<Boolean> {
   @Override
   public Boolean visit(FieldExpression ast) {
     // TODO ONLY VARIABLE SUPPORTED RN
+    var ok = ast.expression().welcome(this);
     if (ast.expression() instanceof Variable var) {
       var variable = env.get(var.name());
       if (variable == null) {

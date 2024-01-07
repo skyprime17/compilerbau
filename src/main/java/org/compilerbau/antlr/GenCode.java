@@ -157,7 +157,8 @@ public class GenCode implements Visitor<Void> {
         if (fieldExpression.expression() instanceof Variable v) {
           mv.visitVarInsn(Opcodes.ALOAD, env.get(v.name()));
           ast.rhs().welcome(this);
-          mv.visitFieldInsn(Opcodes.PUTFIELD, v.name(), fieldExpression.fieldName(), fieldExpression.attributes().typ.jvmType());
+          var owner = ((Typ.Ref) v.attributes().typ).name();
+          mv.visitFieldInsn(Opcodes.PUTFIELD, owner, fieldExpression.fieldName(), fieldExpression.attributes().typ.jvmType());
         } else {
           throw new RuntimeException("Unsuported field expression");
         }

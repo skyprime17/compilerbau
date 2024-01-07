@@ -49,6 +49,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="a49ad83785aca96212fc033ad5c189a13687073b" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -59,6 +64,25 @@
 }</component>
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="5" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1704643182" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
   </component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
@@ -200,11 +224,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MainMethodGenerator" />
-        <item itemvalue="Application.test" />
-        <item itemvalue="Application.Main (1)" />
-        <item itemvalue="Application.GenCode" />
         <item itemvalue="Gradle.compilerbau [dependencies]" />
+        <item itemvalue="Application.GenCode" />
+        <item itemvalue="Application.test" />
+        <item itemvalue="Application.MainMethodGenerator" />
+        <item itemvalue="Application.Main (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -537,5 +561,16 @@
     <MESSAGE value="- field expression" />
     <MESSAGE value="x" />
     <option name="LAST_COMMIT_MESSAGE" value="x" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GenCode.java</url>
+          <line>160</line>
+          <option name="timeStamp" value="89" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
