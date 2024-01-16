@@ -25,6 +25,7 @@ import org.compilerbau.antlr.ast.IndexVariable;
 import org.compilerbau.antlr.ast.IntegerInteger;
 import org.compilerbau.antlr.ast.LoopExpression;
 import org.compilerbau.antlr.ast.NegationExpression;
+import org.compilerbau.antlr.ast.Null;
 import org.compilerbau.antlr.ast.Operator;
 import org.compilerbau.antlr.ast.Program;
 import org.compilerbau.antlr.ast.ReturnExpression;
@@ -423,6 +424,12 @@ public class GenCode implements Visitor<Void> {
     mv.visitVarInsn(Opcodes.ALOAD, env.get(ast.name()));
     ast.index().welcome(this);
     mv.visitInsn(loadArrayCode(ast.attributes().typ));
+    return null;
+  }
+
+  @Override
+  public Void visit(Null nil) {
+    mv.visitInsn(Opcodes.ACONST_NULL);
     return null;
   }
 

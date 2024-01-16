@@ -6,7 +6,6 @@ public interface Typ {
   Typ INT = new PrimInt();
   Typ BOOLEAN = new PrimBool();
   Typ VOID = new Void();
-  Typ STRING = new PrimString();
   FunTyp ARITH = new FunTyp(List.of(Typ.INT, Typ.INT), Typ.INT);
   FunTyp CMP = new FunTyp(List.of(Typ.INT, Typ.INT), Typ.BOOLEAN);
   FunTyp LOGIC = new FunTyp(List.of(Typ.BOOLEAN, Typ.BOOLEAN), Typ.BOOLEAN);
@@ -18,6 +17,8 @@ public interface Typ {
 
   String jvmType();
 
+  boolean nullable();
+
   record Void() implements Typ {
     @Override
     public String toString() {
@@ -27,6 +28,11 @@ public interface Typ {
     @Override
     public String jvmType() {
       return "V";
+    }
+
+    @Override
+    public boolean nullable() {
+      return false;
     }
   }
 
@@ -39,6 +45,11 @@ public interface Typ {
     @Override
     public String jvmType() {
       return "Z";
+    }
+
+    @Override
+    public boolean nullable() {
+      return false;
     }
   }
 
@@ -54,9 +65,10 @@ public interface Typ {
     }
 
     @Override
-    public int stackPos() {
-      return 1;
+    public boolean nullable() {
+      return false;
     }
+
   }
 
   record Ref(String name, String outer) implements Typ {
@@ -74,6 +86,11 @@ public interface Typ {
     public String jvmType() {
       return "L" + (outer() == null ? "" : outer + "$") + name() + ";";
     }
+
+    @Override
+    public boolean nullable() {
+      return true;
+    }
   }
 
   record PrimString() implements Typ {
@@ -86,12 +103,22 @@ public interface Typ {
     public String jvmType() {
       return "Ljava/lang/String;";
     }
+
+    @Override
+    public boolean nullable() {
+      return true;
+    }
   }
 
   record FunTyp(List<Typ> args, Typ typ) implements Typ {
     @Override
     public String jvmType() {
       return null;
+    }
+
+    @Override
+    public boolean nullable() {
+      return true;
     }
   }
 
@@ -100,12 +127,22 @@ public interface Typ {
     public String jvmType() {
       return null;
     }
+
+    @Override
+    public boolean nullable() {
+      return false;
+    }
   }
 
   record Array(Typ typ) implements Typ {
     @Override
     public String jvmType() {
       return "[" + typ.jvmType();
+    }
+
+    @Override
+    public boolean nullable() {
+      return true;
     }
   }
 }

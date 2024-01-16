@@ -3,6 +3,7 @@ package org.compilerbau.antlr;
 import static org.compilerbau.antlr.ast.Typ.VOID;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.compilerbau.antlr.ast.AST;
@@ -19,10 +20,11 @@ import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.IfExpression;
 import org.compilerbau.antlr.ast.IndexVariable;
-import org.compilerbau.antlr.ast.Item;
 import org.compilerbau.antlr.ast.IntegerInteger;
+import org.compilerbau.antlr.ast.Item;
 import org.compilerbau.antlr.ast.LoopExpression;
 import org.compilerbau.antlr.ast.NegationExpression;
+import org.compilerbau.antlr.ast.Null;
 import org.compilerbau.antlr.ast.Program;
 import org.compilerbau.antlr.ast.ReturnExpression;
 import org.compilerbau.antlr.ast.StringLit;
@@ -62,7 +64,10 @@ public class TypCheck implements Visitor<Boolean> {
   public Boolean visit(FunDef ast) {
     env = new HashMap<>();
     currentFunctionResult = ast.typ();
-    ast.args().forEach(arg -> env.put(arg.name(), arg.typ()));
+    ast.args().forEach(arg -> {
+      arg.welcome(this);
+      env.put(arg.name(), arg.typ());
+    });
     return ast.body().welcome(this);
   }
 
@@ -113,6 +118,18 @@ public class TypCheck implements Visitor<Boolean> {
         var rt = ast.rhs().attributes().typ;
         var oldTyp = env.get(var.name());
         if (oldTyp != null && !oldTyp.equals(rt)) {
+          return false;
+        }
+        var typeHint = var.attributes().typ;
+        if (ast.rhs() instanceof Null) {
+          if (typeHint == null || !typeHint.nullable()) {
+            System.out.println("Type=" + typeHint + " is not nullable");
+            return false;
+          }
+          ast.rhs().attributes().typ = typeHint;
+          rt = typeHint;
+        } else if (!(typeHint instanceof Typ.Unknown) && !typeHint.equals(rt)) {
+          System.out.println("Type Hint = " + typeHint + " does not match type of rhs = " + rt);
           return false;
         }
         env.put(var.name(), rt);
@@ -167,7 +184,9 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(IntegerInteger ast) {
-    if (ast.attributes().typ instanceof Typ.PrimBool) return true;
+    if (ast.attributes().typ instanceof Typ.PrimBool) {
+      return true;
+    }
     ast.attributes().typ = Typ.INT;
     return true;
   }
@@ -205,6 +224,10 @@ public class TypCheck implements Visitor<Boolean> {
     }
 
     var r = ast.expr().welcome(this);
+    if (ast.expr() instanceof Null n) {
+      n.attributes().typ = currentFunctionResult;
+    }
+
     if (!ast.expr().attributes().typ.equals(currentFunctionResult)) {
       System.out.println("Return type does not match function type");
     }
@@ -226,6 +249,24 @@ public class TypCheck implements Visitor<Boolean> {
         System.out.println("Wrong number of arguments for function: " + var.name());
         return false;
       }
+
+      // compare types
+      for (int i = 0; i < ast.args().size(); i++) {
+        var arg = ast.args().get(i);
+        var argTyp = arg.attributes().typ;
+        var funArg = fun.args().get(i);
+        var funArgTyp = funArg.typ();
+        // check if null is an argument
+        if (arg instanceof Null s) {
+          s.attributes().typ = funArgTyp;
+          continue;
+        }
+        if (!argTyp.equals(funArgTyp)) {
+          System.out.println("Argument type does not match function argument type");
+          return false;
+        }
+      }
+
       return true;
     }
 
@@ -258,6 +299,7 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(StructDeclaration ast) {
+    ast.args().forEach(p -> p.welcome(this));
     return true;
   }
 
@@ -341,6 +383,24 @@ public class TypCheck implements Visitor<Boolean> {
       System.out.println("Unknown fundef or structdef: " + ast.name());
       return false;
     }
+
+    // compare types
+    for (int i = 0; i < ast.args().size(); i++) {
+      var arg = ast.args().get(i);
+      var argTyp = arg.attributes().typ;
+      var funArg = funs.get(ast.name()).args().get(i);
+      var funArgTyp = funArg.typ();
+      // check if null is an argument
+      if (arg instanceof Null s) {
+        s.attributes().typ = funArgTyp;
+        continue;
+      }
+      if (!argTyp.equals(funArgTyp)) {
+        System.out.println("Argument type does not match function argument type");
+        return false;
+      }
+    }
+
     ast.attributes().typ = funs.get(ast.name()).typ();
     return true;
   }
@@ -373,5 +433,10 @@ public class TypCheck implements Visitor<Boolean> {
     }
     System.out.println("Variable is not an array");
     return false;
+  }
+
+  @Override
+  public Boolean visit(Null nil) {
+    return true;
   }
 }

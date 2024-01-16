@@ -19,6 +19,7 @@ import org.compilerbau.antlr.ast.IndexVariable;
 import org.compilerbau.antlr.ast.IntegerInteger;
 import org.compilerbau.antlr.ast.LoopExpression;
 import org.compilerbau.antlr.ast.NegationExpression;
+import org.compilerbau.antlr.ast.Null;
 import org.compilerbau.antlr.ast.Program;
 import org.compilerbau.antlr.ast.ReturnExpression;
 import org.compilerbau.antlr.ast.StringLit;
@@ -196,6 +197,11 @@ public class MkStackEnv implements Visitor<Map<String, Integer>> {
 
   @Override
   public Map<String, Integer> visit(IndexVariable ast) {
+    return env;
+  }
+
+  @Override
+  public Map<String, Integer> visit(Null nil) {
     return env;
   }
 }

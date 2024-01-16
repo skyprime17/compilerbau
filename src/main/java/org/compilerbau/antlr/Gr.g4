@@ -154,9 +154,7 @@ slicetype
    ;
 
 type
-   : identifier
-   | arraytype
-   | slicetype
+   : (identifier | arraytype | slicetype) '?'?
 ;
 
 literalExpression:
@@ -164,6 +162,7 @@ literalExpression:
     | INTEGER_LITERAL
     | KW_TRUE
     | KW_FALSE
+    | KW_NULL
     | identifier
 ;
 
@@ -260,6 +259,7 @@ KW_STRUCT: 'struct';
 KW_TRUE: 'true';
 KW_FALSE: 'false';
 KW_MUT: 'mut';
+KW_NULL: 'null';
 
 IDENT: Alpha (Digit|Alpha)*;
 

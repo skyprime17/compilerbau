@@ -9,6 +9,7 @@ import org.compilerbau.antlr.ast.Arg;
 import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
 import org.compilerbau.antlr.ast.ArrayExpression;
 import org.compilerbau.antlr.ast.Assign;
+import org.compilerbau.antlr.ast.Attributes;
 import org.compilerbau.antlr.ast.Block;
 import org.compilerbau.antlr.ast.BreakExpression;
 import org.compilerbau.antlr.ast.ComparisonExpression;
@@ -22,6 +23,7 @@ import org.compilerbau.antlr.ast.Item;
 import org.compilerbau.antlr.ast.IntegerInteger;
 import org.compilerbau.antlr.ast.LoopExpression;
 import org.compilerbau.antlr.ast.NegationExpression;
+import org.compilerbau.antlr.ast.Null;
 import org.compilerbau.antlr.ast.Operator;
 import org.compilerbau.antlr.ast.Program;
 import org.compilerbau.antlr.ast.ReturnExpression;
@@ -83,7 +85,12 @@ class BuildTree extends GrBaseVisitor<AST> {
     if (ctx.letStatement() != null) {
       GrParser.LetStatementContext letStatementContext = ctx.letStatement();
       var rhs = visit(letStatementContext.expression());
-      return new Assign(new Variable(letStatementContext.IDENT().getText()), rhs);
+      GrParser.TypeContext typeHint = letStatementContext.type();
+      var attributes = new Attributes();
+      if (typeHint != null) {
+        attributes.typ = ((TheTyp) visit(typeHint)).typ();
+      }
+      return new Assign(new Variable(attributes, letStatementContext.IDENT().getText()), rhs);
     }
 
     if (ctx.item() != null) {
@@ -231,6 +238,10 @@ class BuildTree extends GrBaseVisitor<AST> {
       return falseKeyword;
     }
 
+    if (literalExpressionContext.KW_NULL() != null) {
+      return new Null();
+    }
+
     return null;
   }
 
@@ -335,7 +346,7 @@ class BuildTree extends GrBaseVisitor<AST> {
     if (ctx.arrayElements().SEMICOLON() != null) {
       var defaultVal = visit(ctx.arrayElements().expression(0));
       var size = (IntegerInteger) visit(ctx.arrayElements().expression(1));
-      var elements = IntStream.range(0, (int) size.n()).mapToObj(i -> defaultVal).toList();
+      var elements = IntStream.range(0, size.n()).mapToObj(i -> defaultVal).toList();
       return new ArrayExpression(elements);
     }
 

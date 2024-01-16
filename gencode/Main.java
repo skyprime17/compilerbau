@@ -3,12 +3,13 @@
 
 public class Main {
 
-  public static boolean point_equals(Point p1, Point p2) {
-    return p1.x == p2.x && p1.y == p2.y;
+  public static LinkedList make_linked_list() {
+    return new LinkedList(1, null);
   }
 
   public static void main(String[] args) {
-    System.out.println(test.factorial(5));
-    System.out.println(test.factorial_iter(5));
+    LinkedList list = make_linked_list();
+    System.out.println(list.value);
+    System.out.println(list.next);
   }
 }
