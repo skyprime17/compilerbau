@@ -196,6 +196,24 @@ class BuildTree extends GrBaseVisitor<AST> {
   }
 
   @Override
+  public AST visitCompoundAssignmentExpression(GrParser.CompoundAssignmentExpressionContext ctx) {
+    var op = switch (ctx.compoundAssignOperator().getText()) {
+      case "+=" -> Operator.add;
+      case "-=" -> Operator.sub;
+      case "*=" -> Operator.mul;
+      case "/=" -> Operator.div;
+      case "%=" -> Operator.mod;
+      case "^=" -> Operator.caret;
+      case "&=" -> Operator.and;
+      case "|=" -> Operator.or;
+      default -> throw new RuntimeException("Unknown operator");
+    };
+    var lhs = visit(ctx.expression(0));
+    var rhs = visit(ctx.expression(1));
+    return new Assign(lhs, new ArithmeticOrLogicalExpression(lhs, op, rhs));
+  }
+
+  @Override
   public AST visitNegationExpression(GrParser.NegationExpressionContext ctx) {
     var op = ctx.NOT() != null ? Operator.not : Operator.sub;
     var right = visit(ctx.expression());

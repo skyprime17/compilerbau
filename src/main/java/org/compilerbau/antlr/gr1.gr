@@ -12,7 +12,13 @@ pub fn make_linked_list() -> LinkedList {
 }
 
 pub fn test2() -> int {
-    return ((2+3)*4) / 2;
+    let x = 25;
+    x *= 2567;
+    x += 25;
+    x -= 25;
+    x /= 25;
+    x %= 25;
+    return x;
 }
 
 
