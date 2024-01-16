@@ -17,6 +17,7 @@ import org.compilerbau.antlr.ast.ContinueExpression;
 import org.compilerbau.antlr.ast.FieldExpression;
 import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
+import org.compilerbau.antlr.ast.GroupedExpression;
 import org.compilerbau.antlr.ast.IfExpression;
 import org.compilerbau.antlr.ast.IndexVariable;
 import org.compilerbau.antlr.ast.Item;
@@ -111,6 +112,11 @@ class BuildTree extends GrBaseVisitor<AST> {
     var arr = ctx.expression(0).getText();
     var index = visit(ctx.expression(1));
     return new IndexVariable(arr, index);
+  }
+
+  @Override
+  public AST visitGroupedExpression(GrParser.GroupedExpressionContext ctx) {
+    return new GroupedExpression(visit(ctx.expression()));
   }
 
   @Override

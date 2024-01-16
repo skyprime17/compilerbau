@@ -49,4 +49,6 @@ public interface Visitor<R> {
   R visit(IndexVariable ast);
 
   R visit(Null nil);
+
+  R visit(GroupedExpression groupedExpression);
 }

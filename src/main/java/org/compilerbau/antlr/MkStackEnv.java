@@ -14,6 +14,7 @@ import org.compilerbau.antlr.ast.ComparisonExpression;
 import org.compilerbau.antlr.ast.ContinueExpression;
 import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
+import org.compilerbau.antlr.ast.GroupedExpression;
 import org.compilerbau.antlr.ast.IfExpression;
 import org.compilerbau.antlr.ast.IndexVariable;
 import org.compilerbau.antlr.ast.IntegerInteger;
@@ -202,6 +203,11 @@ public class MkStackEnv implements Visitor<Map<String, Integer>> {
 
   @Override
   public Map<String, Integer> visit(Null nil) {
+    return env;
+  }
+
+  @Override
+  public Map<String, Integer> visit(GroupedExpression groupedExpression) {
     return env;
   }
 }

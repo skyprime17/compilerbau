@@ -18,6 +18,7 @@ import org.compilerbau.antlr.ast.ContinueExpression;
 import org.compilerbau.antlr.ast.FieldExpression;
 import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
+import org.compilerbau.antlr.ast.GroupedExpression;
 import org.compilerbau.antlr.ast.IfExpression;
 import org.compilerbau.antlr.ast.IndexVariable;
 import org.compilerbau.antlr.ast.IntegerInteger;
@@ -438,5 +439,10 @@ public class TypCheck implements Visitor<Boolean> {
   @Override
   public Boolean visit(Null nil) {
     return true;
+  }
+
+  @Override
+  public Boolean visit(GroupedExpression groupedExpression) {
+    return groupedExpression.expr().welcome(this);
   }
 }

@@ -20,6 +20,7 @@ import org.compilerbau.antlr.ast.ContinueExpression;
 import org.compilerbau.antlr.ast.FieldExpression;
 import org.compilerbau.antlr.ast.FunCall;
 import org.compilerbau.antlr.ast.FunDef;
+import org.compilerbau.antlr.ast.GroupedExpression;
 import org.compilerbau.antlr.ast.IfExpression;
 import org.compilerbau.antlr.ast.IndexVariable;
 import org.compilerbau.antlr.ast.IntegerInteger;
@@ -430,6 +431,12 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(Null nil) {
     mv.visitInsn(Opcodes.ACONST_NULL);
+    return null;
+  }
+
+  @Override
+  public Void visit(GroupedExpression groupedExpression) {
+    groupedExpression.expr().welcome(this);
     return null;
   }
 
