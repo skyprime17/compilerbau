@@ -9,6 +9,7 @@ import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
 import org.compilerbau.antlr.ast.ArrayExpression;
 import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.Block;
+import org.compilerbau.antlr.ast.BooleanBoolean;
 import org.compilerbau.antlr.ast.BreakExpression;
 import org.compilerbau.antlr.ast.ComparisonExpression;
 import org.compilerbau.antlr.ast.ContinueExpression;
@@ -208,6 +209,11 @@ public class MkStackEnv implements Visitor<Map<String, Integer>> {
 
   @Override
   public Map<String, Integer> visit(GroupedExpression groupedExpression) {
+    return env;
+  }
+
+  @Override
+  public Map<String, Integer> visit(BooleanBoolean booleanBoolean) {
     return env;
   }
 }

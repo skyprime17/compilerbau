@@ -1,40 +1,16 @@
 package test;
 
 
-struct LinkedList {
-    value: int,
-    next: LinkedList
-}
-
-pub fn make_linked_list() -> LinkedList {
-    let head = LinkedList { value: 0, next: null };
-    return head;
-}
-
-pub fn test2() -> int {
-    let x = 25;
-    x *= 2567;
-    x += 25;
-    x -= 25;
-    x /= 25;
-    x %= 25;
+pub fn test(x: Int) -> Int? {
     return x;
 }
 
+pub fn calls_nullable() -> Int {
+    let s:Int = test(2);
+    return s;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+pub fn test5() -> Int? {
+  let s:Int? = null;
+  return s;
+}

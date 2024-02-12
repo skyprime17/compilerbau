@@ -1,10 +1,14 @@
 package org.compilerbau.antlr;
 
+import static org.compilerbau.antlr.ast.Typ.BOXED_BOOLEAN;
+import static org.compilerbau.antlr.ast.Typ.BOXED_INT;
+
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -14,6 +18,7 @@ import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
 import org.compilerbau.antlr.ast.ArrayExpression;
 import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.Block;
+import org.compilerbau.antlr.ast.BooleanBoolean;
 import org.compilerbau.antlr.ast.BreakExpression;
 import org.compilerbau.antlr.ast.ComparisonExpression;
 import org.compilerbau.antlr.ast.ContinueExpression;
@@ -116,7 +121,7 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(Variable ast) {
-    mv.visitVarInsn(loadCode(ast.attributes().typ), env.get(ast.name()));
+    mv.visitVarInsn(Opcodes.ALOAD, env.get(ast.name()));
     return null;
   }
 
@@ -146,13 +151,13 @@ public class GenCode implements Visitor<Void> {
     switch (ast.var()) {
       case Variable var -> {
         ast.rhs().welcome(this);
-        mv.visitVarInsn(storeCode(ast.rhs().attributes().typ), env.get(var.name()));
+        mv.visitVarInsn(Opcodes.ASTORE, env.get(var.name()));
       }
       case IndexVariable iv -> {
         mv.visitVarInsn(Opcodes.ALOAD, env.get(iv.name()));
         iv.index().welcome(this);
         ast.rhs().welcome(this);
-        mv.visitInsn(storeArrayCode(iv.attributes().typ));
+        mv.visitInsn(Opcodes.AASTORE);
       }
       case FieldExpression fieldExpression -> {
         if (fieldExpression.expression() instanceof Variable v) {
@@ -180,8 +185,15 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(ArithmeticOrLogicalExpression ast) {
     ast.left().welcome(this);
+    if (ast.left().attributes().typ.equals(BOXED_INT)) {
+      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
+    }
     ast.right().welcome(this);
+    if (ast.right().attributes().typ.equals(BOXED_INT)) {
+      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
+    }
     mv.visitInsn(jvmOp(ast.op()));
+
     if (ast.op().compare) {
       var end = new Label();
       var ifCase = new Label();
@@ -200,6 +212,12 @@ public class GenCode implements Visitor<Void> {
       mv.visitLabel(ifCase);
       mv.visitInsn(Opcodes.ICONST_1);
       mv.visitLabel(end);
+    } else {
+      if (ast.left().attributes().typ.equals(BOXED_INT) && ast.right().attributes().typ.equals(BOXED_INT)) {
+        mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
+      } else if (ast.left().attributes().typ.equals(BOXED_BOOLEAN) && ast.right().attributes().typ.equals(BOXED_BOOLEAN)) {
+        mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;", false);
+      }
     }
     return null;
   }
@@ -207,10 +225,12 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(NegationExpression ast) {
     ast.expr().welcome(this);
-    switch (ast.expr().attributes().typ) {
-      case Typ.PrimInt p -> mv.visitInsn(Opcodes.INEG);
-      case Typ.PrimBool b -> mv.visitInsn(Opcodes.ICONST_1);
-      default -> throw new RuntimeException("Unknown type");
+    if (ast.expr().attributes().typ.equals(BOXED_INT)) {
+      //mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
+      mv.visitInsn(Opcodes.INEG);
+    }
+    if (ast.expr().attributes().typ.equals(BOXED_BOOLEAN)) {
+      mv.visitInsn(Opcodes.ICONST_1);
     }
     return null;
   }
@@ -225,13 +245,8 @@ public class GenCode implements Visitor<Void> {
       return null;
     }
 
-    switch (ast.expr().attributes().typ) {
-      case Typ.PrimInt p -> mv.visitInsn(Opcodes.IRETURN);
-      case Typ.PrimBool b -> mv.visitInsn(Opcodes.IRETURN);
-      case Typ.PrimString s -> mv.visitInsn(Opcodes.ARETURN);
-      case Typ.Ref r -> mv.visitInsn(Opcodes.ARETURN);
-      case Typ.Array a -> mv.visitInsn(Opcodes.ARETURN);
-      default -> throw new RuntimeException("Unknown type");
+    if (ast.expr().attributes().typ != null) {
+      mv.visitInsn(Opcodes.ARETURN);
     }
     return null;
   }
@@ -283,7 +298,7 @@ public class GenCode implements Visitor<Void> {
     var i = 1;
     for (var arg : ast.args()) {
       constr.visitVarInsn(Opcodes.ALOAD, 0);
-      constr.visitVarInsn(loadCode(arg.typ()), i);
+      constr.visitVarInsn(Opcodes.ALOAD, i);
       constr.visitFieldInsn(Opcodes.PUTFIELD, ast.name(), arg.name(), arg.typ().jvmType());
       i += arg.typ().stackPos();
     }
@@ -355,7 +370,13 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(ComparisonExpression ast) {
     ast.left().welcome(this);
+    if (ast.left().attributes().typ.equals(BOXED_INT)) {
+      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
+    }
     ast.right().welcome(this);
+    if (ast.right().attributes().typ.equals(BOXED_INT)) {
+      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
+    }
     //mv.visitInsn(jvmOp(ast.op()));
     var end = new Label();
     var ifCase = new Label();
@@ -379,6 +400,7 @@ public class GenCode implements Visitor<Void> {
     mv.visitLabel(ifCase);
     mv.visitInsn(Opcodes.ICONST_1);
     mv.visitLabel(end);
+    //mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;", false);
     return null;
   }
 
@@ -398,33 +420,58 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(ArrayExpression ast) {
-    var opCode = ast.items().size() < 127 ? Opcodes.BIPUSH : Opcodes.SIPUSH;
-
-    mv.visitIntInsn(opCode, ast.items().size());
+    //int opCode = getStaticPushOpCode(ast.items().size());
+    //var opCode = ast.items().size() < 127 ? Opcodes.BIPUSH : Opcodes.SIPUSH;
+    getStaticPush(ast.items().size()).accept(mv);
+    //mv.visitIntInsn(opCode, ast.items().size());
 
     Typ typ = ((Typ.Array) ast.attributes().typ).typ();
     if (typ instanceof Typ.Ref ref) {
       mv.visitTypeInsn(Opcodes.ANEWARRAY, ref.name());
     } else {
-      mv.visitIntInsn(Opcodes.NEWARRAY, arrayType(typ));
+      mv.visitTypeInsn(Opcodes.ANEWARRAY, typ.toString());
     }
 
     int s = 0;
     for (AST item : ast.items()) {
       mv.visitInsn(Opcodes.DUP);
-      mv.visitIntInsn(opCode, s++);
+      //mv.visitIntInsn(opCode, s++);
+      getStaticPush(s++).accept(mv);
       item.welcome(this);
-      mv.visitInsn(storeArrayCode(item.attributes().typ));
+      mv.visitInsn(Opcodes.AASTORE);
     }
 
     return null;
+  }
+
+  private Consumer<MethodVisitor> getStaticPush(Integer val) {
+    return mv -> {
+      switch (val) {
+        case -1 -> mv.visitInsn(Opcodes.ICONST_M1);
+        case 0 -> mv.visitInsn(Opcodes.ICONST_0);
+        case 1 -> mv.visitInsn(Opcodes.ICONST_1);
+        case 2 -> mv.visitInsn(Opcodes.ICONST_2);
+        case 3 -> mv.visitInsn(Opcodes.ICONST_3);
+        case 4 -> mv.visitInsn(Opcodes.ICONST_4);
+        case 5 -> mv.visitInsn(Opcodes.ICONST_5);
+        default -> {
+          if (val >= -128 && val <= 127) {
+            mv.visitIntInsn(Opcodes.BIPUSH, val);
+          } else if (val >= -32768 && val <= 32767) {
+            mv.visitIntInsn(Opcodes.SIPUSH, val);
+          } else {
+            mv.visitLdcInsn(val);
+          }
+        }
+      }
+    };
   }
 
   @Override
   public Void visit(IndexVariable ast) {
     mv.visitVarInsn(Opcodes.ALOAD, env.get(ast.name()));
     ast.index().welcome(this);
-    mv.visitInsn(loadArrayCode(ast.attributes().typ));
+    mv.visitInsn(Opcodes.AALOAD);
     return null;
   }
 
@@ -441,8 +488,22 @@ public class GenCode implements Visitor<Void> {
   }
 
   @Override
+  public Void visit(BooleanBoolean booleanBoolean) {
+    mv.visitInsn(booleanBoolean.n() ? Opcodes.ICONST_1 : Opcodes.ICONST_0);
+    mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;", false);
+    return null;
+  }
+
+  @Override
   public Void visit(IntegerInteger ast) {
-    mv.visitLdcInsn(ast.n());
+    if (ast.n() == null) {
+      mv.visitInsn(Opcodes.ACONST_NULL);
+      return null;
+    }
+    getStaticPush(ast.n()).accept(mv);
+    if (ast.attributes().needsBoxing) {
+      mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
+    }
     return null;
   }
 
@@ -461,49 +522,6 @@ public class GenCode implements Visitor<Void> {
       case eq -> Opcodes.IF_ICMPEQ;
       case neq -> Opcodes.IF_ICMPNE;
       default -> 0;
-    };
-  }
-
-  private static int loadCode(Typ t) {
-    return switch (t) {
-      case Typ.PrimInt p -> Opcodes.ILOAD;
-      case Typ.PrimBool b -> Opcodes.ILOAD;
-      default -> Opcodes.ALOAD;
-    };
-  }
-
-  private static int loadArrayCode(Typ t) {
-    return switch (t) {
-      case Typ.PrimInt p -> Opcodes.IALOAD;
-      case Typ.PrimBool b -> Opcodes.IALOAD;
-      default -> Opcodes.AALOAD;
-    };
-  }
-
-
-  private static int storeArrayCode(Typ t) {
-    return switch (t) {
-      case Typ.PrimInt p -> Opcodes.IASTORE;
-      case Typ.PrimBool b -> Opcodes.IASTORE;
-      default -> Opcodes.AASTORE;
-    };
-  }
-
-  private static int storeCode(Typ t) {
-    return switch (t) {
-      case Typ.PrimInt p -> Opcodes.ISTORE;
-      case Typ.PrimBool b -> Opcodes.ISTORE;
-      case Typ.Array a -> Opcodes.ASTORE;
-      default -> Opcodes.ASTORE;
-    };
-  }
-
-
-  private static int arrayType(Typ t) {
-    return switch (t) {
-      case Typ.PrimInt p -> Opcodes.T_INT;
-      case Typ.PrimBool b -> Opcodes.T_BOOLEAN;
-      default -> throw new IllegalStateException("Unexpected value: " + t);
     };
   }
 

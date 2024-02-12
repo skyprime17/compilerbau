@@ -51,4 +51,6 @@ public interface Visitor<R> {
   R visit(Null nil);
 
   R visit(GroupedExpression groupedExpression);
+
+  R visit(BooleanBoolean booleanBoolean);
 }

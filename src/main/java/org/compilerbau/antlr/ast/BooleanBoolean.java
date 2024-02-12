@@ -1,8 +1,8 @@
 package org.compilerbau.antlr.ast;
 
 
-public record IntegerInteger(Attributes attributes, Integer n) implements AST {
-  public IntegerInteger(int n) {
+public record BooleanBoolean(Attributes attributes, Boolean n) implements AST {
+  public BooleanBoolean(Boolean n) {
     this(new Attributes(), n);
   }
 

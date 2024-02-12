@@ -11,6 +11,7 @@ import org.compilerbau.antlr.ast.ArrayExpression;
 import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.Attributes;
 import org.compilerbau.antlr.ast.Block;
+import org.compilerbau.antlr.ast.BooleanBoolean;
 import org.compilerbau.antlr.ast.BreakExpression;
 import org.compilerbau.antlr.ast.ComparisonExpression;
 import org.compilerbau.antlr.ast.ContinueExpression;
@@ -20,8 +21,8 @@ import org.compilerbau.antlr.ast.FunDef;
 import org.compilerbau.antlr.ast.GroupedExpression;
 import org.compilerbau.antlr.ast.IfExpression;
 import org.compilerbau.antlr.ast.IndexVariable;
-import org.compilerbau.antlr.ast.Item;
 import org.compilerbau.antlr.ast.IntegerInteger;
+import org.compilerbau.antlr.ast.Item;
 import org.compilerbau.antlr.ast.LoopExpression;
 import org.compilerbau.antlr.ast.NegationExpression;
 import org.compilerbau.antlr.ast.Null;
@@ -89,7 +90,9 @@ class BuildTree extends GrBaseVisitor<AST> {
       GrParser.TypeContext typeHint = letStatementContext.type();
       var attributes = new Attributes();
       if (typeHint != null) {
-        attributes.typ = ((TheTyp) visit(typeHint)).typ();
+        TheTyp visit = (TheTyp) visit(typeHint);
+        attributes.typ = visit.typ();
+        attributes.nullable = visit.nullable();
       }
       return new Assign(new Variable(attributes, letStatementContext.IDENT().getText()), rhs);
     }
@@ -251,14 +254,14 @@ class BuildTree extends GrBaseVisitor<AST> {
     }
 
     if (literalExpressionContext.KW_TRUE() != null) {
-      var trueKeyword = new IntegerInteger(1);
-      trueKeyword.attributes().typ = new Typ.PrimBool();
+      var trueKeyword = new BooleanBoolean(true);
+      trueKeyword.attributes().typ = Typ.BOXED_BOOLEAN;
       return trueKeyword;
     }
 
     if (literalExpressionContext.KW_FALSE() != null) {
-      var falseKeyword = new IntegerInteger(0);
-      falseKeyword.attributes().typ = new Typ.PrimBool();
+      var falseKeyword = new BooleanBoolean(false);
+      falseKeyword.attributes().typ = Typ.BOXED_BOOLEAN;
       return falseKeyword;
     }
 
@@ -342,7 +345,10 @@ class BuildTree extends GrBaseVisitor<AST> {
 
   @Override
   public AST visitParam(GrParser.ParamContext ctx) {
-    return new Arg(ctx.IDENT().getText(), ((TheTyp) visit(ctx.type())).typ());
+    TheTyp typ = ((TheTyp) visit(ctx.type()));
+    Attributes attributes = new Attributes();
+    attributes.nullable = typ.nullable();
+    return new Arg(attributes, ctx.IDENT().getText(), typ.typ());
   }
 
   @Override
@@ -384,9 +390,12 @@ class BuildTree extends GrBaseVisitor<AST> {
     var visibility = ctx.visbility() == null ? Visibility.PRIVATE :
         ((TheVisibility) visit(ctx.visbility())).visibility();
     var params = ctx.param().stream().map(p -> (Arg) visit(p)).toList();
-    var returnType = ((TheTyp) visit(ctx.type())).typ();
+    var type = ((TheTyp) visit(ctx.type()));
+    var returnType = type.typ();
     var body = visit(ctx.blockExpression());
-    return new FunDef(visibility, funcName, params, returnType, body);
+    var attributes = new Attributes();
+    attributes.nullable = type.nullable();
+    return new FunDef(attributes, visibility, funcName, params, returnType, body);
   }
 
   @Override
@@ -398,12 +407,13 @@ class BuildTree extends GrBaseVisitor<AST> {
       return visit(ctx.arraytype());
     }
     var t = ctx.identifier().getText();
-    return switch (t) {
-      case "int" -> new TheTyp(new Typ.PrimInt());
-      case "string" -> new TheTyp(new Typ.PrimString());
-      case "bool" -> new TheTyp(new Typ.PrimBool());
-      case "void" -> new TheTyp(new Typ.Void());
-      default -> new TheTyp(new Typ.Ref(t));
+    var nullable = ctx.KW_NULLABLE() != null;
+    return switch (ctx.identifier().getText()) {
+      case "Int" -> new TheTyp(Typ.BOXED_INT, nullable);
+      case "String" -> new TheTyp(Typ.BOXED_STRING, nullable);
+      case "Bool" -> new TheTyp(Typ.BOXED_BOOLEAN, nullable);
+      case "Void" -> new TheTyp(Typ.BOXED_VOID, nullable);
+      default -> new TheTyp(new Typ.Ref(t), nullable);
     };
   }
 
@@ -411,13 +421,13 @@ class BuildTree extends GrBaseVisitor<AST> {
   public AST visitSlicetype(GrParser.SlicetypeContext ctx) {
     if (ctx.type().identifier() != null) {
       var type = switch (ctx.type().identifier().getText()) {
-        case "int" -> new Typ.PrimInt();
-        case "string" -> new Typ.PrimString();
-        case "boolean" -> new Typ.PrimBool();
-        case "void" -> new Typ.Void();
+        case "Int" -> Typ.BOXED_INT;
+        case "String" -> Typ.BOXED_STRING;
+        case "Boolean" -> Typ.BOXED_BOOLEAN;
+        case "Void" -> Typ.BOXED_VOID;
         default -> new Typ.Ref(ctx.type().identifier().getText());
       };
-      return new TheTyp(new Typ.Array(type));
+      return new TheTyp(new Typ.Array(type), ctx.type().KW_NULLABLE() != null);
     }
     return visit(ctx.type());
   }

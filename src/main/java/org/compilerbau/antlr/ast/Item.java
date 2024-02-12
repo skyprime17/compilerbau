@@ -9,5 +9,7 @@ public sealed interface Item permits FunDef, StructDeclaration {
 
   Typ typ();
 
+  Attributes attributes();
+
   <R> R welcome(Visitor<R> vis);
 }

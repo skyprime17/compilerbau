@@ -1,9 +1,8 @@
 package org.compilerbau.antlr;
 
-import static org.compilerbau.antlr.ast.Typ.VOID;
+import static org.compilerbau.antlr.ast.Typ.BOXED_VOID;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.compilerbau.antlr.ast.AST;
@@ -12,6 +11,7 @@ import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
 import org.compilerbau.antlr.ast.ArrayExpression;
 import org.compilerbau.antlr.ast.Assign;
 import org.compilerbau.antlr.ast.Block;
+import org.compilerbau.antlr.ast.BooleanBoolean;
 import org.compilerbau.antlr.ast.BreakExpression;
 import org.compilerbau.antlr.ast.ComparisonExpression;
 import org.compilerbau.antlr.ast.ContinueExpression;
@@ -56,7 +56,7 @@ public class TypCheck implements Visitor<Boolean> {
     var result = true;
     ast.items().forEach(item -> funs.put(item.name(), item));
     for (var fun : ast.items()) {
-      result = fun.welcome(this);
+      result &= fun.welcome(this);
     }
     return result;
   }
@@ -104,10 +104,11 @@ public class TypCheck implements Visitor<Boolean> {
   public Boolean visit(Block ast) {
     boolean r = true;
     for (var st : ast.statements()) {
-      r = r && st.welcome(this);
+      Boolean welcome = st.welcome(this);
+      r &= welcome;
     }
 
-    ast.attributes().typ = VOID;
+    ast.attributes().typ = BOXED_VOID;
     return r;
   }
 
@@ -116,15 +117,17 @@ public class TypCheck implements Visitor<Boolean> {
     switch (ast.var()) {
       case Variable var -> {
         var r = ast.rhs().welcome(this);
-        var rt = ast.rhs().attributes().typ;
+        var rtAttr = ast.rhs().attributes();
+        var rt = rtAttr.typ;
         var oldTyp = env.get(var.name());
         if (oldTyp != null && !oldTyp.equals(rt)) {
           return false;
         }
         var typeHint = var.attributes().typ;
+        var typeHintNullable = var.attributes().nullable;
         if (ast.rhs() instanceof Null) {
-          if (typeHint == null || !typeHint.nullable()) {
-            System.out.println("Type=" + typeHint + " is not nullable");
+          if (typeHint == null|| typeHint instanceof Typ.Unknown) {
+            System.out.println("Variable with null needs type hint");
             return false;
           }
           ast.rhs().attributes().typ = typeHint;
@@ -135,6 +138,10 @@ public class TypCheck implements Visitor<Boolean> {
         }
         env.put(var.name(), rt);
         ast.attributes().typ = rt;
+        if (!typeHintNullable && rtAttr.nullable) {
+          System.out.println("Variable is nullable but rhs is not");
+          return false;
+        }
         return r;
       }
       case IndexVariable iv -> {
@@ -153,7 +160,7 @@ public class TypCheck implements Visitor<Boolean> {
           return false;
         }
         iv.attributes().typ = rt;
-        //env.put(iv.name(), rt);
+        env.put(iv.name(), rt);
         return r;
       }
       case FieldExpression fieldExpression -> {
@@ -185,10 +192,10 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(IntegerInteger ast) {
-    if (ast.attributes().typ instanceof Typ.PrimBool) {
+    if (ast.attributes().typ.equals(Typ.BOXED_INT)) {
       return true;
     }
-    ast.attributes().typ = Typ.INT;
+    ast.attributes().typ = Typ.BOXED_INT;
     return true;
   }
 
@@ -215,7 +222,10 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(ReturnExpression ast) {
-    if (ast.expr() == null && !currentFunctionResult.equals(Typ.VOID)) {
+    if (ast.expr() != null) {
+      ast.expr().welcome(this);
+    }
+    if (ast.expr() == null && !currentFunctionResult.equals(Typ.BOXED_VOID)) {
       System.out.println("Return type does not match function type");
       return false;
     }
@@ -250,6 +260,7 @@ public class TypCheck implements Visitor<Boolean> {
         System.out.println("Wrong number of arguments for function: " + var.name());
         return false;
       }
+      ast.attributes().nullable = fun.attributes().nullable;
 
       // compare types
       for (int i = 0; i < ast.args().size(); i++) {
@@ -259,6 +270,10 @@ public class TypCheck implements Visitor<Boolean> {
         var funArgTyp = funArg.typ();
         // check if null is an argument
         if (arg instanceof Null s) {
+          if (!funArg.attributes().nullable) {
+            System.out.println("Arg: " + funArg.name() + " is not nullable");
+            return false;
+          }
           s.attributes().typ = funArgTyp;
           continue;
         }
@@ -289,7 +304,7 @@ public class TypCheck implements Visitor<Boolean> {
         }
         String fieldMethodCallName = fieldExpression.fieldName();
         if (expression.attributes().typ instanceof Typ.Array e && fieldMethodCallName.equals("len")) {
-          ast.attributes().typ = Typ.INT;
+          ast.attributes().typ = Typ.BOXED_INT;
           return true;
         }
       }
@@ -355,7 +370,7 @@ public class TypCheck implements Visitor<Boolean> {
   public Boolean visit(LoopExpression ast) {
     var cr = ast.cond().welcome(this);
     var br = ast.body().welcome(this);
-    ast.attributes().typ = VOID;
+    ast.attributes().typ = BOXED_VOID;
     return cr && br;
   }
 
@@ -430,6 +445,7 @@ public class TypCheck implements Visitor<Boolean> {
     }
     if (typ instanceof Typ.Array) {
       ast.attributes().typ = ((Typ.Array) typ).typ();
+      ast.index().attributes().needsBoxing = false;
       return true;
     }
     System.out.println("Variable is not an array");
@@ -438,11 +454,17 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(Null nil) {
+    nil.attributes().nullable = true;
     return true;
   }
 
   @Override
   public Boolean visit(GroupedExpression groupedExpression) {
     return groupedExpression.expr().welcome(this);
+  }
+
+  @Override
+  public Boolean visit(BooleanBoolean booleanBoolean) {
+    return true;
   }
 }

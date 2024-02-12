@@ -141,7 +141,7 @@ identifier:
 ;
 
 param:
-  'mut'? IDENT COLON type
+  KW_MUT? IDENT COLON type
 ;
 
 
@@ -154,7 +154,7 @@ slicetype
    ;
 
 type
-   : (identifier | arraytype | slicetype) '?'?
+   : (identifier | arraytype | slicetype) KW_NULLABLE?
 ;
 
 literalExpression:
@@ -260,6 +260,7 @@ KW_TRUE: 'true';
 KW_FALSE: 'false';
 KW_MUT: 'mut';
 KW_NULL: 'null';
+KW_NULLABLE: '?';
 
 IDENT: Alpha (Digit|Alpha)*;
 
