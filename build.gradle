@@ -20,8 +20,21 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation 'org.antlr:antlr4-runtime:4.13.1'
     implementation 'org.ow2.asm:asm:9.6'
+    implementation 'commons-io:commons-io:2.15.1'
 }
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.compilerbau.Main'
+        )
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }

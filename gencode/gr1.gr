@@ -1,0 +1,24 @@
+package test;
+
+struct Point {
+    x: Int,
+    y: Int
+}
+
+pub fn mutatePoint(mut p: Point, x:Int, y:Int) -> Point? {
+    p.x = x;
+    p.y = y;
+    if p.x + p.y > 10 {
+        return null;
+    }
+    return p;
+}
+
+pub fn createPoint(x: Int, y:Int) -> Point {
+    return Point { x: x, y: y };
+}
+
+pub fn nullablePoint(x: Int, y:Int) -> Point? {
+    return null;
+}
+
