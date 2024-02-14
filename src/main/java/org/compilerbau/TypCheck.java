@@ -1,41 +1,41 @@
-package org.compilerbau.antlr;
+package org.compilerbau;
 
-import static org.compilerbau.antlr.ast.Typ.BOXED_VOID;
+import static org.compilerbau.ast.Typ.BOXED_VOID;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.compilerbau.antlr.ast.AST;
-import org.compilerbau.antlr.ast.Arg;
-import org.compilerbau.antlr.ast.ArithmeticOrLogicalExpression;
-import org.compilerbau.antlr.ast.ArrayExpression;
-import org.compilerbau.antlr.ast.Assign;
-import org.compilerbau.antlr.ast.Block;
-import org.compilerbau.antlr.ast.BooleanBoolean;
-import org.compilerbau.antlr.ast.BreakExpression;
-import org.compilerbau.antlr.ast.ComparisonExpression;
-import org.compilerbau.antlr.ast.ContinueExpression;
-import org.compilerbau.antlr.ast.FieldExpression;
-import org.compilerbau.antlr.ast.FunCall;
-import org.compilerbau.antlr.ast.FunDef;
-import org.compilerbau.antlr.ast.GroupedExpression;
-import org.compilerbau.antlr.ast.IfExpression;
-import org.compilerbau.antlr.ast.IndexVariable;
-import org.compilerbau.antlr.ast.IntegerInteger;
-import org.compilerbau.antlr.ast.Item;
-import org.compilerbau.antlr.ast.LoopExpression;
-import org.compilerbau.antlr.ast.NegationExpression;
-import org.compilerbau.antlr.ast.Null;
-import org.compilerbau.antlr.ast.Program;
-import org.compilerbau.antlr.ast.ReturnExpression;
-import org.compilerbau.antlr.ast.StringLit;
-import org.compilerbau.antlr.ast.StructCall;
-import org.compilerbau.antlr.ast.StructDeclaration;
-import org.compilerbau.antlr.ast.TheTyp;
-import org.compilerbau.antlr.ast.TheVisibility;
-import org.compilerbau.antlr.ast.Typ;
-import org.compilerbau.antlr.ast.Variable;
-import org.compilerbau.antlr.ast.Visitor;
+import org.compilerbau.ast.AST;
+import org.compilerbau.ast.Arg;
+import org.compilerbau.ast.ArithmeticOrLogicalExpression;
+import org.compilerbau.ast.ArrayExpression;
+import org.compilerbau.ast.Assign;
+import org.compilerbau.ast.Block;
+import org.compilerbau.ast.BooleanBoolean;
+import org.compilerbau.ast.BreakExpression;
+import org.compilerbau.ast.ComparisonExpression;
+import org.compilerbau.ast.ContinueExpression;
+import org.compilerbau.ast.FieldExpression;
+import org.compilerbau.ast.FunCall;
+import org.compilerbau.ast.FunDef;
+import org.compilerbau.ast.GroupedExpression;
+import org.compilerbau.ast.IfExpression;
+import org.compilerbau.ast.IndexVariable;
+import org.compilerbau.ast.IntegerInteger;
+import org.compilerbau.ast.Item;
+import org.compilerbau.ast.LoopExpression;
+import org.compilerbau.ast.NegationExpression;
+import org.compilerbau.ast.Null;
+import org.compilerbau.ast.Program;
+import org.compilerbau.ast.ReturnExpression;
+import org.compilerbau.ast.StringLit;
+import org.compilerbau.ast.StructCall;
+import org.compilerbau.ast.StructDeclaration;
+import org.compilerbau.ast.TheTyp;
+import org.compilerbau.ast.TheVisibility;
+import org.compilerbau.ast.Typ;
+import org.compilerbau.ast.Variable;
+import org.compilerbau.ast.Visitor;
 
 public class TypCheck implements Visitor<Boolean> {
   private Map<String, Typ> env = new HashMap<>();
@@ -43,7 +43,7 @@ public class TypCheck implements Visitor<Boolean> {
 
 
   //private final static Map<String, FunDef> standardLibFuns = new HashMap<>();
-  private Typ currentFunctionResult;
+  private FunDef currentFunctionResult;
 
   /*
   static {
@@ -64,7 +64,7 @@ public class TypCheck implements Visitor<Boolean> {
   @Override
   public Boolean visit(FunDef ast) {
     env = new HashMap<>();
-    currentFunctionResult = ast.typ();
+    currentFunctionResult = ast;
     ast.args().forEach(arg -> {
       arg.welcome(this);
       env.put(arg.name(), arg.typ());
@@ -79,7 +79,7 @@ public class TypCheck implements Visitor<Boolean> {
       return false;
     }
     if (typ instanceof Typ.Unknown) {
-      //TODO
+      throw new RuntimeException("Type not resolved");
     }
     ast.attributes().typ = typ;
     return true;
@@ -114,20 +114,43 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(Assign ast) {
+    var r = ast.rhs().welcome(this);
+    if (!r) {
+      return false;
+    }
+
     switch (ast.var()) {
       case Variable var -> {
-        var r = ast.rhs().welcome(this);
+        if (var.init() && env.get(var.name()) != null) {
+          System.out.println("Variable already defined in this scope: " + var.name());
+          return false;
+        } else if (!var.init()) {
+          var oldTyp = env.get(var.name());
+          if (oldTyp == null) {
+            System.out.println("Cannot resolve symbol: " + var.name());
+            return false;
+          }
+          boolean mutable = ast.var().attributes().mutable;
+          if (!mutable) {
+            System.out.println("Variable is not mutable: " + var.name());
+            return false;
+          }
+        }
+
         var rtAttr = ast.rhs().attributes();
         var rt = rtAttr.typ;
         var oldTyp = env.get(var.name());
         if (oldTyp != null && !oldTyp.equals(rt)) {
+          System.out.println("Variable type does not match rhs type");
           return false;
         }
+
         var typeHint = var.attributes().typ;
         var typeHintNullable = var.attributes().nullable;
+
         if (ast.rhs() instanceof Null) {
-          if (typeHint == null|| typeHint instanceof Typ.Unknown) {
-            System.out.println("Variable with null needs type hint");
+          if (typeHint == null || typeHint instanceof Typ.Unknown) {
+            System.out.println("Variable with null needs type hint as it cannot be inferred");
             return false;
           }
           ast.rhs().attributes().typ = typeHint;
@@ -138,18 +161,19 @@ public class TypCheck implements Visitor<Boolean> {
         }
         env.put(var.name(), rt);
         ast.attributes().typ = rt;
+
         if (!typeHintNullable && rtAttr.nullable) {
           System.out.println("Variable is nullable but rhs is not");
           return false;
         }
-        return r;
+
+
       }
       case IndexVariable iv -> {
         var indexExpr = iv.index().welcome(this);
         if (!indexExpr) {
           return false;
         }
-        var r = ast.rhs().welcome(this);
         var rt = ast.rhs().attributes().typ;
         var oldTyp = env.get(iv.name());
         if (oldTyp == null) {
@@ -161,14 +185,12 @@ public class TypCheck implements Visitor<Boolean> {
         }
         iv.attributes().typ = rt;
         env.put(iv.name(), rt);
-        return r;
       }
       case FieldExpression fieldExpression -> {
         var field = fieldExpression.welcome(this);
         if (!field) {
           return false;
         }
-        var r = ast.rhs().welcome(this);
         var fieldType = ast.rhs().attributes().typ;
         var newType = fieldExpression.attributes().typ;
         if (!fieldType.equals(newType)) {
@@ -181,7 +203,6 @@ public class TypCheck implements Visitor<Boolean> {
         }
         //env.put(fieldExpression.fieldName(), rt);
         ast.attributes().typ = fieldType;
-        return r;
       }
       case null, default -> {
       }
@@ -225,6 +246,8 @@ public class TypCheck implements Visitor<Boolean> {
     if (ast.expr() != null) {
       ast.expr().welcome(this);
     }
+    Typ currentFunctionResult = this.currentFunctionResult.typ();
+
     if (ast.expr() == null && !currentFunctionResult.equals(Typ.BOXED_VOID)) {
       System.out.println("Return type does not match function type");
       return false;
@@ -241,8 +264,16 @@ public class TypCheck implements Visitor<Boolean> {
 
     if (!ast.expr().attributes().typ.equals(currentFunctionResult)) {
       System.out.println("Return type does not match function type");
+      return false;
     }
     ast.attributes().typ = currentFunctionResult;
+
+    if (ast.expr() instanceof Null) {
+      if (!this.currentFunctionResult.attributes().nullable) {
+        System.out.println("Invalid return type. Expected non-nullable type");
+        return false;
+      }
+    }
     return r;
   }
 
@@ -268,6 +299,12 @@ public class TypCheck implements Visitor<Boolean> {
         var argTyp = arg.attributes().typ;
         var funArg = fun.args().get(i);
         var funArgTyp = funArg.typ();
+
+        if (funArg.attributes().mutable != arg.attributes().mutable) {
+          System.out.println("Argument mutability does not match function argument mutability. Expected: " + funArg.attributes().mutable + " but got: " + arg.attributes().mutable);
+          return false;
+        }
+
         // check if null is an argument
         if (arg instanceof Null s) {
           if (!funArg.attributes().nullable) {
