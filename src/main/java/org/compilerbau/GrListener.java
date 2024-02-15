@@ -1,4 +1,4 @@
-// Generated from D:/IdeaProjects/compilerbau/compilerbau/src/main/java/org/compilerbau/antlr/Gr.g4 by ANTLR 4.13.1
+// Generated from D:/IdeaProjects/compilerbau/compilerbau/src/main/java/org/compilerbau/Gr.g4 by ANTLR 4.13.1
 package org.compilerbau;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
