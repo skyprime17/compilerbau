@@ -372,7 +372,7 @@ public class GenCode implements Visitor<Void> {
     var end = new Label();
     var ifCase = new Label();
     if (ast.op().compare) {
-      int i = (leftNull || rightNull) ? Opcodes.IFNONNULL : jvmOp(ast.op());
+      int i = (leftNull || rightNull) ? jvmOpNullCmp(ast.op()) : jvmOp(ast.op());
       mv.visitJumpInsn(i, ifCase);
     }
 
@@ -502,6 +502,14 @@ public class GenCode implements Visitor<Void> {
       case gt -> Opcodes.IF_ICMPGT;
       case eq -> Opcodes.IF_ICMPEQ;
       case neq -> Opcodes.IF_ICMPNE;
+      default -> 0;
+    };
+  }
+
+  private static int jvmOpNullCmp(Operator op) {
+    return switch (op) {
+      case eq -> Opcodes.IFNULL;
+      case neq -> Opcodes.IFNONNULL;
       default -> 0;
     };
   }

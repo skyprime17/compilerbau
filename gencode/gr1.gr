@@ -83,3 +83,10 @@ pub fn addNodeToTail(head: LinkedList, value: Int) -> LinkedList {
     temp.next = newNode;
     return head;
 }
+
+pub fn length(arr: [Int]?) -> Int {
+    if arr == null {
+        return 0;
+    }
+    return arr.len();
+}

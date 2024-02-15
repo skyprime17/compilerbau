@@ -22,6 +22,8 @@ public class Main {
     for (LinkedList i = l2; i != null; i = i.next) {
       System.out.println("LinkedList value: " + i.value + " next: " + i.next);
     }
+    System.out.println(test.length(arr3));
+    System.out.println(test.length(null));
 
   }
 }
