@@ -8,7 +8,7 @@ item:
 ;
 
 fundef:
-  visbility? KW_FN IDENT LPAR (param (COMMA param)* )? RPAR ARROW type blockExpression
+  visbility? (LPAR param RPAR)? KW_FN IDENT LPAR (param (COMMA param)* )? RPAR ARROW type blockExpression
 ;
 
 structdef:

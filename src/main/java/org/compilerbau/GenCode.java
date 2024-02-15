@@ -53,9 +53,6 @@ public class GenCode implements Visitor<Void> {
   private MethodVisitor mv;
   private Map<String, Integer> env;
 
-  private Label end;
-  private Label start;
-
   public GenCode(String resultPath) {
     this.resultPath = resultPath;
   }
@@ -116,7 +113,13 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(Block ast) {
-    ast.statements().forEach(s -> s.welcome(this));
+    for (AST s : ast.statements()) {
+      s.welcome(this);
+      // if node is a straight fun call, we need to pop the result of the stack
+      if (s instanceof FunCall) {
+        mv.visitInsn(Opcodes.POP);
+      }
+    }
     return null;
   }
 
@@ -130,6 +133,7 @@ public class GenCode implements Visitor<Void> {
       case IndexVariable iv -> {
         mv.visitVarInsn(Opcodes.ALOAD, env.get(iv.name()));
         iv.index().welcome(this);
+        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
         ast.rhs().welcome(this);
         mv.visitInsn(Opcodes.AASTORE);
       }
@@ -244,6 +248,7 @@ public class GenCode implements Visitor<Void> {
           "len")) {
         fieldExpression.expression().welcome(this);
         mv.visitInsn(Opcodes.ARRAYLENGTH);
+        mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
         return null;
       }
     }
@@ -254,7 +259,7 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(StructDeclaration ast) {
     var conw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-    conw.visit(Opcodes.V20, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, ast.name(), null, "java/lang/Object", null);
+    conw.visit(Opcodes.V21, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, ast.name(), null, "java/lang/Object", null);
     conw.visitSource(module + ".gr", null);
 
     for (var arg : ast.args()) {
@@ -319,8 +324,8 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(LoopExpression ast) {
-    end = new Label();
-    start = new Label();
+    var end = new Label();
+    var start = new Label();
     mv.visitLabel(start);
     ast.cond().welcome(this);
     mv.visitJumpInsn(Opcodes.IFEQ, end);
@@ -332,7 +337,8 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(BreakExpression ast) {
-    mv.visitJumpInsn(Opcodes.GOTO, end);
+    // TODO
+    //mv.visitJumpInsn(Opcodes.GOTO, end);
     return null;
   }
 
@@ -343,38 +349,38 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(ComparisonExpression ast) {
-    ast.left().welcome(this);
-    if (ast.left().attributes().typ.equals(BOXED_INT)) {
-      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
+    boolean leftNull = false;
+    boolean rightNull = false;
+    if (!(ast.left() instanceof Null)) {
+      ast.left().welcome(this);
+      if (ast.left().attributes().typ.equals(BOXED_INT)) {
+        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
+      }
+    } else {
+      leftNull = true;
     }
-    ast.right().welcome(this);
-    if (ast.right().attributes().typ.equals(BOXED_INT)) {
-      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
+
+    if (!(ast.right() instanceof Null)) {
+      ast.right().welcome(this);
+      if (ast.right().attributes().typ.equals(BOXED_INT)) {
+        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
+      }
+    } else {
+      rightNull = true;
     }
-    //mv.visitInsn(jvmOp(ast.op()));
+
     var end = new Label();
     var ifCase = new Label();
     if (ast.op().compare) {
-      mv.visitJumpInsn(jvmOp(ast.op()), ifCase);
+      int i = (leftNull || rightNull) ? Opcodes.IFNONNULL : jvmOp(ast.op());
+      mv.visitJumpInsn(i, ifCase);
     }
-    /*
-    mv.visitJumpInsn(switch (ast.op()) {
-          case lt -> Opcodes.IFLT;
-          case le -> Opcodes.IFLE;
-          case ge -> Opcodes.IFGE;
-          case gt -> Opcodes.IFGT;
-          case eq -> Opcodes.IFEQ;
-          case neq -> Opcodes.IFNE;
-          default -> throw new RuntimeException("internal error");
-        }
-        , ifCase);
-     */
+
     mv.visitInsn(Opcodes.ICONST_0);
     mv.visitJumpInsn(Opcodes.GOTO, end);
     mv.visitLabel(ifCase);
     mv.visitInsn(Opcodes.ICONST_1);
     mv.visitLabel(end);
-    //mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;", false);
     return null;
   }
 
@@ -445,6 +451,7 @@ public class GenCode implements Visitor<Void> {
   public Void visit(IndexVariable ast) {
     mv.visitVarInsn(Opcodes.ALOAD, env.get(ast.name()));
     ast.index().welcome(this);
+    mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
     mv.visitInsn(Opcodes.AALOAD);
     return null;
   }

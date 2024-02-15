@@ -1,5 +1,4 @@
-package test;
-
+package sort;
 
 pub fn swap(arr: [Int], i: Int, j: Int) -> Void {
     let temp = arr[i];
@@ -58,28 +57,4 @@ fn partition(arr: [Int], low: Int, high: Int) -> Int {
     }
     swap(arr, i + 1, high);
     return i + 1;
-}
-
-
-struct LinkedList {
-    value: Int,
-    next: LinkedList?
-}
-
-pub fn createNode(value: Int) -> LinkedList {
-    let newNode = LinkedList {
-        value: value,
-        next: null
-    };
-    return newNode;
-}
-
-pub fn addNodeToTail(head: LinkedList, value: Int) -> LinkedList {
-    let newNode = createNode(value);
-    let mut temp = head;
-    while temp.next != null {
-        temp = temp.next;
-    }
-    temp.next = newNode;
-    return head;
 }

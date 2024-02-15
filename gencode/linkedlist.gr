@@ -1,0 +1,24 @@
+package test;
+
+struct LinkedList {
+    value: Int,
+    next: LinkedList?
+}
+
+pub fn createNode(value: Int) -> LinkedList {
+    let newNode = LinkedList {
+        value: value,
+        next: null
+    };
+    return newNode;
+}
+
+pub fn addNodeToTail(head: LinkedList, value: Int) -> LinkedList {
+    let newNode = createNode(value);
+    let mut temp = head;
+    while temp.next != null {
+        temp = temp.next;
+    }
+    temp.next = newNode;
+    return head;
+}

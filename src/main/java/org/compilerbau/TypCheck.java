@@ -131,10 +131,11 @@ public class TypCheck implements Visitor<Boolean> {
             return false;
           }
           boolean mutable = ast.var().attributes().mutable;
-          if (!mutable) {
-            System.out.println("Variable is not mutable: " + var.name());
-            return false;
-          }
+          // check if variable is mutable
+          //if (!mutable) {
+          //  System.out.println("Variable is not mutable: " + var.name());
+          //  return false;
+          // }
         }
 
         var rtAttr = ast.rhs().attributes();
@@ -184,7 +185,7 @@ public class TypCheck implements Visitor<Boolean> {
           return false;
         }
         iv.attributes().typ = rt;
-        env.put(iv.name(), rt);
+        //env.put(iv.name(), rt);
       }
       case FieldExpression fieldExpression -> {
         var field = fieldExpression.welcome(this);
@@ -269,7 +270,7 @@ public class TypCheck implements Visitor<Boolean> {
     ast.attributes().typ = currentFunctionResult;
 
     if (ast.expr() instanceof Null) {
-      if (!this.currentFunctionResult.attributes().nullable) {
+      if (!this.currentFunctionResult.attributes().nullable && !this.currentFunctionResult.typ().equals(Typ.BOXED_VOID)) {
         System.out.println("Invalid return type. Expected non-nullable type");
         return false;
       }

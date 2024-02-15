@@ -5,67 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="x">
-      <change afterPath="$PROJECT_DIR$/gencode/gr1.gr" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gencode/linkedlist.gr" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gencode/sort.gr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gencode/Person.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gencode/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Point.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gencode/gr1.gr" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/gr1.gr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/test.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/BuildTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/BuildTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GenCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Gr.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Gr.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Gr.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrBaseListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrBaseVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrLexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrLexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrLexer.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/GrVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/MkStackEnv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/MkStackEnv.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/TypCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/AST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/AST.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Arg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Arg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/ArithmeticOrLogicalExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/ArithmeticOrLogicalExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/ArrayExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/ArrayExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Assign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Assign.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Attributes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Attributes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/BooleanBoolean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/BooleanBoolean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/BreakExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/BreakExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/ComparisonExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/ComparisonExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/CompoundAssignmentExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/CompoundAssignmentExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/ContinueExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/ContinueExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/FieldExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/FieldExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/FunCall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/FunCall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/FunDef.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/FunDef.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/GroupedExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/GroupedExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/IfExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/IfExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/IndexVariable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/IndexVariable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/IntegerInteger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/IntegerInteger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/LoopExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/LoopExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/NegationExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/NegationExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Null.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Null.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Operator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Operator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Program.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/ReturnExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/ReturnExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/StringLit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/StringLit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/StructCall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/StructCall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/StructDeclaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/StructDeclaration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/TheTyp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/TheTyp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/TheVisibility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/TheVisibility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Typ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Typ.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Variable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Variable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Visibility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Visibility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/ast/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Visitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/antlr/gr1.gr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,29 +107,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.compilerbau [:GenCode.main()].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/IdeaProjects/compilerbau/compilerbau/gencode&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.20301348&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.compilerbau [:GenCode.main()].executor": "Run",
+    "Gradle.compilerbau [:Main.main()].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "jdk.selected.JAVA_MODULE": "21",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/IdeaProjects/compilerbau/compilerbau/gencode",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.20301348",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\gencode" />
@@ -313,13 +263,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -357,6 +300,8 @@
       <workItem from="1707508333712" duration="10602000" />
       <workItem from="1707604824561" duration="34298000" />
       <workItem from="1707867826943" duration="6767000" />
+      <workItem from="1707944495746" duration="5115000" />
+      <workItem from="1707957708295" duration="18710000" />
     </task>
     <task id="LOCAL-00001" summary="-">
       <option name="closed" value="true" />
@@ -721,5 +666,20 @@
     <MESSAGE value="- field expression" />
     <MESSAGE value="x" />
     <option name="LAST_COMMIT_MESSAGE" value="x" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="11" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="GradleRunConfiguration">
+        <watch expression="antlrTree" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
