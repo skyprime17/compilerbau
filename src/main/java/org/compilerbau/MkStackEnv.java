@@ -100,13 +100,16 @@ public class MkStackEnv implements Visitor<Map<String, Integer>> {
       return env;
     }
     if (ast.var() instanceof IndexVariable var) {
-      var entry = env.get(var.name());
-      if (null == entry) {
-        env.put(var.name(), offset);
-        offset += ast.attributes().typ.stackPos();
+      if (var.name() instanceof Variable v) {
+        var entry = env.get(v.name());
+        if (null == entry) {
+          env.put(v.name(), offset);
+          offset += ast.attributes().typ.stackPos();
+        }
+        ast.rhs().welcome(this);
+        return env;
       }
-      ast.rhs().welcome(this);
-      return env;
+
     }
     return env;
   }

@@ -4,6 +4,19 @@ import java.util.Arrays;
 
 public class Main {
 
+  public static Integer[] s() {
+    return new Integer[]{1, 2, 3, 4, 5};
+  }
+
+  public static Integer t() {
+    return s()[3];
+  }
+
+  public static Integer t2() {
+    var s = s();
+    return s[3];
+  }
+
   public static void main(String[] args) {
     Integer[] arr = {1, 2, 3, 4, 5};
     System.out.println(Arrays.toString(arr));
@@ -22,8 +35,13 @@ public class Main {
     for (LinkedList i = l2; i != null; i = i.next) {
       System.out.println("LinkedList value: " + i.value + " next: " + i.next);
     }
-    System.out.println(test.length(arr3));
-    System.out.println(test.length(null));
+    //System.out.println(test.length(arr3));
+    //System.out.println(test.length(null));
+    System.out.println(test.s());
+    System.out.println(test.s3());
+    System.out.println(test.s4());
+    System.out.println(test.s5());
+    System.out.println(test.s6());
 
   }
 }

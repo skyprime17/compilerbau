@@ -113,7 +113,7 @@ class BuildTree extends GrBaseVisitor<AST> {
 
   @Override
   public AST visitIndexExpression(GrParser.IndexExpressionContext ctx) {
-    var arr = ctx.expression(0).getText();
+    var arr = visit(ctx.expression(0));
     var index = visit(ctx.expression(1));
     return new IndexVariable(arr, index);
   }

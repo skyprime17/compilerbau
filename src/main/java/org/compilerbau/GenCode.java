@@ -131,7 +131,11 @@ public class GenCode implements Visitor<Void> {
         mv.visitVarInsn(Opcodes.ASTORE, env.get(var.name()));
       }
       case IndexVariable iv -> {
-        mv.visitVarInsn(Opcodes.ALOAD, env.get(iv.name()));
+        if (iv.name() instanceof Variable v) {
+          mv.visitVarInsn(Opcodes.ALOAD, env.get(v.name()));
+        } else if (iv.name() instanceof FunCall funCall) {
+          funCall.welcome(this);
+        }
         iv.index().welcome(this);
         mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
         ast.rhs().welcome(this);
@@ -449,9 +453,16 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(IndexVariable ast) {
-    mv.visitVarInsn(Opcodes.ALOAD, env.get(ast.name()));
+    if (ast.name() instanceof Variable v) {
+      mv.visitVarInsn(Opcodes.ALOAD, env.get(v.name()));
+    } else if (ast.name() instanceof FunCall funCall) {
+      funCall.welcome(this);
+    }
     ast.index().welcome(this);
-    mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
+    // TODO do attributes check instead maybe
+    if (!(ast.index() instanceof IntegerInteger)) {
+      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
+    }
     mv.visitInsn(Opcodes.AALOAD);
     return null;
   }

@@ -176,7 +176,14 @@ public class TypCheck implements Visitor<Boolean> {
           return false;
         }
         var rt = ast.rhs().attributes().typ;
-        var oldTyp = env.get(iv.name());
+        iv.name().welcome(this);
+        Typ oldTyp = null;
+        if (iv.name() instanceof Variable v) {
+          oldTyp = env.get(v.name());
+        } else if (iv.name() instanceof FunCall f) {
+          oldTyp = f.attributes().typ;
+        }
+
         if (oldTyp == null) {
           return false;
         }
@@ -476,7 +483,13 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(IndexVariable ast) {
-    Typ typ = env.get(ast.name());
+    Typ typ = null;
+    if (ast.name() instanceof  Variable var) {
+      typ = env.get(var.name());
+    } else if (ast.name() instanceof FunCall fc) {
+      fc.welcome(this);
+      typ = fc.attributes().typ;
+    }
     boolean r = ast.index().welcome(this);
     if (!r) {
       return false;

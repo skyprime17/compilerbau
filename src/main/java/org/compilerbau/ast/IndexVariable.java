@@ -1,7 +1,7 @@
 package org.compilerbau.ast;
 
-public record IndexVariable(Attributes attributes, String name, AST index) implements AST {
-  public IndexVariable(String name, AST index) {
+public record IndexVariable(Attributes attributes, AST name, AST index) implements AST {
+  public IndexVariable(AST name, AST index) {
     this(new Attributes(), name, index);
   }
 
