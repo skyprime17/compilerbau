@@ -390,6 +390,29 @@ public class TypCheck implements Visitor<Boolean> {
         }
         ast.attributes().typ = field.typ();
       }
+    } else if (ast.expression() instanceof FunCall funCall) {
+      Variable v = (Variable) funCall.lhs();
+      FunDef fun = (FunDef) funs.get(v.name());
+      if (fun == null) {
+        System.out.println("Function not found: " + v.name());
+        return false;
+      }
+      // check if the function is a struct and has the field
+      if (fun.typ() instanceof Typ.Ref ref) {
+        StructDeclaration structDecl = (StructDeclaration) funs.get(ref.name());
+        if (structDecl == null) {
+          System.out.println("Struct not found: " + ref.name());
+          return false;
+        }
+        Arg field = structDecl.args().stream().filter(p -> p.name().equals(ast.fieldName())).findFirst().orElse(null);
+        if (field == null) {
+          System.out.println("Field not found: " + ast.fieldName());
+          return false;
+        }
+        ast.attributes().typ = field.typ();
+      }
+
+
     }
     return true;
   }
@@ -484,7 +507,7 @@ public class TypCheck implements Visitor<Boolean> {
   @Override
   public Boolean visit(IndexVariable ast) {
     Typ typ = null;
-    if (ast.name() instanceof  Variable var) {
+    if (ast.name() instanceof Variable var) {
       typ = env.get(var.name());
     } else if (ast.name() instanceof FunCall fc) {
       fc.welcome(this);

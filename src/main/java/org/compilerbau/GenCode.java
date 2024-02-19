@@ -305,9 +305,14 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(FieldExpression ast) {
-    Variable var = (Variable) ast.expression();
-    mv.visitVarInsn(Opcodes.ALOAD, env.get(var.name()));
-    var owner = ((Typ.Ref) var.attributes().typ).name();
+    String owner = null;
+    if (ast.expression() instanceof Variable v) {
+      mv.visitVarInsn(Opcodes.ALOAD, env.get(v.name()));
+      owner = ((Typ.Ref) v.attributes().typ).name();
+    } else if (ast.expression() instanceof FunCall funCall) {
+      funCall.welcome(this);
+      owner = ((Typ.Ref) funCall.attributes().typ).name();
+    }
     mv.visitFieldInsn(Opcodes.GETFIELD, owner, ast.fieldName(), ast.attributes().typ.jvmType());
     return null;
   }
