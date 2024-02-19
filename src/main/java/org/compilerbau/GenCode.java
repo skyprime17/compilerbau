@@ -413,7 +413,7 @@ public class GenCode implements Visitor<Void> {
     if (typ instanceof Typ.Ref ref) {
       mv.visitTypeInsn(Opcodes.ANEWARRAY, ref.name());
     } else {
-      mv.visitTypeInsn(Opcodes.ANEWARRAY, typ.toString());
+      mv.visitTypeInsn(Opcodes.ANEWARRAY, typ.jvmType());
     }
 
     int s = 0;

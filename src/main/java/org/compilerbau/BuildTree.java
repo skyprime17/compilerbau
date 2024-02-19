@@ -431,7 +431,7 @@ class BuildTree extends GrBaseVisitor<AST> {
       };
       return new TheTyp(new Typ.Array(type), ctx.type().KW_NULLABLE() != null);
     }
-    return visit(ctx.type());
+    return new TheTyp(new Typ.Array(((TheTyp) visit(ctx.type())).typ()), ctx.type().KW_NULLABLE() != null);
   }
 
 
