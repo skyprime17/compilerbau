@@ -65,6 +65,16 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(FunDef ast) {
+    Typ typ = ast.typ();
+    if (!Typ.isPrimitive(typ)) {
+      Optional<Item> any = funs.values().stream()
+          .filter(x -> x instanceof StructDeclaration)
+          .filter(x -> x.typ().equals(typ)).findAny();
+      if (any.isEmpty()) {
+        System.out.println("Return type not found: " + typ);
+        return false;
+      }
+    }
     env = new HashMap<>();
     currentFunctionResult = ast;
     ast.args().forEach(arg -> {

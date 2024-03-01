@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import org.apache.commons.lang3.SerializationUtils;
 import org.compilerbau.ast.AST;
 import org.compilerbau.ast.Arg;
 import org.compilerbau.ast.ArithmeticOrLogicalExpression;

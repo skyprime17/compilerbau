@@ -17,6 +17,17 @@ public interface Typ {
 
   String jvmType();
 
+  static boolean isPrimitive(Typ typ) {
+    boolean primitive = typ == Typ.BOXED_INT || typ == Typ.BOXED_BOOLEAN || typ == Typ.BOXED_VOID || typ == Typ.BOXED_STRING;
+    if (primitive) {
+      return true;
+    }
+    if (typ instanceof Array x) {
+      return isPrimitive(x.typ);
+    }
+    return false;
+  }
+
 
   record Ref(String name, String outer) implements Typ {
 
