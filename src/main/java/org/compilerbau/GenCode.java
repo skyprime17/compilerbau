@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.compilerbau.ast.AST;
 import org.compilerbau.ast.Arg;
 import org.compilerbau.ast.ArithmeticOrLogicalExpression;
@@ -263,7 +264,8 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(StructDeclaration ast) {
     var conw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-    conw.visit(Opcodes.V21, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, ast.name(), null, "java/lang/Object", null);
+    conw.visit(Opcodes.V21, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, ast.name(), null, "java/lang/Object",
+        new String[]{"java/io/Serializable"});
     conw.visitSource(module + ".gr", null);
 
     for (var arg : ast.args()) {

@@ -89,6 +89,18 @@ public class GrBaseListener implements GrListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterReceiver(GrParser.ReceiverContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitReceiver(GrParser.ReceiverContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStatement(GrParser.StatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -504,6 +516,18 @@ public class GrBaseListener implements GrListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParam(GrParser.ParamContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArgconvention(GrParser.ArgconventionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArgconvention(GrParser.ArgconventionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

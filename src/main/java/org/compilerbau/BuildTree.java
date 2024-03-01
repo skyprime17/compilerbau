@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 
 import org.compilerbau.ast.AST;
 import org.compilerbau.ast.Arg;
+import org.compilerbau.ast.ArgConvention;
 import org.compilerbau.ast.ArithmeticOrLogicalExpression;
 import org.compilerbau.ast.ArrayExpression;
 import org.compilerbau.ast.Assign;
@@ -94,7 +95,6 @@ class BuildTree extends GrBaseVisitor<AST> {
         attributes.typ = visit.typ();
         attributes.nullable = visit.nullable();
       }
-      attributes.mutable = letStatementContext.KW_MUT() != null;
       return new Assign(new Variable(attributes, letStatementContext.IDENT().getText(), true), rhs);
     }
 
@@ -349,8 +349,12 @@ class BuildTree extends GrBaseVisitor<AST> {
     TheTyp typ = ((TheTyp) visit(ctx.type()));
     Attributes attributes = new Attributes();
     attributes.nullable = typ.nullable();
-    attributes.mutable = ctx.KW_MUT() != null;
-    return new Arg(attributes, ctx.IDENT().getText(), typ.typ());
+    GrParser.ArgconventionContext argconvention = ctx.argconvention();
+    ArgConvention arg = ArgConvention.BORROWED;
+    if (argconvention != null && argconvention.getText().equals("inout")) {
+      arg = ArgConvention.INOUT;
+    }
+    return new Arg(attributes, ctx.IDENT().getText(), typ.typ(), arg);
   }
 
   @Override

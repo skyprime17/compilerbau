@@ -8,7 +8,7 @@ item:
 ;
 
 fundef:
-  visbility? (LPAR param RPAR)? KW_FN IDENT LPAR (param (COMMA param)* )? RPAR ARROW type blockExpression
+  visbility? KW_FN receiver? IDENT LPAR (param (COMMA param)* )? RPAR ARROW type blockExpression
 ;
 
 structdef:
@@ -22,6 +22,9 @@ structfield:
 
 visbility: KW_PUBLIC;
 
+receiver:  (LPAR param RPAR)
+;
+
 statement
    : SEMICOLON
    | item
@@ -30,7 +33,7 @@ statement
    ;
 
 letStatement:
-  KW_LET KW_MUT? IDENT (COLON type)? EQ expression SEMICOLON
+  KW_LET IDENT (COLON type)? EQ expression SEMICOLON
  ;
 
 
@@ -141,9 +144,12 @@ identifier:
 ;
 
 param:
-  KW_MUT? IDENT COLON type
+  argconvention? IDENT COLON type
 ;
 
+argconvention:
+  KW_INOUT | KW_BORROWED
+;
 
 arraytype
    : LSQB type SEMICOLON expression RSQB
@@ -258,7 +264,8 @@ KW_PUBLIC: 'pub';
 KW_STRUCT: 'struct';
 KW_TRUE: 'true';
 KW_FALSE: 'false';
-KW_MUT: 'mut';
+KW_INOUT: 'inout';
+KW_BORROWED: 'borrowed';
 KW_NULL: 'null';
 KW_NULLABLE: '?';
 

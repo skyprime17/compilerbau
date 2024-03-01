@@ -47,6 +47,12 @@ public interface GrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVisbility(GrParser.VisbilityContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GrParser#receiver}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReceiver(GrParser.ReceiverContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link GrParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -273,6 +279,12 @@ public interface GrVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitParam(GrParser.ParamContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GrParser#argconvention}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArgconvention(GrParser.ArgconventionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GrParser#arraytype}.
 	 * @param ctx the parse tree

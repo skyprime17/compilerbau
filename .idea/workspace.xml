@@ -4,17 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="x">
+    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="- fix &quot;t().x&quot;;">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/ArgConvention.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gencode/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Point.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gencode/gr1.gr" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/gr1.gr" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gencode/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/test.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/BuildTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/BuildTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/MkStackEnv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/MkStackEnv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrBaseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrBaseVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrLexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrLexer.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/IndexVariable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/IndexVariable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Arg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Arg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Attributes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Attributes.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,10 +58,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
         <option value="Record" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -107,30 +121,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.compilerbau [:GenCode.main()].executor": "Run",
-    "Gradle.compilerbau [:Main.main()].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "jdk.selected.JAVA_MODULE": "21",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/IdeaProjects/compilerbau/compilerbau/gencode",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.20301348",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.compilerbau [:GenCode.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.compilerbau [:Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/IdeaProjects/compilerbau/compilerbau/gencode&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.20301348&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\gencode" />
@@ -264,6 +278,13 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -302,7 +323,10 @@
       <workItem from="1707604824561" duration="34298000" />
       <workItem from="1707867826943" duration="6767000" />
       <workItem from="1707944495746" duration="5115000" />
-      <workItem from="1707957708295" duration="27376000" />
+      <workItem from="1707957708295" duration="34980000" />
+      <workItem from="1708347937940" duration="27165000" />
+      <workItem from="1708811490472" duration="15210000" />
+      <workItem from="1709290146368" duration="13056000" />
     </task>
     <task id="LOCAL-00001" summary="-">
       <option name="closed" value="true" />
@@ -664,7 +688,31 @@
       <option name="project" value="LOCAL" />
       <updated>1708035704780</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="fix index expressions in relation to func calls">
+      <option name="closed" value="true" />
+      <created>1708103109311</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1708103109312</updated>
+    </task>
+    <task id="LOCAL-00047" summary="- fix multi-d arrays">
+      <option name="closed" value="true" />
+      <created>1708353322153</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1708353322153</updated>
+    </task>
+    <task id="LOCAL-00048" summary="- fix &quot;t().x&quot;;">
+      <option name="closed" value="true" />
+      <created>1708358211530</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1708358211530</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -690,7 +738,10 @@
     <MESSAGE value="-" />
     <MESSAGE value="- field expression" />
     <MESSAGE value="x" />
-    <option name="LAST_COMMIT_MESSAGE" value="x" />
+    <MESSAGE value="fix index expressions in relation to func calls" />
+    <MESSAGE value="- fix multi-d arrays" />
+    <MESSAGE value="- fix &quot;t().x&quot;;" />
+    <option name="LAST_COMMIT_MESSAGE" value="- fix &quot;t().x&quot;;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -700,9 +751,9 @@
           <option name="timeStamp" value="11" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java</url>
-          <line>455</line>
-          <option name="timeStamp" value="64" />
+          <url>file://$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java</url>
+          <line>298</line>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -4,9 +4,11 @@ import static org.compilerbau.ast.Typ.BOXED_VOID;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.compilerbau.ast.AST;
 import org.compilerbau.ast.Arg;
+import org.compilerbau.ast.ArgConvention;
 import org.compilerbau.ast.ArithmeticOrLogicalExpression;
 import org.compilerbau.ast.ArrayExpression;
 import org.compilerbau.ast.Assign;
@@ -125,17 +127,16 @@ public class TypCheck implements Visitor<Boolean> {
           System.out.println("Variable already defined in this scope: " + var.name());
           return false;
         } else if (!var.init()) {
+          Optional<Arg> any = currentFunctionResult.args().stream().filter(x -> var.name().equals(x.name())).findAny();
+          if (any.isPresent() && any.get().argConvention() == ArgConvention.BORROWED) {
+            System.out.println("expression must be mutable in assignment");
+            return false;
+          }
           var oldTyp = env.get(var.name());
           if (oldTyp == null) {
             System.out.println("Cannot resolve symbol: " + var.name());
             return false;
           }
-          boolean mutable = ast.var().attributes().mutable;
-          // check if variable is mutable
-          //if (!mutable) {
-          //  System.out.println("Variable is not mutable: " + var.name());
-          //  return false;
-          // }
         }
 
         var rtAttr = ast.rhs().attributes();
@@ -175,6 +176,14 @@ public class TypCheck implements Visitor<Boolean> {
         if (!indexExpr) {
           return false;
         }
+        if (iv.name() instanceof Variable v) {
+          Optional<Arg> any = currentFunctionResult.args().stream().filter(x -> v.name().equals(x.name())).findAny();
+          if (any.isPresent() && any.get().argConvention() == ArgConvention.BORROWED) {
+            System.out.println("expression must be mutable in assignment");
+            return false;
+          }
+        }
+
         var rt = ast.rhs().attributes().typ;
         iv.name().welcome(this);
         Typ oldTyp = null;
@@ -308,10 +317,18 @@ public class TypCheck implements Visitor<Boolean> {
         var funArg = fun.args().get(i);
         var funArgTyp = funArg.typ();
 
-        if (funArg.attributes().mutable != arg.attributes().mutable) {
-          System.out.println("Argument mutability does not match function argument mutability. Expected: " + funArg.attributes().mutable + " but got: " + arg.attributes().mutable);
-          return false;
+        if (funArg.argConvention() == ArgConvention.INOUT) {
+          if (arg instanceof Variable v) {
+            if (currentFunctionResult.args().stream().filter(x -> x.name().equals(v.name())).anyMatch(x -> x.argConvention() == ArgConvention.BORROWED)) {
+              System.out.println("Argument is not mutable");
+              return false;
+            }
+          } else {
+            System.out.println("Argument is not mutable");
+            return false;
+          }
         }
+
 
         // check if null is an argument
         if (arg instanceof Null s) {

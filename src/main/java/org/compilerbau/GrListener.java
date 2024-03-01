@@ -68,6 +68,16 @@ public interface GrListener extends ParseTreeListener {
 	 */
 	void exitVisbility(GrParser.VisbilityContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GrParser#receiver}.
+	 * @param ctx the parse tree
+	 */
+	void enterReceiver(GrParser.ReceiverContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrParser#receiver}.
+	 * @param ctx the parse tree
+	 */
+	void exitReceiver(GrParser.ReceiverContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GrParser#statement}.
 	 * @param ctx the parse tree
 	 */
@@ -451,6 +461,16 @@ public interface GrListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitParam(GrParser.ParamContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrParser#argconvention}.
+	 * @param ctx the parse tree
+	 */
+	void enterArgconvention(GrParser.ArgconventionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrParser#argconvention}.
+	 * @param ctx the parse tree
+	 */
+	void exitArgconvention(GrParser.ArgconventionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GrParser#arraytype}.
 	 * @param ctx the parse tree

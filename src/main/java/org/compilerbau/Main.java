@@ -24,6 +24,7 @@ public class Main {
     var typ = ast.welcome(new TypCheck());
     if (!typ) {
       System.out.println("Compilation failed due to type errors");
+      return;
     }
     ast.welcome(new GenCode(resultPath));
   }

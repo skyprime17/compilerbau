@@ -60,6 +60,13 @@ public class GrBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements GrV
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitReceiver(GrParser.ReceiverContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitStatement(GrParser.StatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -299,6 +306,13 @@ public class GrBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements GrV
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitParam(GrParser.ParamContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitArgconvention(GrParser.ArgconventionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -1,21 +1,11 @@
 
 
 import java.util.Arrays;
+import java.io.Serializable;
 
-public class Main {
 
-  public static Integer[] s() {
-    return new Integer[]{1, 2, 3, 4, 5};
-  }
+public class Main implements Serializable {
 
-  public static Integer t() {
-    return s()[3];
-  }
-
-  public static Integer t2() {
-    var s = s();
-    return s[3];
-  }
 
   public static void main(String[] args) {
     Integer[] arr = {1, 2, 3, 4, 5};
