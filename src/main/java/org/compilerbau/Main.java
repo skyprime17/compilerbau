@@ -16,7 +16,7 @@ public class Main {
     compile(FileUtils.getFile(args[0]).getParent(), new FileReader(args[0]));
   }
 
-  private static void compile(String resultPath, Reader script) throws IOException {
+  public static void compile(String resultPath, Reader script) throws IOException {
     var lexer = new GrLexer(CharStreams.fromReader(script));
     var parser = new GrParser(new CommonTokenStream(lexer));
     var antlrTree = parser.start();

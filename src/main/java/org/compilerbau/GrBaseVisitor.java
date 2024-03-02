@@ -200,13 +200,6 @@ public class GrBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements GrV
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLazyBooleanExpression(GrParser.LazyBooleanExpressionContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitComparisonOperator(GrParser.ComparisonOperatorContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

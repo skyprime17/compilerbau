@@ -55,8 +55,8 @@ expression
    | expression CARET expression                        # ArithmeticOrLogicalExpression
    | expression OR expression                           # ArithmeticOrLogicalExpression
    | expression comparisonOperator expression           # ComparisonExpression
-   | expression ANDAND expression                       # LazyBooleanExpression
-   | expression OROR expression                         # LazyBooleanExpression
+   | expression ANDAND expression                       # ArithmeticOrLogicalExpression
+   | expression OROR expression                         # ArithmeticOrLogicalExpression
    | expression EQ expression                           # AssignmentExpression
    | expression compoundAssignOperator expression       # CompoundAssignmentExpression
    | KW_CONTINUE expression?                            # ContinueExpression

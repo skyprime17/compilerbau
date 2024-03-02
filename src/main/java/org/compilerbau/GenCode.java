@@ -1,5 +1,7 @@
 package org.compilerbau;
 
+import static org.compilerbau.ast.Operator.eq;
+import static org.compilerbau.ast.Operator.neq;
 import static org.compilerbau.ast.Typ.BOXED_BOOLEAN;
 import static org.compilerbau.ast.Typ.BOXED_INT;
 
@@ -166,6 +168,43 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(ArithmeticOrLogicalExpression ast) {
+    if (ast.op() == Operator.and) {
+      var pos = new Label();
+      var neg = new Label();
+      ast.left().welcome(this);
+      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
+      mv.visitJumpInsn(Opcodes.IFEQ, neg);
+      ast.right().welcome(this);
+      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
+      mv.visitJumpInsn(Opcodes.IFEQ, neg);
+      mv.visitInsn(Opcodes.ICONST_1);
+      mv.visitJumpInsn(Opcodes.GOTO, pos);
+      mv.visitLabel(neg);
+      mv.visitInsn(Opcodes.ICONST_0);
+      mv.visitLabel(pos);
+      mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;", false);
+      return null;
+    }
+
+    if (ast.op() == Operator.or) {
+      var pos = new Label();
+      var neg = new Label();
+      ast.left().welcome(this);
+      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
+      mv.visitJumpInsn(Opcodes.IFNE, pos);
+      ast.right().welcome(this);
+      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
+      mv.visitJumpInsn(Opcodes.IFNE, pos);
+      mv.visitInsn(Opcodes.ICONST_0);
+      mv.visitJumpInsn(Opcodes.GOTO, neg);
+      mv.visitLabel(pos);
+      mv.visitInsn(Opcodes.ICONST_1);
+      mv.visitLabel(neg);
+      mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;", false);
+      return null;
+    }
+
+
     ast.left().welcome(this);
     if (ast.left().attributes().typ.equals(BOXED_INT)) {
       mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
@@ -208,11 +247,15 @@ public class GenCode implements Visitor<Void> {
   public Void visit(NegationExpression ast) {
     ast.expr().welcome(this);
     if (ast.expr().attributes().typ.equals(BOXED_INT)) {
-      //mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
+      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
       mv.visitInsn(Opcodes.INEG);
+      mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
     }
     if (ast.expr().attributes().typ.equals(BOXED_BOOLEAN)) {
+      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
       mv.visitInsn(Opcodes.ICONST_1);
+      mv.visitInsn(Opcodes.IXOR);
+      mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;", false);
     }
     return null;
   }
@@ -228,6 +271,9 @@ public class GenCode implements Visitor<Void> {
     }
 
     if (ast.expr().attributes().typ != null) {
+      if (ast.expr() instanceof ComparisonExpression ce) {
+        mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;", false);
+      }
       mv.visitInsn(Opcodes.ARETURN);
     }
     return null;
@@ -264,7 +310,7 @@ public class GenCode implements Visitor<Void> {
   public Void visit(StructDeclaration ast) {
     var conw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
     conw.visit(Opcodes.V21, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, ast.name(), null, "java/lang/Object",
-        new String[]{"java/io/Serializable"});
+        new String[] {"java/io/Serializable"});
     conw.visitSource(module + ".gr", null);
 
     for (var arg : ast.args()) {
@@ -363,7 +409,7 @@ public class GenCode implements Visitor<Void> {
     boolean rightNull = false;
     if (!(ast.left() instanceof Null)) {
       ast.left().welcome(this);
-      if (ast.left().attributes().typ.equals(BOXED_INT)) {
+      if ((!ast.op().equals(eq) && !ast.op().equals(neq)) && ast.left().attributes().typ.equals(BOXED_INT)) {
         mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
       }
     } else {
@@ -372,7 +418,7 @@ public class GenCode implements Visitor<Void> {
 
     if (!(ast.right() instanceof Null)) {
       ast.right().welcome(this);
-      if (ast.right().attributes().typ.equals(BOXED_INT)) {
+      if ((!ast.op().equals(eq) && !ast.op().equals(neq)) && ast.right().attributes().typ.equals(BOXED_INT)) {
         mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I", false);
       }
     } else {
@@ -391,6 +437,8 @@ public class GenCode implements Visitor<Void> {
     mv.visitLabel(ifCase);
     mv.visitInsn(Opcodes.ICONST_1);
     mv.visitLabel(end);
+    //mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;", false);
+
     return null;
   }
 
@@ -517,8 +565,8 @@ public class GenCode implements Visitor<Void> {
       case le -> Opcodes.IF_ICMPLE;
       case ge -> Opcodes.IF_ICMPGE;
       case gt -> Opcodes.IF_ICMPGT;
-      case eq -> Opcodes.IF_ICMPEQ;
-      case neq -> Opcodes.IF_ICMPNE;
+      case eq -> Opcodes.IF_ACMPEQ;
+      case neq -> Opcodes.IF_ACMPNE;
       default -> 0;
     };
   }

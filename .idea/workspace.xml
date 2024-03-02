@@ -5,11 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="-">
+      <change afterPath="$PROJECT_DIR$/src/test/java/TestBool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TestInteger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/boolean.gr" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/integer.gr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gencode/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gencode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gencode/gr1.gr" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/gr1.gr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gencode/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/BuildTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/BuildTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Attributes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Attributes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Typ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Typ.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Gr.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrBaseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrBaseVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GrVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,8 +57,8 @@
       <list>
         <option value="Interface" />
         <option value="Record" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -102,30 +118,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.compilerbau [:GenCode.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.compilerbau [:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/IdeaProjects/compilerbau/compilerbau/gencode&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.20301348&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Gradle.compilerbau [:GenCode.main()].executor": "Run",
+    "Gradle.compilerbau [:Main.main()].executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "jdk.selected.JAVA_MODULE": "21",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/IdeaProjects/compilerbau/compilerbau/gencode",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.20301348",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\gencode" />
@@ -134,6 +154,7 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\src\main\java\org\compilerbau" />
+      <recent name="D:\IdeaProjects\compilerbau\compilerbau\src\test" />
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\src\main\gen\org\compilerbau" />
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\gencode" />
     </key>
@@ -142,21 +163,7 @@
       <recent name="org.compilerbau.antlr" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.org.compilerbau.Main">
-    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.compilerbau.antlr.Main" />
-      <module name="compilerbau.main" />
-      <option name="PROGRAM_PARAMETERS" value="D:\\IdeaProjects\\compilerbau\\compilerbau\\src\\main\\java\\org\\compilerbau\\gr1.gr" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.compilerbau.antlr.ast.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Gradle.TestInteger">
     <configuration name="org.compilerbau.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.compilerbau.Main" />
       <module name="compilerbau.main" />
@@ -171,51 +178,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="compilerbau [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="compilerbau [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="dependencies" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="compilerbau [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="TestInteger" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -226,36 +189,105 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="jar" />
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestInteger&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="compilerbau-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/build/libs/compilerbau-1.0-SNAPSHOT.jar" />
+    <configuration name="TestInteger.testMul" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestInteger.testMul&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestInteger.testNeg" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestInteger.testNeg&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestInteger.testSub" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestInteger.testSub&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Application.Main" />
       <item itemvalue="Application.org.compilerbau.Main" />
-      <item itemvalue="Gradle.compilerbau [build]" />
-      <item itemvalue="Gradle.compilerbau [jar]" />
-      <item itemvalue="Gradle.compilerbau [dependencies]" />
-      <item itemvalue="JAR Application.compilerbau-1.0-SNAPSHOT.jar" />
+      <item itemvalue="Gradle.TestInteger.testMul" />
+      <item itemvalue="Gradle.TestInteger.testNeg" />
+      <item itemvalue="Gradle.TestInteger.testSub" />
+      <item itemvalue="Gradle.TestInteger" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.compilerbau [jar]" />
-        <item itemvalue="Gradle.compilerbau [build]" />
+        <item itemvalue="Gradle.TestInteger" />
         <item itemvalue="Application.org.compilerbau.Main" />
-        <item itemvalue="JAR Application.compilerbau-1.0-SNAPSHOT.jar" />
-        <item itemvalue="Gradle.compilerbau [dependencies]" />
+        <item itemvalue="Gradle.TestInteger.testNeg" />
+        <item itemvalue="Gradle.TestInteger.testMul" />
+        <item itemvalue="Gradle.TestInteger.testSub" />
       </list>
     </recent_temporary>
   </component>
@@ -308,14 +340,6 @@
       <workItem from="1708347937940" duration="27165000" />
       <workItem from="1708811490472" duration="15210000" />
       <workItem from="1709290146368" duration="14197000" />
-    </task>
-    <task id="LOCAL-00002" summary="-">
-      <option name="closed" value="true" />
-      <created>1698787361658</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1698787361658</updated>
     </task>
     <task id="LOCAL-00003" summary="-">
       <option name="closed" value="true" />
@@ -701,7 +725,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709314826057</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="-">
+      <option name="closed" value="true" />
+      <created>1709401654887</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1709401654887</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -729,6 +761,7 @@
     <MESSAGE value="fix index expressions in relation to func calls" />
     <MESSAGE value="- fix multi-d arrays" />
     <MESSAGE value="- fix &quot;t().x&quot;;" />
+    <MESSAGE value="f2" />
     <MESSAGE value="-" />
     <option name="LAST_COMMIT_MESSAGE" value="-" />
   </component>
@@ -741,10 +774,5 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="GradleRunConfiguration">
-        <watch expression="antlrTree" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>

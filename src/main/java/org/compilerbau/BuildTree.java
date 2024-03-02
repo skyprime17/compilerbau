@@ -142,11 +142,11 @@ class BuildTree extends GrBaseVisitor<AST> {
       op = Operator.add;
     } else if (ctx.MINUS() != null) {
       op = Operator.sub;
-    } else if (ctx.AND() != null) {
+    } else if (ctx.ANDAND() != null) {
       op = Operator.and;
     } else if (ctx.CARET() != null) {
       op = Operator.caret;
-    } else if (ctx.OR() != null) {
+    } else if (ctx.OROR() != null) {
       op = Operator.or;
     }
 

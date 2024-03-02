@@ -1009,6 +1009,8 @@ public class GrParser extends Parser {
 		public TerminalNode AND() { return getToken(GrParser.AND, 0); }
 		public TerminalNode CARET() { return getToken(GrParser.CARET, 0); }
 		public TerminalNode OR() { return getToken(GrParser.OR, 0); }
+		public TerminalNode ANDAND() { return getToken(GrParser.ANDAND, 0); }
+		public TerminalNode OROR() { return getToken(GrParser.OROR, 0); }
 		public ArithmeticOrLogicalExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -1275,31 +1277,6 @@ public class GrParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class LazyBooleanExpressionContext extends ExpressionContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode ANDAND() { return getToken(GrParser.ANDAND, 0); }
-		public TerminalNode OROR() { return getToken(GrParser.OROR, 0); }
-		public LazyBooleanExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrListener ) ((GrListener)listener).enterLazyBooleanExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrListener ) ((GrListener)listener).exitLazyBooleanExpression(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GrVisitor ) return ((GrVisitor<? extends T>)visitor).visitLazyBooleanExpression(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 
 	public final ExpressionContext expression() throws RecognitionException {
 		return expression(0);
@@ -1561,7 +1538,7 @@ public class GrParser extends Parser {
 						break;
 					case 7:
 						{
-						_localctx = new LazyBooleanExpressionContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new ArithmeticOrLogicalExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(203);
 						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
@@ -1573,7 +1550,7 @@ public class GrParser extends Parser {
 						break;
 					case 8:
 						{
-						_localctx = new LazyBooleanExpressionContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new ArithmeticOrLogicalExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(206);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");

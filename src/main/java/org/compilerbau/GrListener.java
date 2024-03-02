@@ -300,18 +300,6 @@ public interface GrListener extends ParseTreeListener {
 	 */
 	void exitCallExpression(GrParser.CallExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code LazyBooleanExpression}
-	 * labeled alternative in {@link GrParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterLazyBooleanExpression(GrParser.LazyBooleanExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code LazyBooleanExpression}
-	 * labeled alternative in {@link GrParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitLazyBooleanExpression(GrParser.LazyBooleanExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link GrParser#comparisonOperator}.
 	 * @param ctx the parse tree
 	 */

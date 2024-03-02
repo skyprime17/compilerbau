@@ -1,0 +1,27 @@
+package intTest;
+
+
+
+pub fn add(x: Int, y: Int) -> Int {
+   return x + y;
+}
+
+pub fn sub(x: Int, y: Int) -> Int {
+   return x - y;
+}
+
+pub fn mul(x: Int, y: Int) -> Int {
+   return x * y;
+}
+
+pub fn div(x: Int, y: Int) -> Int {
+   return x / y;
+}
+
+pub fn mod(x: Int, y: Int) -> Int {
+   return x % y;
+}
+
+pub fn neg(x: Int) -> Int {
+   return -x;
+}

@@ -183,13 +183,6 @@ public interface GrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCallExpression(GrParser.CallExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code LazyBooleanExpression}
-	 * labeled alternative in {@link GrParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLazyBooleanExpression(GrParser.LazyBooleanExpressionContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link GrParser#comparisonOperator}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
