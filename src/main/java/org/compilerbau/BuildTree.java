@@ -417,7 +417,7 @@ class BuildTree extends GrBaseVisitor<AST> {
     return switch (ctx.identifier().getText()) {
       case "Int" -> new TheTyp(Typ.BOXED_INT, nullable);
       case "String" -> new TheTyp(Typ.BOXED_STRING, nullable);
-      case "Bool" -> new TheTyp(Typ.BOXED_BOOLEAN, nullable);
+      case "Boolean" -> new TheTyp(Typ.BOXED_BOOLEAN, nullable);
       case "Void" -> new TheTyp(Typ.BOXED_VOID, nullable);
       default -> new TheTyp(new Typ.Ref(t), nullable);
     };
