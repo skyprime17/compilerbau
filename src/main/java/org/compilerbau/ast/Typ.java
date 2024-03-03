@@ -10,6 +10,7 @@ public interface Typ {
   FunTyp CMP = new FunTyp(List.of(Typ.BOXED_INT, Typ.BOXED_INT), Typ.BOXED_BOOLEAN);
   FunTyp LOGIC = new FunTyp(List.of(Typ.BOXED_BOOLEAN, Typ.BOXED_BOOLEAN), Typ.BOXED_BOOLEAN);
   Typ BOXED_STRING = new Ref("java/lang/String");
+  Typ VOID = new Void();
 
   default int stackPos() {
     return 1;
@@ -18,7 +19,8 @@ public interface Typ {
   String jvmType();
 
   static boolean isPrimitive(Typ typ) {
-    boolean primitive = typ == Typ.BOXED_INT || typ == Typ.BOXED_BOOLEAN || typ == Typ.BOXED_VOID || typ == Typ.BOXED_STRING;
+    boolean primitive =
+        typ == Typ.BOXED_INT || typ == Typ.BOXED_BOOLEAN || typ == Typ.VOID || typ == Typ.BOXED_STRING;
     if (primitive) {
       return true;
     }
@@ -70,5 +72,17 @@ public interface Typ {
       return "[" + typ.jvmType();
     }
 
+  }
+
+  record Void() implements Typ {
+    @Override
+    public String toString() {
+      return "void";
+    }
+
+    @Override
+    public String jvmType() {
+      return "V";
+    }
   }
 }

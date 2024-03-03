@@ -275,7 +275,7 @@ public class TypCheck implements Visitor<Boolean> {
     }
     Typ currentFunctionResult = this.currentFunctionResult.typ();
 
-    if (ast.expr() == null && !currentFunctionResult.equals(Typ.BOXED_VOID)) {
+    if (ast.expr() == null && !currentFunctionResult.equals(Typ.VOID)) {
       System.out.println("Return type does not match function type");
       return false;
     }
@@ -296,7 +296,7 @@ public class TypCheck implements Visitor<Boolean> {
     ast.attributes().typ = currentFunctionResult;
 
     if (ast.expr() instanceof Null) {
-      if (!this.currentFunctionResult.attributes().nullable && !this.currentFunctionResult.typ().equals(Typ.BOXED_VOID)) {
+      if (!this.currentFunctionResult.attributes().nullable && !this.currentFunctionResult.typ().equals(Typ.VOID)) {
         System.out.println("Invalid return type. Expected non-nullable type");
         return false;
       }

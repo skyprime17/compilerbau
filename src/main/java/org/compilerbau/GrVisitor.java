@@ -29,6 +29,12 @@ public interface GrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFundef(GrParser.FundefContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link GrParser#fundefReturnType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFundefReturnType(GrParser.FundefReturnTypeContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link GrParser#structdef}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

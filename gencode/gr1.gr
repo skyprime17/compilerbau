@@ -1,11 +1,11 @@
 package test;
 
 
-pub fn swap(inout arr: [Int], i: Int, j: Int) -> Void {
+pub fn swap(inout arr: [Int], i: Int, j: Int) {
     let temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
-    return null;
+    return;
 }
 
 pub fn reverse(inout arr: [Int]) -> [Int] {

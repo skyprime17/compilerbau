@@ -118,7 +118,7 @@ public class GenCode implements Visitor<Void> {
     for (AST s : ast.statements()) {
       s.welcome(this);
       // if node is a straight fun call, we need to pop the result of the stack
-      if (s instanceof FunCall) {
+      if (s.attributes().typ != Typ.VOID && s instanceof FunCall) {
         mv.visitInsn(Opcodes.POP);
       }
     }

@@ -8,8 +8,12 @@ item:
 ;
 
 fundef:
-  visbility? KW_FN receiver? IDENT LPAR (param (COMMA param)* )? RPAR ARROW type blockExpression
+  visbility? KW_FN receiver? IDENT LPAR (param (COMMA param)* )? RPAR fundefReturnType? blockExpression
 ;
+
+fundefReturnType
+   : ARROW type
+   ;
 
 structdef:
   visbility? KW_STRUCT IDENT LBRC structfield (COMMA structfield)* RBRC

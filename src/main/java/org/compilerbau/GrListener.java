@@ -38,6 +38,16 @@ public interface GrListener extends ParseTreeListener {
 	 */
 	void exitFundef(GrParser.FundefContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GrParser#fundefReturnType}.
+	 * @param ctx the parse tree
+	 */
+	void enterFundefReturnType(GrParser.FundefReturnTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrParser#fundefReturnType}.
+	 * @param ctx the parse tree
+	 */
+	void exitFundefReturnType(GrParser.FundefReturnTypeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GrParser#structdef}.
 	 * @param ctx the parse tree
 	 */

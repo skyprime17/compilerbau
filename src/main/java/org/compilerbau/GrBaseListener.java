@@ -53,6 +53,18 @@ public class GrBaseListener implements GrListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFundefReturnType(GrParser.FundefReturnTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFundefReturnType(GrParser.FundefReturnTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStructdef(GrParser.StructdefContext ctx) { }
 	/**
 	 * {@inheritDoc}

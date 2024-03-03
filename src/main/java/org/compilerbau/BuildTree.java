@@ -396,7 +396,11 @@ class BuildTree extends GrBaseVisitor<AST> {
     var visibility = ctx.visbility() == null ? Visibility.PRIVATE :
         ((TheVisibility) visit(ctx.visbility())).visibility();
     var params = ctx.param().stream().map(p -> (Arg) visit(p)).toList();
-    var type = ((TheTyp) visit(ctx.type()));
+
+    var type = new TheTyp(Typ.VOID, false);
+    if (ctx.fundefReturnType() != null) {
+      type = ((TheTyp) visit(ctx.fundefReturnType().type()));
+    }
     var returnType = type.typ();
     var body = visit(ctx.blockExpression());
     var attributes = new Attributes();
@@ -418,7 +422,7 @@ class BuildTree extends GrBaseVisitor<AST> {
       case "Int" -> new TheTyp(Typ.BOXED_INT, nullable);
       case "String" -> new TheTyp(Typ.BOXED_STRING, nullable);
       case "Boolean" -> new TheTyp(Typ.BOXED_BOOLEAN, nullable);
-      case "Void" -> new TheTyp(Typ.BOXED_VOID, nullable);
+      //case "Void" -> new TheTyp(Typ.BOXED_VOID, nullable);
       default -> new TheTyp(new Typ.Ref(t), nullable);
     };
   }
@@ -430,7 +434,7 @@ class BuildTree extends GrBaseVisitor<AST> {
         case "Int" -> Typ.BOXED_INT;
         case "String" -> Typ.BOXED_STRING;
         case "Boolean" -> Typ.BOXED_BOOLEAN;
-        case "Void" -> Typ.BOXED_VOID;
+        //case "Void" -> Typ.BOXED_VOID;
         default -> new Typ.Ref(ctx.type().identifier().getText());
       };
       return new TheTyp(new Typ.Array(type), ctx.type().KW_NULLABLE() != null);
