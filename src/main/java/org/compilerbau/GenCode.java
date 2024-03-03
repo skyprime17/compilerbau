@@ -8,6 +8,7 @@ import static org.compilerbau.ast.Typ.BOXED_INT;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Stack;
 import java.util.function.Consumer;
 
 import org.compilerbau.ast.AST;
@@ -54,6 +55,10 @@ public class GenCode implements Visitor<Void> {
   private String module;
   private MethodVisitor mv;
   private Map<String, Integer> env;
+
+  private Stack<Label> endLabels = new Stack<>();
+  private Stack<Label> startLabels = new Stack<>();
+
 
   public GenCode(String resultPath) {
     this.resultPath = resultPath;
@@ -381,7 +386,9 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(LoopExpression ast) {
     var end = new Label();
+    endLabels.push(end);
     var start = new Label();
+    startLabels.push(start);
     mv.visitLabel(start);
     ast.cond().welcome(this);
     mv.visitJumpInsn(Opcodes.IFEQ, end);
@@ -393,13 +400,23 @@ public class GenCode implements Visitor<Void> {
 
   @Override
   public Void visit(BreakExpression ast) {
-    // TODO
-    //mv.visitJumpInsn(Opcodes.GOTO, end);
+    if (!endLabels.isEmpty()) {
+      Label endLabel = endLabels.peek();
+      mv.visitJumpInsn(Opcodes.GOTO, endLabel);
+    } else {
+      System.out.println("Error: break statement outside of loop");
+    }
     return null;
   }
 
   @Override
   public Void visit(ContinueExpression ast) {
+    if (!startLabels.isEmpty()) {
+      Label startLabel = startLabels.peek();
+      mv.visitJumpInsn(Opcodes.GOTO, startLabel);
+    } else {
+      System.out.println("Error: continue statement outside of loop");
+    }
     return null;
   }
 

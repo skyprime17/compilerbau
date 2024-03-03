@@ -6,12 +6,8 @@ public record ContinueExpression(Attributes attributes) implements AST {
     this(new Attributes());
   }
 
-
-
-
-
   @Override
   public <R> R welcome(Visitor<R> vis) {
-    return null;
+    return vis.visit(this);
   }
 }
