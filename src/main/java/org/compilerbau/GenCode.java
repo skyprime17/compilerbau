@@ -56,8 +56,8 @@ public class GenCode implements Visitor<Void> {
   private MethodVisitor mv;
   private Map<String, Integer> env;
 
-  private Stack<Label> endLabels = new Stack<>();
-  private Stack<Label> startLabels = new Stack<>();
+  private final Stack<Label> endLabels = new Stack<>();
+  private final Stack<Label> startLabels = new Stack<>();
 
 
   public GenCode(String resultPath) {
@@ -287,6 +287,10 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(FunCall ast) {
     if (ast.lhs() instanceof Variable variable) {
+      if (variable.name().equals("printf")) {
+        generatePrintf(ast);
+        return null;
+      }
       ast.args().forEach(arg -> arg.welcome(this));
       StringBuilder jvmArgs = new StringBuilder("(");
       for (var arg : ast.args()) {
@@ -309,6 +313,25 @@ public class GenCode implements Visitor<Void> {
     }
 
     return null;
+  }
+
+  private void generatePrintf(FunCall ast) {
+    mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+    ast.args().get(0).welcome(this);
+    getStaticPush(ast.args().size() - 1).accept(mv);
+    mv.visitTypeInsn(Opcodes.ANEWARRAY, "java/lang/Object");
+    if (ast.args().size() > 1) {
+      int s = 0;
+      for (AST item : ast.args().stream().skip(1).toList()) {
+        mv.visitInsn(Opcodes.DUP);
+        getStaticPush(s++).accept(mv);
+        item.welcome(this);
+        mv.visitInsn(Opcodes.AASTORE);
+      }
+    }
+    mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "printf",
+        "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;", false);
+    mv.visitInsn(Opcodes.POP);
   }
 
   @Override

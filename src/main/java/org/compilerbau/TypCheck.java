@@ -3,6 +3,7 @@ package org.compilerbau;
 import static org.compilerbau.ast.Typ.BOXED_VOID;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import org.compilerbau.ast.ArgConvention;
 import org.compilerbau.ast.ArithmeticOrLogicalExpression;
 import org.compilerbau.ast.ArrayExpression;
 import org.compilerbau.ast.Assign;
+import org.compilerbau.ast.Attributes;
 import org.compilerbau.ast.Block;
 import org.compilerbau.ast.BooleanBoolean;
 import org.compilerbau.ast.BreakExpression;
@@ -37,21 +39,21 @@ import org.compilerbau.ast.TheTyp;
 import org.compilerbau.ast.TheVisibility;
 import org.compilerbau.ast.Typ;
 import org.compilerbau.ast.Variable;
+import org.compilerbau.ast.Visibility;
 import org.compilerbau.ast.Visitor;
 
 public class TypCheck implements Visitor<Boolean> {
   private Map<String, Typ> env = new HashMap<>();
   private final Map<String, Item> funs = new HashMap<>();
 
-
-  //private final static Map<String, FunDef> standardLibFuns = new HashMap<>();
+  private final static Map<String, FunDef> standardLibFuns = new HashMap<>();
   private FunDef currentFunctionResult;
 
-  /*
   static {
-   /standardLibFuns.put("println", new Typ.FunTyp(List.of(Typ.INT), Typ.VOID));
+    standardLibFuns.put("printf", new FunDef(Visibility.PUBLIC, "printf",
+        List.of(new Arg(new Attributes(),"x", Typ.BOXED_STRING,ArgConvention.BORROWED)),  Typ.VOID,
+        new Block(List.of())));
   }
-   */
 
   @Override
   public Boolean visit(Program ast) {
@@ -308,10 +310,25 @@ public class TypCheck implements Visitor<Boolean> {
   public Boolean visit(FunCall ast) {
     if (ast.lhs() instanceof Variable var) {
       var fun = funs.get(var.name());
-      if (fun == null) {
-        System.out.println("Function notfound: " + var.name());
+      if (fun != null && standardLibFuns.containsKey(var.name())) {
+        System.out.println("Function is reserved: " + var.name());
         return false;
       }
+
+      if (fun == null) {
+        fun = standardLibFuns.get(var.name());
+        if (fun != null) {
+          ast.args().forEach(p -> p.welcome(this));
+          ast.attributes().typ = fun.typ();
+          return true;
+        }
+      }
+
+      if (fun == null) {
+        System.out.println("Function not found: " + var.name());
+        return false;
+      }
+
       ast.args().forEach(p -> p.welcome(this));
       ast.attributes().typ = fun.typ();
       if (fun.args().size() != ast.args().size()) {

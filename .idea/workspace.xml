@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="-">
+    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="- fix continue / break expr">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/StandardLib.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gencode/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/ContinueExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/ContinueExpression.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,30 +185,6 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="TestInteger.testMul" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;TestInteger.testMul&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="TestInteger.testNeg" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -224,6 +199,30 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;TestInteger.testNeg&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestStruct.testCreateStruct" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestStruct.testCreateStruct&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -258,18 +257,18 @@
     </configuration>
     <list>
       <item itemvalue="Application.org.compilerbau.Main" />
+      <item itemvalue="Gradle.TestStruct.testCreateStruct" />
       <item itemvalue="Gradle.Tests in 'compilerbau.test'" />
-      <item itemvalue="Gradle.TestInteger.testMul" />
       <item itemvalue="Gradle.TestInteger.testNeg" />
       <item itemvalue="Gradle.TestInteger" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.TestStruct.testCreateStruct" />
         <item itemvalue="Gradle.Tests in 'compilerbau.test'" />
         <item itemvalue="Gradle.TestInteger" />
         <item itemvalue="Application.org.compilerbau.Main" />
         <item itemvalue="Gradle.TestInteger.testNeg" />
-        <item itemvalue="Gradle.TestInteger.testMul" />
       </list>
     </recent_temporary>
   </component>
@@ -322,14 +321,6 @@
       <workItem from="1708347937940" duration="27165000" />
       <workItem from="1708811490472" duration="15210000" />
       <workItem from="1709290146368" duration="14197000" />
-    </task>
-    <task id="LOCAL-00005" summary="-">
-      <option name="closed" value="true" />
-      <created>1700614497462</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1700614497462</updated>
     </task>
     <task id="LOCAL-00006" summary="-">
       <option name="closed" value="true" />
@@ -715,7 +706,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709429663211</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="- fix continue / break expr">
+      <option name="closed" value="true" />
+      <created>1709432666932</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1709432666933</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -745,7 +744,8 @@
     <MESSAGE value="- fix &quot;t().x&quot;;" />
     <MESSAGE value="f2" />
     <MESSAGE value="-" />
-    <option name="LAST_COMMIT_MESSAGE" value="-" />
+    <MESSAGE value="- fix continue / break expr" />
+    <option name="LAST_COMMIT_MESSAGE" value="- fix continue / break expr" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -755,19 +755,9 @@
           <option name="timeStamp" value="11" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java</url>
-          <line>413</line>
-          <option name="timeStamp" value="74" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java</url>
-          <line>481</line>
+          <line>495</line>
           <option name="timeStamp" value="77" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java</url>
-          <line>118</line>
-          <option name="timeStamp" value="78" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
