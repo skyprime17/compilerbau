@@ -1,6 +1,7 @@
 package org.compilerbau;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -301,15 +302,17 @@ class BuildTree extends GrBaseVisitor<AST> {
     if (ctx.statements() == null) {
       return new Block(List.of());
     }
-    if (!ctx.statements().statement().isEmpty()) {
-      return new Block(ctx.statements().statement().stream().map(this::visit).toList());
+    if (ctx.statements() != null) {
+      List<AST> statements = new ArrayList<>();
+      if (ctx.statements().statement() != null) {
+        ctx.statements().statement().stream().map(this::visit).forEach(statements::add);
+      }
+      if (ctx.statements().expression() != null) {
+        var expr = visit(ctx.statements().expression());
+        statements.add(new ReturnExpression(expr));
+      }
+      return new Block(statements);
     }
-    // TODO expressions
-    /*
-    if (!ctx.statements().expression().isEmpty()) {
-      return new Block(List.of(visit(ctx.statements().expression())));
-    }
-     */
     return new Block(List.of());
   }
 
@@ -323,12 +326,6 @@ class BuildTree extends GrBaseVisitor<AST> {
     return new StructCall(structName, fields);
   }
 
- /*
-  @Override
-  public AST visitStructExprField(GrParser.StructExprFieldContext ctx) {
-    //return new Assign( ctx.identifier().getText(), visit(ctx.expression()));
-  }
-  */
 
   @Override
   public AST visitPredicateLoopExpression(GrParser.PredicateLoopExpressionContext ctx) {
@@ -403,6 +400,15 @@ class BuildTree extends GrBaseVisitor<AST> {
     }
     var returnType = type.typ();
     var body = visit(ctx.blockExpression());
+
+    // check body, if the return type is Void and the last statement is not a return statement, add a return statement
+    if (returnType.equals(Typ.VOID) && body instanceof Block block){
+      if (block.statements().isEmpty() || !(block.statements().get(block.statements().size() - 1) instanceof ReturnExpression)) {
+        var returnStatement = new ReturnExpression(null);
+        block.statements().add(returnStatement);
+      }
+    }
+
     var attributes = new Attributes();
     attributes.nullable = type.nullable();
     return new FunDef(attributes, visibility, funcName, params, returnType, body);

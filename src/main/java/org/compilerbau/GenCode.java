@@ -287,7 +287,7 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(FunCall ast) {
     if (ast.lhs() instanceof Variable variable) {
-      if (variable.name().equals("printf")) {
+      if (variable.name().equals("println")) {
         generatePrintf(ast);
         return null;
       }
@@ -332,6 +332,11 @@ public class GenCode implements Visitor<Void> {
     mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "printf",
         "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;", false);
     mv.visitInsn(Opcodes.POP);
+
+    // hack to force new line since ldc somehow escapes \n
+    mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+    mv.visitLdcInsn("\n");
+    mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "print", "(Ljava/lang/String;)V", false);
   }
 
   @Override
@@ -397,6 +402,14 @@ public class GenCode implements Visitor<Void> {
     var end = new Label();
     var ifCase = new Label();
     ast.cond().welcome(this);
+
+    switch (ast.cond()) {
+      case Variable v -> mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
+      case FunCall v -> mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
+      default -> {
+      }
+    }
+
     mv.visitJumpInsn(Opcodes.IFNE, ifCase);
     ast.elseCase().ifPresent(ec -> ec.welcome(this));
     mv.visitJumpInsn(Opcodes.GOTO, end);

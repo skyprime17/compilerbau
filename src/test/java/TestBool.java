@@ -79,6 +79,12 @@ public class TestBool {
   }
 
 
+  @Test
+  public void ifCallTrue() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
+      IllegalAccessException {
+    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("ifCallTrue").invoke(null));
+    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("ifCallFalse").invoke(null));
+  }
 
 
 

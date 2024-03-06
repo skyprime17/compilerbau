@@ -1,0 +1,34 @@
+package fizzbuzz;
+
+// Unlike C/C++, there's no restriction on the order of function definitions
+pub fn main(args: [String]) {
+    fizzbuzzTo(100);
+}
+
+fn isDivisibleBy(lhs: Int, rhs: Int) -> Boolean {
+    if rhs == 0 {
+        return false;
+    }
+    lhs % rhs == 0
+}
+
+fn fizzbuzz(n: Int) {
+    if isDivisibleBy(n, 15) {
+        println("fizzbuzz");
+    } else if isDivisibleBy(n, 3) {
+        println("fizz");
+    } else if isDivisibleBy(n, 5) {
+        println("buzz");
+    } else {
+        println("%s", n);
+    }
+}
+
+// When a function returns `Void`, the return type can be omitted from the signature
+fn fizzbuzzTo(n: Int) {
+    let idx = 1;
+    while idx <= n {
+        fizzbuzz(idx);
+        idx += 1;
+    }
+}

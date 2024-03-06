@@ -33,3 +33,18 @@ pub fn not2(bool: Boolean) -> Boolean {
     let s = !bool;
     return s;
 }
+
+
+pub fn ifCallTrue() -> Boolean {
+    if t() {
+        return true;
+    }
+    return false;
+}
+
+pub fn ifCallFalse() -> Boolean {
+    if f() {
+        return true;
+    }
+    return false;
+}

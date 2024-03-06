@@ -50,7 +50,7 @@ public class TypCheck implements Visitor<Boolean> {
   private FunDef currentFunctionResult;
 
   static {
-    standardLibFuns.put("printf", new FunDef(Visibility.PUBLIC, "printf",
+    standardLibFuns.put("println", new FunDef(Visibility.PUBLIC, "println",
         List.of(new Arg(new Attributes(),"x", Typ.BOXED_STRING,ArgConvention.BORROWED)),  Typ.VOID,
         new Block(List.of())));
   }
