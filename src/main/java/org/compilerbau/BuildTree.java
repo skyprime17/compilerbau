@@ -402,8 +402,8 @@ class BuildTree extends GrBaseVisitor<AST> {
     var body = visit(ctx.blockExpression());
 
     // check body, if the return type is Void and the last statement is not a return statement, add a return statement
-    if (returnType.equals(Typ.VOID) && body instanceof Block block){
-      if (block.statements().isEmpty() || !(block.statements().get(block.statements().size() - 1) instanceof ReturnExpression)) {
+    if ((returnType.equals(Typ.VOID)) && body instanceof Block block){
+      if (block.statements().isEmpty() || !(block.statements().getLast() instanceof ReturnExpression)) {
         var returnStatement = new ReturnExpression(null);
         block.statements().add(returnStatement);
       }

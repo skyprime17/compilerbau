@@ -48,3 +48,17 @@ pub fn ifCallFalse() -> Boolean {
     }
     return false;
 }
+
+pub fn compoundAnd(x: Boolean) -> Boolean {
+    let s = true;
+    s &= x;
+    return s;
+}
+
+pub fn compoundOr(x: Boolean) -> Boolean {
+    let s = false;
+    s |= x;
+    return s;
+}
+
+

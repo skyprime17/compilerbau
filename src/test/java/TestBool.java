@@ -29,38 +29,54 @@ public class TestBool {
   @Test
   public void testAnd() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
       IllegalAccessException {
-    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("and", Boolean.class, Boolean.class).invoke(null, Boolean.TRUE, Boolean.TRUE));
-    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("and", Boolean.class, Boolean.class).invoke(null, Boolean.TRUE, Boolean.FALSE));
-    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("and", Boolean.class, Boolean.class).invoke(null, Boolean.FALSE, Boolean.TRUE));
-    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("and", Boolean.class, Boolean.class).invoke(null, Boolean.FALSE, Boolean.FALSE));
+    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("and", Boolean.class, Boolean.class).invoke(null,
+        Boolean.TRUE, Boolean.TRUE));
+    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("and", Boolean.class, Boolean.class).invoke(null,
+        Boolean.TRUE, Boolean.FALSE));
+    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("and", Boolean.class, Boolean.class).invoke(null,
+        Boolean.FALSE, Boolean.TRUE));
+    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("and", Boolean.class, Boolean.class).invoke(null,
+        Boolean.FALSE, Boolean.FALSE));
   }
 
   @Test
   public void testOr() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
       IllegalAccessException {
-    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("or", Boolean.class, Boolean.class).invoke(null, Boolean.TRUE, Boolean.TRUE));
-    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("or", Boolean.class, Boolean.class).invoke(null, Boolean.TRUE, Boolean.FALSE));
-    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("or", Boolean.class, Boolean.class).invoke(null, Boolean.FALSE, Boolean.TRUE));
-    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("or", Boolean.class, Boolean.class).invoke(null, Boolean.FALSE, Boolean.FALSE));
+    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("or", Boolean.class, Boolean.class).invoke(null,
+        Boolean.TRUE, Boolean.TRUE));
+    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("or", Boolean.class, Boolean.class).invoke(null,
+        Boolean.TRUE, Boolean.FALSE));
+    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("or", Boolean.class, Boolean.class).invoke(null,
+        Boolean.FALSE, Boolean.TRUE));
+    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("or", Boolean.class, Boolean.class).invoke(null,
+        Boolean.FALSE, Boolean.FALSE));
   }
 
 
   @Test
   public void testEq() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
       IllegalAccessException {
-    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("eq", Boolean.class, Boolean.class).invoke(null, Boolean.TRUE, Boolean.TRUE));
-    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("eq", Boolean.class, Boolean.class).invoke(null, Boolean.TRUE, Boolean.FALSE));
-    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("eq", Boolean.class, Boolean.class).invoke(null, Boolean.FALSE, Boolean.TRUE));
-    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("eq", Boolean.class, Boolean.class).invoke(null, Boolean.FALSE, Boolean.FALSE));
+    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("eq", Boolean.class, Boolean.class).invoke(null,
+        Boolean.TRUE, Boolean.TRUE));
+    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("eq", Boolean.class, Boolean.class).invoke(null,
+        Boolean.TRUE, Boolean.FALSE));
+    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("eq", Boolean.class, Boolean.class).invoke(null,
+        Boolean.FALSE, Boolean.TRUE));
+    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("eq", Boolean.class, Boolean.class).invoke(null,
+        Boolean.FALSE, Boolean.FALSE));
   }
 
   @Test
   public void testNeq() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
       IllegalAccessException {
-    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("neq", Boolean.class, Boolean.class).invoke(null, Boolean.TRUE, Boolean.TRUE));
-    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("neq", Boolean.class, Boolean.class).invoke(null, Boolean.TRUE, Boolean.FALSE));
-    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("neq", Boolean.class, Boolean.class).invoke(null, Boolean.FALSE, Boolean.TRUE));
-    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("neq", Boolean.class, Boolean.class).invoke(null, Boolean.FALSE, Boolean.FALSE));
+    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("neq", Boolean.class, Boolean.class).invoke(null,
+        Boolean.TRUE, Boolean.TRUE));
+    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("neq", Boolean.class, Boolean.class).invoke(null,
+        Boolean.TRUE, Boolean.FALSE));
+    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("neq", Boolean.class, Boolean.class).invoke(null,
+        Boolean.FALSE, Boolean.TRUE));
+    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("neq", Boolean.class, Boolean.class).invoke(null,
+        Boolean.FALSE, Boolean.FALSE));
   }
 
   @Test
@@ -87,6 +103,22 @@ public class TestBool {
   }
 
 
+  @Test
+  public void compoundAnd() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
+      IllegalAccessException {
+    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("compoundAnd", Boolean.class).invoke(null,
+        Boolean.TRUE));
+    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("compoundAnd", Boolean.class).invoke(null,
+        Boolean.FALSE));
+  }
 
+  @Test
+  public void compoundOr() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
+      IllegalAccessException {
+    assertEquals(Boolean.TRUE, Class.forName("boolTest").getMethod("compoundOr", Boolean.class).invoke(null,
+        Boolean.TRUE));
+    assertEquals(Boolean.FALSE, Class.forName("boolTest").getMethod("compoundOr", Boolean.class).invoke(null,
+        Boolean.FALSE));
+  }
 
 }

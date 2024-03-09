@@ -20,7 +20,7 @@ public interface Typ {
 
   static boolean isPrimitive(Typ typ) {
     boolean primitive =
-        typ == Typ.BOXED_INT || typ == Typ.BOXED_BOOLEAN || typ == Typ.VOID || typ == Typ.BOXED_STRING;
+        typ == Typ.BOXED_INT || typ == Typ.BOXED_BOOLEAN || typ == Typ.VOID || typ == Typ.BOXED_STRING || typ == Typ.BOXED_VOID;
     if (primitive) {
       return true;
     }

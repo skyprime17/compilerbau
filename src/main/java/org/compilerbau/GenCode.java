@@ -317,21 +317,25 @@ public class GenCode implements Visitor<Void> {
 
   private void generatePrintf(FunCall ast) {
     mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-    ast.args().get(0).welcome(this);
-    getStaticPush(ast.args().size() - 1).accept(mv);
-    mv.visitTypeInsn(Opcodes.ANEWARRAY, "java/lang/Object");
-    if (ast.args().size() > 1) {
-      int s = 0;
-      for (AST item : ast.args().stream().skip(1).toList()) {
-        mv.visitInsn(Opcodes.DUP);
-        getStaticPush(s++).accept(mv);
-        item.welcome(this);
-        mv.visitInsn(Opcodes.AASTORE);
+
+    if (!ast.args().isEmpty()) {
+      ast.args().getFirst().welcome(this);
+      getStaticPush(ast.args().size() - 1).accept(mv);
+      mv.visitTypeInsn(Opcodes.ANEWARRAY, "java/lang/Object");
+      if (ast.args().size() > 1) {
+        int s = 0;
+        for (AST item : ast.args().stream().skip(1).toList()) {
+          mv.visitInsn(Opcodes.DUP);
+          getStaticPush(s++).accept(mv);
+          item.welcome(this);
+          mv.visitInsn(Opcodes.AASTORE);
+        }
       }
+      mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "printf",
+          "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;", false);
+      mv.visitInsn(Opcodes.POP);
     }
-    mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "printf",
-        "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;", false);
-    mv.visitInsn(Opcodes.POP);
+
 
     // hack to force new line since ldc somehow escapes \n
     mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
@@ -342,8 +346,7 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(StructDeclaration ast) {
     var conw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-    conw.visit(Opcodes.V21, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, ast.name(), null, "java/lang/Object",
-        new String[] {"java/io/Serializable"});
+    conw.visit(Opcodes.V21, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, ast.name(), null, "java/lang/Object", null);
     conw.visitSource(module + ".gr", null);
 
     for (var arg : ast.args()) {
