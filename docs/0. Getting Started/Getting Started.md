@@ -1,3 +1,5 @@
+## Getting Started
+
 GRK ist eine Programmiersprache inspiriert von Golang / Rust / Kotlin und MojoLang.
 
 Der Compiler ist in Java implementiert und erzeugt JVM Byte Code, der nach der Kompilation über die JVM ausgeführt werden kann. 
