@@ -136,6 +136,9 @@ public class GenCode implements Visitor<Void> {
     switch (ast.var()) {
       case Variable var -> {
         ast.rhs().welcome(this);
+        if (ast.rhs() instanceof ComparisonExpression) {
+          mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;", false);
+        }
         mv.visitVarInsn(Opcodes.ASTORE, env.get(var.name()));
       }
       case IndexVariable iv -> {
@@ -329,6 +332,9 @@ public class GenCode implements Visitor<Void> {
           mv.visitInsn(Opcodes.DUP);
           getStaticPush(s++).accept(mv);
           item.welcome(this);
+          if (item instanceof ComparisonExpression) {
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;", false);
+          }
           mv.visitInsn(Opcodes.AASTORE);
         }
       }
