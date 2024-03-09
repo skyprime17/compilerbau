@@ -6,7 +6,7 @@ pub fn swap(inout arr: [Int], i: Int, j: Int) {
     arr[j] = temp;
 }
 
-pub fn reverse(inout arr: [Int]) -> [Int] {
+pub fn reverse(inout arr: [Int]) {
     let n:Int = arr.len();
     let i:Int = 0;
     let j:Int = n - 1;
@@ -15,7 +15,6 @@ pub fn reverse(inout arr: [Int]) -> [Int] {
         i = i + 1;
         j = j - 1;
     }
-    return arr;
 }
 
 pub fn bubbleSort(inout arr: [Int]) -> [Int] {
@@ -56,4 +55,32 @@ fn partition(inout arr: [Int], low: Int, high: Int) -> Int {
     }
     swap(arr, i + 1, high);
     return i + 1;
+}
+
+pub fn main(args: [String]) {
+    let arr = [64, 34, 25, 12, 22, 11, 90];
+    let n = arr.len();
+    let sortedArr = bubbleSort(arr);
+    println("Sorted array using bubble sort:");
+    printArr(sortedArr);
+
+    let arr2 = [64, 34, 25, 12, 22, 11, 90];
+    let n2 = arr2.len();
+    let sortedArr2 = quickSort(arr2, 0, n2 - 1);
+    println("Sorted array using quick sort:");
+    printArr(sortedArr2);
+
+    let arr3 = [1,2,3,4,5,6,7,8,9,10];
+    reverse(arr3);
+    println("Reversed array:");
+    printArr(arr3);
+}
+
+fn printArr(arr: [Int]) {
+    let n = arr.len();
+    let i = 0;
+    while i < n {
+        println("%s", arr[i]);
+        i = i + 1;
+    }
 }

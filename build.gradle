@@ -33,8 +33,11 @@ jar {
                 'Main-Class': 'org.compilerbau.Main'
         )
     }
+    destinationDirectory = file("$rootDir/gencode")
 
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
+
+    archiveFileName = 'grk.jar'
 }

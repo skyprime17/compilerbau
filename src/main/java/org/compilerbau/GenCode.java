@@ -78,6 +78,7 @@ public class GenCode implements Visitor<Void> {
       out.write(cw.toByteArray());
       out.close();
     } catch (IOException e) {
+      System.out.println("Error: " + e.getMessage());
       throw new RuntimeException(e);
     }
     return null;
