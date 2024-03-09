@@ -86,6 +86,14 @@ public class TestInteger {
   }
 
 
+  @Test
+  public void testCompoundAssignment() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
+      IllegalAccessException {
+    var i = Integer.valueOf(3);
+    Class.forName("intTest").getMethod("compoundAssign", Integer.class, Integer.class).invoke(null, i, Integer.valueOf(2));
+    assertEquals(Integer.valueOf(3), i);
+
+  }
 
 
 

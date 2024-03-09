@@ -25,3 +25,11 @@ pub fn mod(x: Int, y: Int) -> Int {
 pub fn neg(x: Int) -> Int {
    return -x;
 }
+
+pub fn compoundAssign(inout x: Int, y: Int) {
+   x += y;
+   x -= y;
+   x *= y;
+   x /= y;
+   x %= y;
+}

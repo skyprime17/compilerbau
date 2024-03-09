@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="-" />
+    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="- docs">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestInteger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestInteger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/integer.gr" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/integer.gr" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -104,6 +108,7 @@
     "Downloaded.Files.Path.Enabled": "false",
     "Gradle.TestBool.compoundAnd.executor": "Run",
     "Gradle.TestBool.compoundOr.executor": "Run",
+    "Gradle.TestInteger.executor": "Run",
     "Gradle.compilerbau [:GenCode.main()].executor": "Run",
     "Gradle.compilerbau [:Main.main()].executor": "Run",
     "Gradle.compilerbau [jar].executor": "Run",
@@ -148,7 +153,7 @@
       <recent name="org.compilerbau.antlr" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Gradle.TestInteger">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.compilerbau.Main" />
       <module name="compilerbau.main" />
@@ -162,30 +167,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration name="TestBool" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;TestBool&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
     </configuration>
     <configuration name="TestBool.compoundAnd" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -235,6 +216,30 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="TestInteger" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestInteger&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="compilerbau [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -259,18 +264,18 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="Gradle.TestInteger" />
       <item itemvalue="Gradle.compilerbau [jar]" />
       <item itemvalue="Gradle.TestBool.compoundAnd" />
       <item itemvalue="Gradle.TestBool.compoundOr" />
-      <item itemvalue="Gradle.TestBool" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.TestInteger" />
         <item itemvalue="Gradle.compilerbau [jar]" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Gradle.TestBool.compoundOr" />
         <item itemvalue="Gradle.TestBool.compoundAnd" />
-        <item itemvalue="Gradle.TestBool" />
       </list>
     </recent_temporary>
   </component>
@@ -323,23 +328,7 @@
       <workItem from="1708347937940" duration="27165000" />
       <workItem from="1708811490472" duration="15210000" />
       <workItem from="1709290146368" duration="14197000" />
-      <workItem from="1709892551993" duration="15042000" />
-    </task>
-    <task id="LOCAL-00011" summary="- first generated class code!!">
-      <option name="closed" value="true" />
-      <created>1701199820906</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1701199820906</updated>
-    </task>
-    <task id="LOCAL-00012" summary="- first generated class code!!">
-      <option name="closed" value="true" />
-      <created>1701201634812</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1701201634812</updated>
+      <workItem from="1709892551993" duration="16052000" />
     </task>
     <task id="LOCAL-00013" summary="- first generated class code!!">
       <option name="closed" value="true" />
@@ -717,7 +706,23 @@
       <option name="project" value="LOCAL" />
       <updated>1710003266915</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="- docs">
+      <option name="closed" value="true" />
+      <created>1710003298482</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1710003298482</updated>
+    </task>
+    <task id="LOCAL-00061" summary="- docs">
+      <option name="closed" value="true" />
+      <created>1710003676215</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1710003676215</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -760,7 +765,8 @@
     <MESSAGE value="- fix continue / break expr" />
     <MESSAGE value="- printf" />
     <MESSAGE value="-" />
-    <option name="LAST_COMMIT_MESSAGE" value="-" />
+    <MESSAGE value="- docs" />
+    <option name="LAST_COMMIT_MESSAGE" value="- docs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
