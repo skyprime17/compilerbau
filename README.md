@@ -37,7 +37,6 @@ java fizzbuzz
 
 Erwartete Ausgabe(verkürzt dargestellt):
 ```rust
-/*
 1
 2
 fizz
@@ -60,7 +59,6 @@ java sort
 
 ```rust
 // Erwartete Ausgabe
-/*
 Sorted array using bubble sort:
 11
 12
@@ -88,5 +86,4 @@ Reversed array:
 3
 2
 1
-*/
 ```

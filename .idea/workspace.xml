@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="-">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gencode/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gencode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gencode/Point.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gencode/sort.gr" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/sort.gr" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gencode/test.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java" afterDir="false" />
-    </list>
+    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="-" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -123,7 +114,7 @@
     "git-widget-placeholder": "master",
     "jdk.selected.JAVA_MODULE": "21",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/IdeaProjects/compilerbau/compilerbau/gencode",
+    "last_opened_file_path": "D:/IdeaProjects/compilerbau/compilerbau/docs",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -138,6 +129,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\IdeaProjects\compilerbau\compilerbau\docs" />
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\gencode" />
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\src\main\java\org\compilerbau\antlr" />
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\src" />
@@ -328,23 +320,7 @@
       <workItem from="1708347937940" duration="27165000" />
       <workItem from="1708811490472" duration="15210000" />
       <workItem from="1709290146368" duration="14197000" />
-      <workItem from="1709892551993" duration="14684000" />
-    </task>
-    <task id="LOCAL-00009" summary="-">
-      <option name="closed" value="true" />
-      <created>1701015448008</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1701015448008</updated>
-    </task>
-    <task id="LOCAL-00010" summary="-">
-      <option name="closed" value="true" />
-      <created>1701198192565</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1701198192565</updated>
+      <workItem from="1709892551993" duration="15042000" />
     </task>
     <task id="LOCAL-00011" summary="- first generated class code!!">
       <option name="closed" value="true" />
@@ -722,7 +698,23 @@
       <option name="project" value="LOCAL" />
       <updated>1709997550705</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="-">
+      <option name="closed" value="true" />
+      <created>1710003131906</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1710003131906</updated>
+    </task>
+    <task id="LOCAL-00059" summary="-">
+      <option name="closed" value="true" />
+      <created>1710003266915</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1710003266915</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
