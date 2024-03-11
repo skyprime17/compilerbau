@@ -2,7 +2,9 @@ package org.compilerbau;
 
 import static org.compilerbau.ast.Typ.BOXED_VOID;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -511,6 +513,20 @@ public class TypCheck implements Visitor<Boolean> {
       System.out.println("Unknown fundef or structdef: " + ast.name());
       return false;
     }
+
+    Item item = funs.get(ast.name());
+    if (item.args().size() != ast.args().size()) {
+      System.out.println("Wrong number of arguments for struct call: " + ast.name());
+      return false;
+    }
+    List<String> structCallArgs = ast.args().stream().map(x -> x.attributes().structCallFieldName).toList();
+    List<String> structDefFieldNames = item.args().stream().map(Arg::name).toList();
+
+    if (!new HashSet<>(structDefFieldNames).containsAll(structCallArgs)) {
+      System.out.println("Struct call does not contain all struct fields");
+      return false;
+    }
+    ast.args().sort(Comparator.comparing(x -> structDefFieldNames.indexOf(x.attributes().structCallFieldName)));
 
     // compare types
     for (int i = 0; i < ast.args().size(); i++) {

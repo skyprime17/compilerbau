@@ -322,7 +322,12 @@ class BuildTree extends GrBaseVisitor<AST> {
     if (ctx.structExprFields() == null) {
       return new StructCall(structName, List.of());
     }
-    var fields = ctx.structExprFields().structExprField().stream().map(this::visit).toList();
+    List<AST> fields = new ArrayList<>();
+    for (GrParser.StructExprFieldContext structExprFieldContext : ctx.structExprFields().structExprField()) {
+      AST visit = visit(structExprFieldContext);
+      visit.attributes().structCallFieldName = structExprFieldContext.identifier().getText();
+      fields.add(visit);
+    }
     return new StructCall(structName, fields);
   }
 
