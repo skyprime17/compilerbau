@@ -4,12 +4,13 @@ package fizzbuzz;
 pub fn main(args: [String]) {
     fizzbuzzTo(100);
 }
-
-fn isDivisibleBy(lhs: Int, rhs: Int) -> Boolean {
-    if rhs == 0 {
-        return false;
+// When a function returns `Void`, the return type can be omitted from the signature
+fn fizzbuzzTo(n: Int) {
+    let idx = 1;
+    while idx <= n {
+        fizzbuzz(idx);
+        idx += 1;
     }
-    lhs % rhs == 0
 }
 
 fn fizzbuzz(n: Int) {
@@ -24,11 +25,12 @@ fn fizzbuzz(n: Int) {
     }
 }
 
-// When a function returns `Void`, the return type can be omitted from the signature
-fn fizzbuzzTo(n: Int) {
-    let idx = 1;
-    while idx <= n {
-        fizzbuzz(idx);
-        idx += 1;
+
+
+fn isDivisibleBy(lhs: Int, rhs: Int) -> Boolean {
+    if rhs == 0 {
+        return false;
     }
+    lhs % rhs == 0
 }
+
