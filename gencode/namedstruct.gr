@@ -1,0 +1,14 @@
+package fizzbuzz;
+
+struct T {
+     fizz: String,
+     buzz: String
+}
+
+pub fn main(args: [String]) {
+    let s = T{ buzz: "buzz", fizz: "fizz" };
+    let s2 = T{ fizz: "fizz", buzz: "buzz" };
+
+    println("s.fizz: = %s, s.buzz=%s", s.fizz, s.buzz);
+    println("s2.fizz: = %s, s2.buzz=%s", s2.fizz, s2.buzz);
+}
