@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="- docs">
+    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="- fixed named struct call args">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/BuildTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/BuildTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Attributes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/ast/Attributes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gencode/namedstruct.gr" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/namedstruct.gr" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +157,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.compilerbau.Main" />
       <module name="compilerbau.main" />
-      <option name="PROGRAM_PARAMETERS" value="D:\\IdeaProjects\\compilerbau\\compilerbau\\gencode\\fizzbuzz.gr" />
+      <option name="PROGRAM_PARAMETERS" value="D:\\IdeaProjects\\compilerbau\\compilerbau\\gencode\\namedstruct.gr" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.compilerbau.*" />
@@ -332,22 +330,6 @@
       <workItem from="1709290146368" duration="14197000" />
       <workItem from="1709892551993" duration="19013000" />
       <workItem from="1710013697114" duration="5226000" />
-    </task>
-    <task id="LOCAL-00017" summary="- first generated class code!!">
-      <option name="closed" value="true" />
-      <created>1701208715433</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1701208715433</updated>
-    </task>
-    <task id="LOCAL-00018" summary="- first generated class code!!">
-      <option name="closed" value="true" />
-      <created>1701214654226</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1701214654226</updated>
     </task>
     <task id="LOCAL-00019" summary="- first generated class code!!">
       <option name="closed" value="true" />
@@ -725,7 +707,23 @@
       <option name="project" value="LOCAL" />
       <updated>1710006758791</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="- fixed named struct call args">
+      <option name="closed" value="true" />
+      <created>1710179446676</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1710179446676</updated>
+    </task>
+    <task id="LOCAL-00067" summary="- fixed named struct call args">
+      <option name="closed" value="true" />
+      <created>1710179497147</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1710179497147</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -769,7 +767,8 @@
     <MESSAGE value="- printf" />
     <MESSAGE value="-" />
     <MESSAGE value="- docs" />
-    <option name="LAST_COMMIT_MESSAGE" value="- docs" />
+    <MESSAGE value="- fixed named struct call args" />
+    <option name="LAST_COMMIT_MESSAGE" value="- fixed named struct call args" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
