@@ -1,0 +1,15 @@
+package groupings;
+
+struct Testing {
+  x:Int
+}
+
+pub fn t() -> Testing {
+  Testing { x: 5 }
+}
+
+pub fn main(args: [String]) {
+  let t = (Testing { x: t().x }).x;
+  println("t=%s", t);
+}
+
