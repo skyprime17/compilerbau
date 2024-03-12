@@ -23,5 +23,5 @@ pub fn main(args: [String]) {
     let y = IntWrapper{value: 20};
     add(x, y);
     //add3(x,y);
-    println("%s", x);
+    println("%s", x.value);
 }

@@ -1,0 +1,12 @@
+package array;
+
+
+pub fn main(args:[String]) {
+    let intArr = [1,2,3]; // 1,2,3
+    let s = [100;5]; // Array Initializer mit Default Werten[100,100,100,100]
+    let idx = 0;
+    while idx < s.len() {
+        println("s2[%s] = %s", idx, s[idx]);
+        idx = idx + 1;
+    }
+}
