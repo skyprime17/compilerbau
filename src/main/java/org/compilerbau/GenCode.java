@@ -396,12 +396,19 @@ public class GenCode implements Visitor<Void> {
   @Override
   public Void visit(FieldExpression ast) {
     String owner = null;
-    if (ast.expression() instanceof Variable v) {
+    AST expression = ast.expression();
+    while (expression instanceof GroupedExpression ge) {
+      expression = ge.expr();
+    }
+    if (expression instanceof Variable v) {
       mv.visitVarInsn(Opcodes.ALOAD, env.get(v.name()));
       owner = ((Typ.Ref) v.attributes().typ).name();
-    } else if (ast.expression() instanceof FunCall funCall) {
+    } else if (expression instanceof FunCall funCall) {
       funCall.welcome(this);
       owner = ((Typ.Ref) funCall.attributes().typ).name();
+    } else if (expression instanceof StructCall structCall) {
+      structCall.welcome(this);
+      owner = structCall.name();
     }
     mv.visitFieldInsn(Opcodes.GETFIELD, owner, ast.fieldName(), ast.attributes().typ.jvmType());
     return null;

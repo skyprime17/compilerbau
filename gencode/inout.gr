@@ -1,0 +1,27 @@
+package inoutExample;
+
+struct IntWrapper {
+    value: Int
+}
+
+pub fn add(inout x:IntWrapper, borrowed y:IntWrapper){
+    x.value += y.value;
+}
+
+pub fn add(inout x:IntWrapper, y:IntWrapper){
+    x.value += y.value;
+}
+
+/*
+pub fn add3(x:IntWrapper, y:IntWrapper) { // x muss als inout deklariert sein.
+    x += y;  // Error: expression must be mutable in assignment
+}
+*/
+
+pub fn main(args: [String]) {
+    let x = IntWrapper{value: 10};
+    let y = IntWrapper{value: 20};
+    add(x, y);
+    //add3(x,y);
+    println("%s", x);
+}

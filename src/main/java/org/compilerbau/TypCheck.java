@@ -398,6 +398,8 @@ public class TypCheck implements Visitor<Boolean> {
           ast.attributes().typ = Typ.BOXED_INT;
           return true;
         }
+      } else {
+        ast.attributes().typ = fieldExpression.attributes().typ;
       }
       return true;
     }
@@ -417,7 +419,12 @@ public class TypCheck implements Visitor<Boolean> {
     if (!ok) {
       return false;
     }
-    if (ast.expression() instanceof Variable var) {
+    var expression = ast.expression();
+    while (expression instanceof GroupedExpression ge) {
+      expression = ge.expr();
+    }
+
+    if (expression instanceof Variable var) {
       var variable = env.get(var.name());
       if (variable == null) {
         System.out.println("Variable not found: " + var.name());
@@ -436,7 +443,7 @@ public class TypCheck implements Visitor<Boolean> {
         }
         ast.attributes().typ = field.typ();
       }
-    } else if (ast.expression() instanceof FunCall funCall) {
+    } else if (expression instanceof FunCall funCall) {
       Variable v = (Variable) funCall.lhs();
       FunDef fun = (FunDef) funs.get(v.name());
       if (fun == null) {
@@ -457,8 +464,23 @@ public class TypCheck implements Visitor<Boolean> {
         }
         ast.attributes().typ = field.typ();
       }
-
-
+    } else if (expression instanceof ArrayExpression) {
+      if (ast.fieldName().equals("len")) {
+        ast.attributes().typ = Typ.BOXED_INT;
+        return true;
+      }
+    } else if (expression instanceof StructCall structCall) {
+      Item item = funs.get(structCall.name());
+      if (item == null) {
+        System.out.println("Struct not found: " + structCall.name());
+        return false;
+      }
+      Arg field = item.args().stream().filter(p -> p.name().equals(ast.fieldName())).findFirst().orElse(null);
+      if (field == null) {
+        System.out.println("Field not found: " + ast.fieldName());
+        return false;
+      }
+      ast.attributes().typ = field.typ();
     }
     return true;
   }
@@ -594,7 +616,9 @@ public class TypCheck implements Visitor<Boolean> {
 
   @Override
   public Boolean visit(GroupedExpression groupedExpression) {
-    return groupedExpression.expr().welcome(this);
+    var s =  groupedExpression.expr().welcome(this);
+    groupedExpression.attributes().typ = groupedExpression.expr().attributes().typ;
+    return s;
   }
 
   @Override

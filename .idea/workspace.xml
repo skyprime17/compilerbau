@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="- fixed named struct call args">
+    <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="- fix bug">
+      <change afterPath="$PROJECT_DIR$/gencode/inout.gr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gencode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/BuildTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/BuildTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/TypCheck.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +112,7 @@
     "Gradle.TestBool.executor": "Run",
     "Gradle.TestInteger.executor": "Run",
     "Gradle.compilerbau [:GenCode.main()].executor": "Run",
-    "Gradle.compilerbau [:Main.main()].executor": "Debug",
+    "Gradle.compilerbau [:Main.main()].executor": "Run",
     "Gradle.compilerbau [jar].executor": "Run",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
@@ -144,6 +145,7 @@
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\IdeaProjects\compilerbau\compilerbau\gencode\standardlib" />
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\src\main\java\org\compilerbau" />
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\src\test" />
       <recent name="D:\IdeaProjects\compilerbau\compilerbau\src\main\gen\org\compilerbau" />
@@ -158,7 +160,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.compilerbau.Main" />
       <module name="compilerbau.main" />
-      <option name="PROGRAM_PARAMETERS" value="D:\\IdeaProjects\\compilerbau\\compilerbau\\gencode\\inout.gr" />
+      <option name="PROGRAM_PARAMETERS" value="D:\\IdeaProjects\\compilerbau\\compilerbau\\gencode\\gr1.gr" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.compilerbau.*" />
@@ -272,8 +274,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.TestInteger" />
         <item itemvalue="Gradle.TestBool" />
+        <item itemvalue="Gradle.TestInteger" />
         <item itemvalue="Gradle.compilerbau [jar]" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Gradle.TestBool.compoundOr" />
@@ -331,14 +333,6 @@
       <workItem from="1709290146368" duration="14197000" />
       <workItem from="1709892551993" duration="19013000" />
       <workItem from="1710013697114" duration="5226000" />
-    </task>
-    <task id="LOCAL-00020" summary="-">
-      <option name="closed" value="true" />
-      <created>1701613001571</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1701613001571</updated>
     </task>
     <task id="LOCAL-00021" summary="-">
       <option name="closed" value="true" />
@@ -724,7 +718,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710182415911</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="- fix bug">
+      <option name="closed" value="true" />
+      <created>1710276644435</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1710276644435</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -769,7 +771,8 @@
     <MESSAGE value="-" />
     <MESSAGE value="- docs" />
     <MESSAGE value="- fixed named struct call args" />
-    <option name="LAST_COMMIT_MESSAGE" value="- fixed named struct call args" />
+    <MESSAGE value="- fix bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="- fix bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -778,12 +781,12 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="11" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/compilerbau/GenCode.java</url>
+          <line>412</line>
+          <option name="timeStamp" value="165" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="GradleRunConfiguration">
-        <watch expression="ctx.statements().expression()" language="JAVA" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>
