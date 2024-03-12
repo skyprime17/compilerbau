@@ -300,7 +300,7 @@ class BuildTree extends GrBaseVisitor<AST> {
   @Override
   public AST visitBlockExpression(GrParser.BlockExpressionContext ctx) {
     if (ctx.statements() == null) {
-      return new Block(List.of());
+      return new Block(new ArrayList<>());
     }
     if (ctx.statements() != null) {
       List<AST> statements = new ArrayList<>();
@@ -313,7 +313,7 @@ class BuildTree extends GrBaseVisitor<AST> {
       }
       return new Block(statements);
     }
-    return new Block(List.of());
+    return new Block(new ArrayList<>());
   }
 
   @Override

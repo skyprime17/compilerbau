@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="58c08789-2167-4600-9e0e-05e4116a3b4f" name="Changes" comment="- fixed named struct call args">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gencode/namedstruct.gr" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/namedstruct.gr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gencode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/gencode/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/compilerbau/BuildTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/compilerbau/BuildTree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +111,7 @@
     "Gradle.TestBool.executor": "Run",
     "Gradle.TestInteger.executor": "Run",
     "Gradle.compilerbau [:GenCode.main()].executor": "Run",
-    "Gradle.compilerbau [:Main.main()].executor": "Run",
+    "Gradle.compilerbau [:Main.main()].executor": "Debug",
     "Gradle.compilerbau [jar].executor": "Run",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
@@ -157,7 +158,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.compilerbau.Main" />
       <module name="compilerbau.main" />
-      <option name="PROGRAM_PARAMETERS" value="D:\\IdeaProjects\\compilerbau\\compilerbau\\gencode\\namedstruct.gr" />
+      <option name="PROGRAM_PARAMETERS" value="D:\\IdeaProjects\\compilerbau\\compilerbau\\gencode\\inout.gr" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.compilerbau.*" />
@@ -330,14 +331,6 @@
       <workItem from="1709290146368" duration="14197000" />
       <workItem from="1709892551993" duration="19013000" />
       <workItem from="1710013697114" duration="5226000" />
-    </task>
-    <task id="LOCAL-00019" summary="- first generated class code!!">
-      <option name="closed" value="true" />
-      <created>1701214890610</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1701214890610</updated>
     </task>
     <task id="LOCAL-00020" summary="-">
       <option name="closed" value="true" />
@@ -723,7 +716,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710179497147</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="- fixed named struct call args">
+      <option name="closed" value="true" />
+      <created>1710182415911</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1710182415911</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
