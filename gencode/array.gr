@@ -1,5 +1,9 @@
 package array;
 
+pub fn giveOne() -> Int {
+     1
+}
+
 
 pub fn main(args:[String]) {
     let intArr = [1,2,3]; // 1,2,3
@@ -9,4 +13,7 @@ pub fn main(args:[String]) {
         println("s2[%s] = %s", idx, s[idx]);
         idx = idx + 1;
     }
+
+    let secondIntArrayElement = intArr[giveOne()];
+    println("Second Element of intArr: %s", secondIntArrayElement);
 }
