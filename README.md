@@ -26,7 +26,7 @@ Das Projekt wird mit gradle gebaut. Die kompilierte .jar befindet sich im Ordner
 ```
 
 Ausführen der Beispiele:
-Im ordner `gencode` befinden sich einige Code-Beispiele
+Im Ordner `gencode` befinden sich einige Code-Beispiele (mehr Beispiele unter `gencode/README.md`)
 
 #### FizzBuzz.gr
 
