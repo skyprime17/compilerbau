@@ -31,7 +31,7 @@ Im Ordner `gencode` befinden sich einige Code-Beispiele (mehr Beispiele unter `g
 #### FizzBuzz.gr
 
 ```sh
-java -jar /grk.jar ./fizzbuzz.gr 
+java -jar ./grk.jar ./fizzbuzz.gr 
 java fizzbuzz
 ```
 
@@ -53,7 +53,7 @@ buzz
 
 #### Sort.gr
 ```sh
-java -jar /grk.jar ./sort.gr 
+java -jar ./grk.jar ./sort.gr 
 java sort
 ```
 
