@@ -9,7 +9,7 @@ pub fn t() -> Testing {
 }
 
 pub fn main(args: [String]) {
-  let t = (Testing { x: t().x }).x;
+  let t = (((Testing { x: t().x }))).x;
   println("t=%s", t);
 }
 
