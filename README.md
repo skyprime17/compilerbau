@@ -8,6 +8,9 @@ Die Grammatik wurde mit ANTLR4 realisiert.
 ### Docs
 Genauere Informationen zur Sprache und der Grammatik finden sich im Ordner `docs`
 
+### Presentation
+Eine Präsentation zur Sprache und dem Compiler befindet sich im Ordner `presentation`
+
 
 
 ### Installation
