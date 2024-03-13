@@ -10,7 +10,7 @@ cd gencode # zurück ins Unterverzeichnis
 
 ### Array Beispiel
 ```shell
-./grk.jar ./array.gr
+java -jar /grk.jar ./array.gr
 ```
 ```shell
 java array
@@ -19,7 +19,7 @@ java array
 
 ### Fizzbuzz Beispiel
 ```shell
-./grk.jar ./fizzbuzz.gr
+java -jar /grk.jar ./fizzbuzz.gr
 ```
 ```shell
 java fizzbuzz
@@ -28,7 +28,7 @@ java fizzbuzz
 
 ### NamedStruct Beispiel
 ```shell
-./grk.jar ./namedstruct.gr
+java -jar /grk.jar ./namedstruct.gr
 ```
 ```shell
 java namedstruct
@@ -37,7 +37,7 @@ java namedstruct
 
 ### Inout Beispiel
 ```shell
-./grk.jar ./inout.gr
+java -jar /grk.jar ./inout.gr
 ```
 ```shell
 java inoutExample
@@ -45,7 +45,7 @@ java inoutExample
 
 ### Grouping Beispiel
 ```shell
-./grk.jar ./groupings.gr
+java -jar /grk.jar ./groupings.gr
 ```
 ```shell
 java groupings
@@ -53,7 +53,7 @@ java groupings
 
 ### Sorting Beispiel
 ```shell
-./grk.jar ./sort.gr
+java -jar /grk.jar ./sort.gr
 ```
 ```shell
 java sort

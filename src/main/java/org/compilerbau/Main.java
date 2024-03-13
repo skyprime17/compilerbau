@@ -11,7 +11,8 @@ import org.apache.commons.io.FileUtils;
 public class Main {
   public static void main(String... args) throws Exception {
     if (args.length != 1) {
-      throw new RuntimeException("Usage: Main <inputfile>");
+      System.out.println("Usage: java -jar ./grk.jar <path to .gr file>");
+      return;
     }
     compile(FileUtils.getFile(args[0]).getParent(), new FileReader(args[0]));
   }
